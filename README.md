@@ -22,4 +22,13 @@ The project is built as a full-stack system:
 - **Database (PostgreSQL)** – data storage
 - **Docker** – development environment
 
+---
+
+## Database
+
+For a detailed explanation of the database structure see:  
+➡ [Database Documentation](docs/database/database.md)
+
+---
+
 ## Project Structure

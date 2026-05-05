@@ -43,10 +43,10 @@ public class User {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "trainer")
-    private List<TrainerClient> trainerClients;
+    private List<TrainerClient> clients;
 
     @OneToMany(mappedBy = "client")
-    private List<TrainerClient> clientTrainers;
+    private List<TrainerClient> trainers;
 
     @PrePersist
     protected void onCreate() {

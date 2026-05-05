@@ -2,23 +2,45 @@ package com.example.fitguru;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.content.Intent;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    EditText etName, etPhone, etPassword;
+    Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        etName = findViewById(R.id.etName);
+        etPhone = findViewById(R.id.etPhone);
+        etPassword = findViewById(R.id.etPassword);
+        btnRegister = findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(v -> {
+            String name = etName.getText().toString();
+            String phone = etPhone.getText().toString();
+            String password = etPassword.getText().toString();
+
+            if (name.isEmpty() || phone.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            getSharedPreferences("app", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("is_registered", true)
+                    .apply();
+
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
         });
     }
 }

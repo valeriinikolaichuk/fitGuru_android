@@ -1,9 +1,11 @@
-package com.fitguru.backend.entity;
+package com.fitguru.backend.trainer.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
+import com.fitguru.backend.user.entity.User;
 
 @Entity
 @Table(name = "trainer_clients")

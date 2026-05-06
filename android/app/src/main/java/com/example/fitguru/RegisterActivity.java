@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText etName, etPhone, etPassword;
+
+    RadioGroup rgRole;
     Button btnRegister;
 
     ApiService api;
@@ -29,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName);
         etPhone = findViewById(R.id.etPhone);
         etPassword = findViewById(R.id.etPassword);
+        rgRole = findViewById(R.id.rgRole);
         btnRegister = findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(v -> {
@@ -36,13 +40,20 @@ public class RegisterActivity extends AppCompatActivity {
             String name = etName.getText().toString().trim();
             String phone = etPhone.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
+            String role = "CLIENT";
 
             if (name.isEmpty() || phone.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            RegisterRequest request = new RegisterRequest(name, phone, password);
+            int selectedId = rgRole.getCheckedRadioButtonId();
+
+            if (selectedId == R.id.rbTrainer) {
+                role = "TRAINER";
+            }
+
+            RegisterRequest request = new RegisterRequest(name, phone, password, role);
 
             api.register(request).enqueue(new Callback<Void>() {
                 @Override

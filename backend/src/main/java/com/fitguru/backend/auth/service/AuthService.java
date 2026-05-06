@@ -3,6 +3,8 @@ package com.fitguru.backend.auth.service;
 import org.springframework.stereotype.Service;
 
 import com.fitguru.backend.user.repository.UserRepository;
+import com.fitguru.backend.auth.dto.LoginRequest;
+import com.fitguru.backend.auth.dto.LoginResponse;
 import com.fitguru.backend.auth.dto.RegisterRequest;
 import com.fitguru.backend.user.entity.User;
 import com.fitguru.backend.user.entity.enums.Role; 
@@ -11,9 +13,11 @@ import com.fitguru.backend.user.entity.enums.Role;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, JwtService jwtService) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
     public void register(RegisterRequest request) {
@@ -32,7 +36,7 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    public String login(RegisterRequest request) {
+    public LoginResponse login(LoginRequest request) {
 
         User user = userRepository.findByPhone(request.getPhone())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -41,6 +45,8 @@ public class AuthService {
             throw new RuntimeException("Wrong password");
         }
 
-        return "LOGIN_OK";
+        String token = jwtService.generateToken(user);
+
+        return new LoginResponse(token);
     }
 }

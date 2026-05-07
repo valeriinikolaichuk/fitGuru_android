@@ -1,4 +1,4 @@
-package com.example.fitguru;
+package com.example.fitguru.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

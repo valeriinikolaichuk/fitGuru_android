@@ -1,4 +1,4 @@
-package com.example.fitguru;
+package com.example.fitguru.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.fitguru.main.MainActivity;
+import com.example.fitguru.R;
+import com.example.fitguru.auth.dto.RegisterRequest;
+import com.example.fitguru.network.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.example.fitguru;
+package com.example.fitguru.auth.dto;
 
 public class RegisterRequest {
     private String name;

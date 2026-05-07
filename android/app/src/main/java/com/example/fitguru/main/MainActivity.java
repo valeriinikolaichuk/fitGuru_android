@@ -1,9 +1,12 @@
-package com.example.fitguru;
+package com.example.fitguru.main;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+
+import com.example.fitguru.R;
+import com.example.fitguru.auth.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 

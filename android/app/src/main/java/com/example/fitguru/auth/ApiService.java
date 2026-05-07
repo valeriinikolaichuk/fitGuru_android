@@ -1,4 +1,8 @@
-package com.example.fitguru;
+package com.example.fitguru.auth;
+
+import com.example.fitguru.auth.dto.LoginRequest;
+import com.example.fitguru.auth.dto.LoginResponse;
+import com.example.fitguru.auth.dto.RegisterRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

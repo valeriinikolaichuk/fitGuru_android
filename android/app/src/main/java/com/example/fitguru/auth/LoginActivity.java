@@ -10,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitguru.auth.dto.LoginRequest;
 import com.example.fitguru.auth.dto.LoginResponse;
+import com.example.fitguru.auth.network.ApiService;
 import com.example.fitguru.main.MainActivity;
 import com.example.fitguru.R;
-import com.example.fitguru.network.RetrofitClient;
+import com.example.fitguru.auth.network.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;

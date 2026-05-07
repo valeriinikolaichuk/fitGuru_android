@@ -1,4 +1,4 @@
-package com.example.fitguru.auth;
+package com.example.fitguru.auth.network;
 
 import com.example.fitguru.auth.dto.LoginRequest;
 import com.example.fitguru.auth.dto.LoginResponse;

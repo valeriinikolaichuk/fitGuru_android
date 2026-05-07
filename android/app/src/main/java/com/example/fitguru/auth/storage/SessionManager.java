@@ -1,4 +1,4 @@
-package com.example.fitguru.storage;
+package com.example.fitguru.auth.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;

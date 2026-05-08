@@ -29,7 +29,7 @@ public class AuthService {
         User user = User.builder()
                 .name(request.getName())
                 .phone(request.getPhone())
-                .passwordHash(request.getPassword()) // поки без hash
+                .passwordHash(request.getPassword())
                 .role(Role.CLIENT)
                 .build();
 

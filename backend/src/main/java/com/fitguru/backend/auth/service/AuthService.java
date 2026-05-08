@@ -1,6 +1,7 @@
 package com.fitguru.backend.auth.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fitguru.backend.user.repository.UserRepository;
 import com.fitguru.backend.auth.dto.LoginRequest;
@@ -13,10 +14,16 @@ import com.fitguru.backend.user.entity.enums.Role;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, JwtService jwtService) {
+    public AuthService(
+        UserRepository userRepository, 
+        PasswordEncoder passwordEncoder, 
+        JwtService jwtService
+    ) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
 
@@ -29,7 +36,7 @@ public class AuthService {
         User user = User.builder()
                 .name(request.getName())
                 .phone(request.getPhone())
-                .passwordHash(request.getPassword())
+                .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .role(Role.CLIENT)
                 .build();
 

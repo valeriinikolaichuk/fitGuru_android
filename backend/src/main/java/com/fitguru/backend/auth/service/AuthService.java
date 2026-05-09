@@ -48,7 +48,10 @@ public class AuthService {
         User user = userRepository.findByPhone(request.getPhone())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!user.getPasswordHash().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(
+            request.getPassword(),
+            user.getPasswordHash()
+        )) {
             throw new RuntimeException("Wrong password");
         }
 

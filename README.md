@@ -24,6 +24,11 @@ The project is built as a full-stack system:
 
 ---
 
+## Setup and Run Instructions
+➡ [How to run the project](docs/setup.md)
+
+---
+
 ## Database
 
 For a detailed explanation of the database structure see:  

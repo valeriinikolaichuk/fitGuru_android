@@ -9,11 +9,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.fitguru.auth.network.ApiService;
+import com.example.fitguru.auth.dto.LoginResponse;
 import com.example.fitguru.main.MainActivity;
+import com.example.fitguru.network.ApiService;
 import com.example.fitguru.R;
 import com.example.fitguru.auth.dto.RegisterRequest;
-import com.example.fitguru.auth.network.RetrofitClient;
+import com.example.fitguru.network.RetrofitClient;
+import com.example.fitguru.storage.SessionManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +51,12 @@ public class RegisterActivity extends AppCompatActivity {
             String role = "CLIENT";
 
             if (name.isEmpty() || phone.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        RegisterActivity.this,
+                        "Fill all fields",
+                        Toast.LENGTH_SHORT
+                ).show();
+
                 return;
             }
 
@@ -61,33 +68,38 @@ public class RegisterActivity extends AppCompatActivity {
 
             RegisterRequest request = new RegisterRequest(name, phone, password, role);
 
-            api.register(request).enqueue(new Callback<Void>() {
+            api.register(request).enqueue(new Callback<LoginResponse>() {
                 @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                     if (response.isSuccessful()) {
 
-                        Toast.makeText(RegisterActivity.this,
-                                "Registration successful",
-                                Toast.LENGTH_SHORT).show();
+                        String token = response.body().token;
 
-                        getSharedPreferences("app", MODE_PRIVATE)
-                                .edit()
-                                .putBoolean("is_registered", true)
-                                .apply();
+                        SessionManager sessionManager =
+                                new SessionManager(RegisterActivity.this);
 
-                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        sessionManager.saveToken(token);
+
+                        startActivity(
+                                new Intent(
+                                        RegisterActivity.this,
+                                        MainActivity.class
+                                )
+                        );
                         finish();
 
                     } else {
-                        Toast.makeText(RegisterActivity.this,
+                        Toast.makeText(
+                                RegisterActivity.this,
                                 "Server error: " + response.code(),
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<Void> call, Throwable t) {
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
                     Toast.makeText(RegisterActivity.this,
                             "Network error: " + t.getMessage(),
                             Toast.LENGTH_SHORT).show();

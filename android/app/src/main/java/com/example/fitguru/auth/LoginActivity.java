@@ -10,10 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitguru.auth.dto.LoginRequest;
 import com.example.fitguru.auth.dto.LoginResponse;
-import com.example.fitguru.auth.network.ApiService;
+import com.example.fitguru.network.ApiService;
 import com.example.fitguru.main.MainActivity;
 import com.example.fitguru.R;
-import com.example.fitguru.auth.network.RetrofitClient;
+import com.example.fitguru.network.RetrofitClient;
+import com.example.fitguru.storage.SessionManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText etPhone, etPassword;
     Button btnLogin;
+    Button btnRegister;
 
     ApiService api;
 
@@ -36,42 +38,99 @@ public class LoginActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         btnLogin.setOnClickListener(v -> {
 
-            String phone = etPhone.getText().toString();
-            String password = etPassword.getText().toString();
+            String phone = etPhone.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
-            LoginRequest request = new LoginRequest(phone, password);
+            if (phone.isEmpty() || password.isEmpty()) {
+
+                Toast.makeText(
+                        LoginActivity.this,
+                        "Fill all fields",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return;
+            }
+
+            LoginRequest request =
+                    new LoginRequest(phone, password);
 
             api.login(request).enqueue(new Callback<LoginResponse>() {
+
                 @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                public void onResponse(Call<LoginResponse> call,
+                                       Response<LoginResponse> response) {
 
                     if (response.isSuccessful()) {
 
-                        String token = response.body().token;
+                        LoginResponse body = response.body();
 
-                        getSharedPreferences("app", MODE_PRIVATE)
-                                .edit()
-                                .putString("token", token)
-                                .apply();
+                        if (body == null || body.token == null) {
 
-                        Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(
+                                    LoginActivity.this,
+                                    "Invalid server response",
+                                    Toast.LENGTH_SHORT
+                            ).show();
 
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            return;
+                        }
+
+                        String token = body.token;
+
+                        SessionManager sessionManager =
+                                new SessionManager(LoginActivity.this);
+
+                        sessionManager.saveToken(token);
+
+                        Toast.makeText(
+                                LoginActivity.this,
+                                "Login success",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        startActivity(
+                                new Intent(
+                                        LoginActivity.this,
+                                        MainActivity.class
+                                )
+                        );
+
                         finish();
 
                     } else {
-                        Toast.makeText(LoginActivity.this, "Wrong credentials", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(
+                                LoginActivity.this,
+                                "Wrong credentials",
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<LoginResponse> call,
+                                      Throwable t) {
+
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "Error: " + t.getMessage(),
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             });
+        });
+
+        btnRegister.setOnClickListener(v -> {
+
+            startActivity(new Intent(
+                    LoginActivity.this,
+                    RegisterActivity.class
+            ));
 
         });
     }

@@ -37,7 +37,7 @@ public class AuthService {
                 .name(request.getName())
                 .phone(request.getPhone())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
-                .role(Role.CLIENT)
+                .role(Role.valueOf(request.getRole()))
                 .build();
 
         userRepository.save(user);

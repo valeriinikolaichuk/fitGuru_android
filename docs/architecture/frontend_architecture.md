@@ -38,6 +38,47 @@ LauncherActivity
 
 ---
 
+### main/
+Entry point after authentication. Acts as the landing screen after login / registration
+- `MainActivity`
+
+#### Responsibilities:
+- Checks user role from session
+- Displays main user interface
+- Loads appropriate data (clients or trainers)
+- Displays results in a ListView
+
+#### Architecture
+
+```
+activity_main.xml
+      ↑
+      │ setContentView()
+      │
+ MainActivity
+      │
+      ├── findViewById() → ListView
+      │
+      ├── SessionManager (token + role)
+      │
+      ├── UserRepository
+      │
+      └── ApiService (Retrofit)
+              │
+              ├── @GET("/trainer/clients")
+              │                 ↓
+              │         TrainerController
+              │         
+              ↓
+        HTTP Response (JSON)
+              ↓
+   List<ClientResponse> (DTO parsing via Gson)
+              ↓
+     MainActivity → Adapter → ListView
+```
+
+---
+
 ### network/
 Responsible for all API communication.
 
@@ -49,7 +90,19 @@ Responsible for all API communication.
 - Defines REST API endpoints using `Retrofit`
 - Handles HTTP requests (login, register etc.)
 - Provides singleton `Retrofit` instance
-- Manages base URL and converters (JSON)
+- Manages base URL and converters (Gson)
+
+---
+
+### repository/
+Acts as an abstraction layer between UI and network.
+
+`UserRepository`
+- fetches clients for trainers
+- fetches trainers for clients
+- hides `Retrofit` implementation from Activities
+
+This ensures a clean separation of concerns and makes the app easier to maintain and scale.
 
 ---
 

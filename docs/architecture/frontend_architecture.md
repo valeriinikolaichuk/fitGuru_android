@@ -38,6 +38,35 @@ LauncherActivity
 
 ---
 
+### network/
+Responsible for all API communication.
+
+#### Includes:
+- `ApiService` 
+- `RetrofitClient`
+
+#### Responsibilities:
+- Defines REST API endpoints using `Retrofit`
+- Handles HTTP requests (login, register etc.)
+- Provides singleton `Retrofit` instance
+- Manages base URL and converters (JSON)
+
+---
+
+### storage/
+Manages local session and persistence.
+
+#### Includes:
+`SessionManager`
+
+#### Responsibilities:
+- Stores authentication token in `SharedPreferences`
+- Retrieves saved token for API requests
+- Clears session on logout
+- Acts as a centralized storage layer for user session data
+
+---
+
 ### auth/
 
 #### Overview

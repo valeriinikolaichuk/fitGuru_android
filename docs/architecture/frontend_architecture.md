@@ -2,21 +2,55 @@
 
 ---
 
+### Launcher (App Entry Point)
+- `LauncherActivity`
+
+#### Responsibilities:
+- Entry point of the application
+- Checks if authentication token exists
+- Redirects user:  
+➜ MainActivity (if token exists)  
+➜ LoginActivity (if not authenticated)
+
+#### Notes
+- Token-based authentication (`JWT`-ready structure)
+- Separation of concerns (auth / network / storage / UI)
+- `Retrofit` for API communication
+- Stores `JWT token` locally using `SessionManager`
+
+#### Architecture
+
+```
+LauncherActivity
+        │
+        ├── sessionManager.getToken
+        |
+        ├── token exists?
+        │
+        ├── YES → MainActivity
+        │
+        └── NO → LoginActivity
+                    │
+                    ├── Login
+                    │
+                    └── RegisterActivity
+```
+
+---
+
 ### auth/
 
 #### Overview
 
-Implements the authentication feature of the FitGuru application.
-It is responsible for user registration, login, and maintaining the authenticated session using a locally stored `JWT token`.
-The module communicates with the backend via REST API using `Retrofit`.
+Handles all authentication-related logic.
 
 #### Includes:
 - LoginActivity
 - RegisterActivity
 - DTOs:  
-LoginRequest  
-LoginResponse  
-RegisterRequest  
+— LoginRequest  
+— LoginResponse  
+— RegisterRequest  
 
 #### Architecture
 
@@ -61,13 +95,7 @@ RegisterActivity
 - If token exists → user is redirected to main screen
 - If not → Login/Register screen is shown
 - After successful login/registration:  
-token is saved locally  
-user is redirected to main screen
-
-#### Notes
-- No business logic is handled in Activities
-- Authentication state is fully client-side via stored `token`
-- Stores `JWT token` locally using `SessionManager`
-- `Retrofit` is used as the single API communication layer
+— token is saved locally  
+— user is redirected to main screen
 
 ---

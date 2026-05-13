@@ -1,7 +1,5 @@
 package com.fitguru.backend.trainer.controller;
 
-import org.springframework.stereotype.Controller;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

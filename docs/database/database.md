@@ -2,6 +2,6 @@
 
 #### ER Diagram
 
-![ER Diagram](fitguru_fitguru_public.png)
+![ER Diagram](fitguru_DB.png)
 
 ---

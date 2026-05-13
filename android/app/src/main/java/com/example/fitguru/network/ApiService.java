@@ -4,6 +4,7 @@ import com.example.fitguru.auth.dto.LoginRequest;
 import com.example.fitguru.auth.dto.LoginResponse;
 import com.example.fitguru.auth.dto.RegisterRequest;
 import com.example.fitguru.trainer.dto.ClientResponse;
+import com.example.fitguru.trainer.dto.TrainerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,6 +23,11 @@ public interface ApiService {
 
     @GET("/trainer/clients")
     Call<List<ClientResponse>> getClients(
+            @Header("Authorization") String token
+    );
+
+    @GET("/client/trainers")
+    Call<List<TrainerResponse>> getTrainers(
             @Header("Authorization") String token
     );
 }

@@ -24,6 +24,14 @@ public class SessionManager {
         return prefs.getString("token", null);
     }
 
+    public void saveRole(String role) {
+        prefs.edit().putString("role", role).apply();
+    }
+
+    public String getRole() {
+        return prefs.getString("role", null);
+    }
+
     public void clear() {
         prefs.edit()
                 .clear()

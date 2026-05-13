@@ -2,62 +2,129 @@
 
 ---
 
-### Auth Feature
+### Launcher (App Entry Point)
+- `LauncherActivity`
 
-#### Overview
+#### Responsibilities:
+- Entry point of the application
+- Checks if authentication token exists
+- Redirects user:  
+➜ MainActivity (if token exists)  
+➜ LoginActivity (if not authenticated)
 
-The Auth Feature currently implements the authentication feature of the FitGuru application.
-It is responsible for user registration, login, and maintaining the authenticated session using a locally stored `JWT token`.
-The module communicates with the backend via REST API using `Retrofit`.
+#### Notes
+- Token-based authentication (`JWT`-ready structure)
+- Separation of concerns (auth / network / storage / UI)
+- `Retrofit` for API communication
+- Stores `JWT token` locally using `SessionManager`
 
 #### Architecture
 
-The Android authentication feature is organized in a feature-based structure:
 ```
-auth/
- ├── LoginActivity
- ├── RegisterActivity
- ├── AuthRepository
- ├── dto/
- │    ├── LoginRequest
- │    ├── RegisterRequest
- │    └── LoginResponse
- ├── network/
- │    ├── ApiService
- │    └── RetrofitClient
- ├── storage/
-      └── SessionManager
+LauncherActivity
+        │
+        ├── sessionManager.getToken
+        |
+        ├── token exists?
+        │
+        ├── YES → MainActivity
+        │
+        └── NO → LoginActivity
+                    │
+                    ├── Login
+                    │
+                    └── RegisterActivity
+```
+
+---
+
+### network/
+Responsible for all API communication.
+
+#### Includes:
+- `ApiService` 
+- `RetrofitClient`
+
+#### Responsibilities:
+- Defines REST API endpoints using `Retrofit`
+- Handles HTTP requests (login, register etc.)
+- Provides singleton `Retrofit` instance
+- Manages base URL and converters (JSON)
+
+---
+
+### storage/
+Manages local session and persistence.
+
+#### Includes:
+`SessionManager`
+
+#### Responsibilities:
+- Stores authentication token in `SharedPreferences`
+- Retrieves saved token for API requests
+- Clears session on logout
+- Acts as a centralized storage layer for user session data
+
+---
+
+### auth/
+
+#### Overview
+
+Handles all authentication-related logic.
+
+#### Includes:
+- LoginActivity
+- RegisterActivity
+- DTOs:  
+— LoginRequest  
+— LoginResponse  
+— RegisterRequest  
+
+#### Architecture
+
+```
+LoginActivity
+        │
+        ├── activity_login.xml
+        │
+        ├── LoginRequest
+        │
+        └── RetrofitClient 
+                └── ApiService @POST("/auth/login") <--> AuthController
+                        |
+                        ├── sessionManager.saveToken
+                        │
+                        └── MainActivity
+
+RegisterActivity
+        │
+        ├── activity_register.xml
+        │
+        ├── RegisterRequest
+        │
+        └── RetrofitClient 
+                └── ApiService @POST("/auth/register") <--> AuthController
+                        |
+                        ├── sessionManager.saveToken
+                        │
+                        └── MainActivity
 ```
 
 #### Responsibilities
-**1. User Interface**  
-- `LoginActivity` handles user login input
-- `RegisterActivity` handles user registration input
-- Displays validation messages and navigation between screens
+- User login via phone and password
+- User registration (CLIENT / TRAINER roles)
+- Communication with backend authentication API
+- Token retrieval after successful login
+- Navigation to main screen after authentication
 
-**2. Network Communication**  
-- Uses `Retrofit` to communicate with backend REST endpoints
-- Sends authentication requests: `POST /auth/register` `POST /auth/login`
-- Interact with `Auth Module`
-
-**3. Session Management**  
-- Stores **JWT token** locally using `SessionManager`
-- Retrieves token on app startup
-- Clears token on logout  
-- Storage mechanism: SharedPreferences  
-
-**4. Authentication Flow**
+**Authentication Flow**
 - User opens the app
 - App checks if JWT token exists
 - If token exists → user is redirected to main screen
 - If not → Login/Register screen is shown
-- After successful login:  
-token is saved locally  
-user is redirected to main screen
-
-#### Notes
-- No business logic is handled in Activities
-- Authentication state is fully client-side via stored token
-- Retrofit is used as the single API communication layer
+- After successful login/registration:  
+— token is saved locally  
+— user is redirected to main screen
 
 ---

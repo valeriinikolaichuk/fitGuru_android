@@ -2,62 +2,72 @@
 
 ---
 
-### Auth Feature
+### auth/
 
 #### Overview
 
-The Auth Feature currently implements the authentication feature of the FitGuru application.
+Implements the authentication feature of the FitGuru application.
 It is responsible for user registration, login, and maintaining the authenticated session using a locally stored `JWT token`.
 The module communicates with the backend via REST API using `Retrofit`.
 
+#### Includes:
+- LoginActivity
+- RegisterActivity
+- DTOs:  
+LoginRequest  
+LoginResponse  
+RegisterRequest  
+
 #### Architecture
 
-The Android authentication feature is organized in a feature-based structure:
 ```
-auth/
- ├── LoginActivity
- ├── RegisterActivity
- ├── AuthRepository
- ├── dto/
- │    ├── LoginRequest
- │    ├── RegisterRequest
- │    └── LoginResponse
- ├── network/
- │    ├── ApiService
- │    └── RetrofitClient
- ├── storage/
-      └── SessionManager
+LoginActivity
+        │
+        ├── activity_login.xml
+        │
+        ├── LoginRequest
+        │
+        └── RetrofitClient 
+                └── ApiService @POST("/auth/login") <--> AuthController
+                        |
+                        ├── sessionManager.saveToken
+                        │
+                        └── MainActivity
+
+RegisterActivity
+        │
+        ├── activity_register.xml
+        │
+        ├── RegisterRequest
+        │
+        └── RetrofitClient 
+                └── ApiService @POST("/auth/register") <--> AuthController
+                        |
+                        ├── sessionManager.saveToken
+                        │
+                        └── MainActivity
 ```
 
 #### Responsibilities
-**1. User Interface**  
-- `LoginActivity` handles user login input
-- `RegisterActivity` handles user registration input
-- Displays validation messages and navigation between screens
+- User login via phone and password
+- User registration (CLIENT / TRAINER roles)
+- Communication with backend authentication API
+- Token retrieval after successful login
+- Navigation to main screen after authentication
 
-**2. Network Communication**  
-- Uses `Retrofit` to communicate with backend REST endpoints
-- Sends authentication requests: `POST /auth/register` `POST /auth/login`
-- Interact with `Auth Module`
-
-**3. Session Management**  
-- Stores **JWT token** locally using `SessionManager`
-- Retrieves token on app startup
-- Clears token on logout  
-- Storage mechanism: SharedPreferences  
-
-**4. Authentication Flow**
+**Authentication Flow**
 - User opens the app
 - App checks if JWT token exists
 - If token exists → user is redirected to main screen
 - If not → Login/Register screen is shown
-- After successful login:  
+- After successful login/registration:  
 token is saved locally  
 user is redirected to main screen
 
 #### Notes
 - No business logic is handled in Activities
-- Authentication state is fully client-side via stored token
-- Retrofit is used as the single API communication layer
+- Authentication state is fully client-side via stored `token`
+- Stores `JWT token` locally using `SessionManager`
+- `Retrofit` is used as the single API communication layer
 
 ---

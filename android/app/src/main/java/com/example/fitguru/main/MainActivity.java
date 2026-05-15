@@ -1,15 +1,19 @@
 package com.example.fitguru.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitguru.R;
 
+import com.example.fitguru.adapters.UserAdapter;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
+import com.example.fitguru.program.ProgramsActivity;
 import com.example.fitguru.storage.SessionManager;
 import com.example.fitguru.trainer.dto.ClientResponse;
 import com.example.fitguru.trainer.dto.TrainerResponse;
@@ -25,9 +29,10 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     ApiService api;
-UserRepository repository;
+    UserRepository repository;
     ListView listView;
     SessionManager sessionManager;
+    Button btnRequests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +42,38 @@ UserRepository repository;
 
         api = RetrofitClient.getInstance().create(ApiService.class);
         repository = new UserRepository(api);
-
         sessionManager = new SessionManager(this);
-
         listView = findViewById(R.id.listClients);
+        btnRequests = findViewById(R.id.btnRequests);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+
+            Object item = parent.getItemAtPosition(position);
+
+            Intent intent = new Intent(MainActivity.this, ProgramsActivity.class);
+
+            if (item instanceof ClientResponse) {
+                intent.putExtra("userId", ((ClientResponse) item).id);
+            } else if (item instanceof TrainerResponse) {
+                intent.putExtra("userId", ((TrainerResponse) item).id);
+            }
+
+            startActivity(intent);
+        });
 
         String role = sessionManager.getRole();
 
         if (role.equals("TRAINER")) {
+
+            btnRequests.setVisibility(View.VISIBLE);
+
+            btnRequests.setOnClickListener(v -> {
+                startActivity(
+                        new Intent(MainActivity.this,
+                                RequestsActivity.class)
+                );
+            });
+
             loadClients();
         } else {
             loadTrainers();
@@ -71,13 +100,14 @@ UserRepository repository;
                                 names.add(c.name + " (" + c.phone + ")");
                             }
 
-                            listView.setAdapter(
-                                    new ArrayAdapter<>(
-                                            MainActivity.this,
-                                            android.R.layout.simple_list_item_1,
-                                            names
-                                    )
-                            );
+                            List<Object> items = new ArrayList<>();
+
+                            for (ClientResponse c : response.body()) {
+                                items.add(c);
+                            }
+
+                            UserAdapter adapter = new UserAdapter(MainActivity.this, items);
+                            listView.setAdapter(adapter);
                         }
                     }
 
@@ -111,13 +141,14 @@ UserRepository repository;
                                 names.add(t.name);
                             }
 
-                            listView.setAdapter(
-                                    new ArrayAdapter<>(
-                                            MainActivity.this,
-                                            android.R.layout.simple_list_item_1,
-                                            names
-                                    )
-                            );
+                            List<Object> items = new ArrayList<>();
+
+                            for (TrainerResponse c : response.body()) {
+                                items.add(c);
+                            }
+
+                            UserAdapter adapter = new UserAdapter(MainActivity.this, items);
+                            listView.setAdapter(adapter);
                         }
                     }
 

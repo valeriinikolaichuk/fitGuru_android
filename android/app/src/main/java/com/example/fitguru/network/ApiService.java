@@ -3,6 +3,7 @@ package com.example.fitguru.network;
 import com.example.fitguru.auth.dto.LoginRequest;
 import com.example.fitguru.auth.dto.LoginResponse;
 import com.example.fitguru.auth.dto.RegisterRequest;
+import com.example.fitguru.main.dto.TrainingRequestResponse;
 import com.example.fitguru.trainer.dto.ClientResponse;
 import com.example.fitguru.trainer.dto.TrainerResponse;
 
@@ -12,6 +13,8 @@ import retrofit2.http.POST;
 
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Path;
+
 import java.util.List;
 
 public interface ApiService {
@@ -29,5 +32,22 @@ public interface ApiService {
     @GET("/client/trainers")
     Call<List<TrainerResponse>> getTrainers(
             @Header("Authorization") String token
+    );
+
+    @GET("/trainer/requests")
+    Call<List<TrainingRequestResponse>> getRequests(
+            @Header("Authorization") String token
+    );
+
+    @POST("/trainer/requests/{id}/accept")
+    Call<Void> acceptRequest(
+            @Header("Authorization") String token,
+            @Path("id") Long requestId
+    );
+
+    @POST("/trainer/requests/{id}/reject")
+    Call<Void> rejectRequest(
+            @Header("Authorization") String token,
+            @Path("id") Long requestId
     );
 }

@@ -1,5 +1,6 @@
 package com.example.fitguru.repository;
 
+import com.example.fitguru.main.dto.TrainingRequestResponse;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.trainer.dto.ClientResponse;
 import com.example.fitguru.trainer.dto.TrainerResponse;
@@ -30,5 +31,33 @@ public class UserRepository {
     ) {
 
         api.getTrainers(token).enqueue(callback);
+    }
+
+    public void getRequests(
+            String token,
+            Callback<List<TrainingRequestResponse>> callback
+    ) {
+
+        api.getRequests(token).enqueue(callback);
+    }
+
+    public void acceptRequest(
+            String token,
+            Long requestId,
+            Callback<Void> callback
+    ) {
+
+        api.acceptRequest(token, requestId)
+                .enqueue(callback);
+    }
+
+    public void rejectRequest(
+            String token,
+            Long requestId,
+            Callback<Void> callback
+    ) {
+
+        api.rejectRequest(token, requestId)
+                .enqueue(callback);
     }
 }

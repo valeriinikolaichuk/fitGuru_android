@@ -46,7 +46,23 @@ Entry point after authentication. Acts as the landing screen after login / regis
 - Checks user role from session
 - Displays main user interface
 - Loads appropriate data (clients or trainers)
-- Displays results in a ListView
+- Displays results in a `ListView`
+- Opens `ProgramsActivity`
+- Opens `RequestsActivity` for trainers
+
+#### Trainer Flow
+Trainer sees:
+- Accepted clients
+- "Entries" button
+
+The requests screen allows:
+- viewing incoming training requests
+- accepting requests
+- rejecting requests
+
+#### Client Flow
+Client sees:
+- Accepted trainers only
 
 #### Architecture
 
@@ -57,17 +73,25 @@ activity_main.xml
       │
  MainActivity
       │
-      ├── findViewById() → ListView
+      ├── findViewById()
+      │       ├── ListView
+      │       └── Requests Button
       │
-      ├── SessionManager (token + role)
+      ├── SessionManager
+      │       ├── token
+      │       └── role
       │
       ├── UserRepository
       │
       └── ApiService (Retrofit)
               │
-              ├── @GET("/trainer/clients")
-              │                 ↓
-              │         TrainerController
+              ├── GET /trainer/clients -----------------> TrainerController
+              ├── GET /client/trainers
+              ├── GET /trainer/requests
+              ├── POST /trainer/requests/{id}/accept
+              ├── POST /trainer/requests/{id}/reject
+              │                 
+              │         
               │         
               ↓
         HTTP Response (JSON)

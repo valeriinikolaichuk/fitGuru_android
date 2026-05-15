@@ -46,7 +46,23 @@ Entry point after authentication. Acts as the landing screen after login / regis
 - Checks user role from session
 - Displays main user interface
 - Loads appropriate data (clients or trainers)
-- Displays results in a ListView
+- Displays results in a `ListView`
+- Opens `ProgramsActivity`
+- Opens `RequestsActivity` for trainers
+
+#### Trainer Flow
+Trainer sees:
+- Accepted clients
+- "Entries" button
+
+The requests screen allows:
+- viewing incoming training requests
+- accepting requests
+- rejecting requests
+
+#### Client Flow
+Client sees:
+- Accepted trainers only
 
 #### Architecture
 
@@ -57,17 +73,25 @@ activity_main.xml
       │
  MainActivity
       │
-      ├── findViewById() → ListView
+      ├── findViewById()
+      │       ├── ListView
+      │       └── Requests Button
       │
-      ├── SessionManager (token + role)
+      ├── SessionManager
+      │       ├── token
+      │       └── role
       │
       ├── UserRepository
       │
       └── ApiService (Retrofit)
               │
-              ├── @GET("/trainer/clients")
-              │                 ↓
-              │         TrainerController
+              ├── GET /trainer/clients -----------------> TrainerController
+              ├── GET /client/trainers
+              ├── GET /trainer/requests
+              ├── POST /trainer/requests/{id}/accept
+              ├── POST /trainer/requests/{id}/reject
+              │                 
+              │         
               │         
               ↓
         HTTP Response (JSON)
@@ -76,6 +100,57 @@ activity_main.xml
               ↓
      MainActivity → Adapter → ListView
 ```
+
+`RequestsActivity`  
+Screen used by trainers to manage incoming training requests.
+
+#### Responsibilities
+Loads pending training requests
+Displays request list
+Allows accepting requests
+Allows rejecting requests
+Updates UI after request action
+
+#### RequestsActivity Architecture
+```
+activity_requests.xml
+        ↑
+        │ setContentView()
+        │
+ RequestsActivity
+        │
+        ├── ListView
+        │
+        ├── UserRepository
+        │
+        ├── SessionManager
+        │
+        └── ApiService
+                │
+                ├── GET /trainer/requests
+                ├── POST /trainer/requests/{id}/accept
+                └── POST /trainer/requests/{id}/reject
+```
+                
+---
+
+### adapters/
+
+#### `UserAdapter`  
+#### Used for:
+- trainer clients
+- client trainers
+#### Layout: 
+`item_user.xml`  
+  
+#### `RequestAdapter`
+#### Used for:
+- incoming training requests
+#### Layout:
+`item_request.xml`  
+#### Handles:
+- request acceptance
+- request rejection
 
 ---
 

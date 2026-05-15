@@ -101,6 +101,37 @@ activity_main.xml
      MainActivity → Adapter → ListView
 ```
 
+`RequestsActivity`  
+Screen used by trainers to manage incoming training requests.
+
+#### Responsibilities
+Loads pending training requests
+Displays request list
+Allows accepting requests
+Allows rejecting requests
+Updates UI after request action
+
+#### RequestsActivity Architecture
+```
+activity_requests.xml
+        ↑
+        │ setContentView()
+        │
+ RequestsActivity
+        │
+        ├── ListView
+        │
+        ├── UserRepository
+        │
+        ├── SessionManager
+        │
+        └── ApiService
+                │
+                ├── GET /trainer/requests
+                ├── POST /trainer/requests/{id}/accept
+                └── POST /trainer/requests/{id}/reject
+```
+                
 ---
 
 ### network/

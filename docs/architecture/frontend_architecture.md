@@ -134,6 +134,26 @@ activity_requests.xml
                 
 ---
 
+### adapters/
+
+#### `UserAdapter`  
+#### Used for:
+- trainer clients
+- client trainers
+#### Layout: 
+`item_user.xml`  
+  
+#### `RequestAdapter`
+#### Used for:
+- incoming training requests
+#### Layout:
+`item_request.xml`  
+#### Handles:
+- request acceptance
+- request rejection
+
+---
+
 ### network/
 Responsible for all API communication.
 

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fitguru.backend.trainer.entity.TrainerClient;
+import com.fitguru.backend.trainer.entity.TrainingRequest;
 import com.fitguru.backend.user.entity.enums.Role;
 
 @Entity
@@ -49,6 +50,12 @@ public class User {
 
     @OneToMany(mappedBy = "client")
     private List<TrainerClient> trainers;
+
+    @OneToMany(mappedBy = "trainer")
+    private List<TrainingRequest> receivedRequests;
+
+    @OneToMany(mappedBy = "client")
+    private List<TrainingRequest> sentRequests;
 
     @PrePersist
     protected void onCreate() {

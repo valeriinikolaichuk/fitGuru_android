@@ -6,8 +6,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fitguru.backend.request.entity.TrainingRequest;
 import com.fitguru.backend.trainer.entity.TrainerClient;
-import com.fitguru.backend.trainer.entity.TrainingRequest;
 import com.fitguru.backend.user.entity.enums.Role;
 
 @Entity

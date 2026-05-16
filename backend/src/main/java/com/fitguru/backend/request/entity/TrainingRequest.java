@@ -1,12 +1,12 @@
-package com.fitguru.backend.trainer.entity;
+package com.fitguru.backend.request.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
+import com.fitguru.backend.request.entity.enums.RequestStatus;
 import com.fitguru.backend.user.entity.User;
-import com.fitguru.backend.trainer.entity.enums.RequestStatus;
 
 @Entity
 @Table(name = "training_requests")

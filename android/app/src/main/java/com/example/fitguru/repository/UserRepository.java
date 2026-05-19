@@ -60,4 +60,14 @@ public class UserRepository {
         api.rejectRequest(token, requestId)
                 .enqueue(callback);
     }
+
+    public void sendRequest(
+            String token,
+            Long trainerId,
+            Callback<Void> callback
+    ) {
+
+        api.sendRequest(token, trainerId)
+                .enqueue(callback);
+    }
 }

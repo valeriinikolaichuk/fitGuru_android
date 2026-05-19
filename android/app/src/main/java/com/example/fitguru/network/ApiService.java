@@ -50,4 +50,10 @@ public interface ApiService {
             @Header("Authorization") String token,
             @Path("id") Long requestId
     );
+
+    @POST("requests/{trainerId}")
+    Call<Void> sendRequest(
+            @Header("Authorization") String token,
+            @Path("trainerId") Long trainerId
+    );
 }

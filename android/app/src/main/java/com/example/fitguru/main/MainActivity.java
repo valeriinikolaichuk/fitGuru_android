@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 //import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     SessionManager sessionManager;
     Button btnRequests;
+    Button btnFindTrainers;
     Button btnLogout;
 
     @Override
@@ -48,21 +50,33 @@ public class MainActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         listView = findViewById(R.id.listClients);
         btnRequests = findViewById(R.id.btnRequests);
+        btnFindTrainers = findViewById(R.id.btnFindTrainers);
         btnLogout = findViewById(R.id.btnLogout);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> {
+        listView.setOnItemClickListener((
+                parent,
+                view,
+                position,
+                id) -> {
 
             Object item = parent.getItemAtPosition(position);
+            String role = sessionManager.getRole();
 
-            Intent intent = new Intent(MainActivity.this, ProgramsActivity.class);
+            if ("CLIENT".equals(role) && item instanceof TrainerResponse) {
+                TrainerResponse trainer = (TrainerResponse) item;
+                sendRequest(trainer.id);
 
-            if (item instanceof ClientResponse) {
-                intent.putExtra("userId", ((ClientResponse) item).id);
-            } else if (item instanceof TrainerResponse) {
-                intent.putExtra("userId", ((TrainerResponse) item).id);
+            } else {
+                Intent intent = new Intent(MainActivity.this, ProgramsActivity.class);
+
+                if (item instanceof ClientResponse) {
+                    intent.putExtra("userId", ((ClientResponse) item).id);
+                } else if (item instanceof TrainerResponse) {
+                    intent.putExtra("userId", ((TrainerResponse) item).id);
+                }
+
+                startActivity(intent);
             }
-
-            startActivity(intent);
         });
 
         String role = sessionManager.getRole();
@@ -97,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
 
             loadClients();
         } else {
+            btnFindTrainers.setVisibility(View.VISIBLE);
+
+            btnFindTrainers.setOnClickListener(v -> {
+                startActivity(new Intent(
+                        MainActivity.this,
+                        TrainersListActivity.class
+                ));
+            });
+
             loadTrainers();
         }
     }
@@ -179,6 +202,46 @@ public class MainActivity extends AppCompatActivity {
                             Throwable t
                     ) {
 
+                    }
+                });
+    }
+
+    private void sendRequest(Long trainerId) {
+
+        String token = sessionManager.getToken();
+
+        repository.sendRequest(
+                "Bearer " + token,
+                trainerId,
+                new Callback<Void>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<Void> call,
+                            Response<Void> response
+                    ) {
+
+                        if (response.isSuccessful()) {
+
+                            Toast.makeText(
+                                    MainActivity.this,
+                                    "Request sent",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<Void> call,
+                            Throwable t
+                    ) {
+
+                        Toast.makeText(
+                                MainActivity.this,
+                                "Error",
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
     }

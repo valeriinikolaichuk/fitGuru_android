@@ -56,18 +56,19 @@ Responsible for:
 - Supporting authentication validation logic
 
 **4. Data Layer**
-- UserRepository handles database operations using Spring Data JPA
-- User entity represents application users
-- TrainerClient represents relationships between trainers and clients
-- Role defines user types (`TRAINER` / `CLIENT`)
+- `UserRepository` handles database operations using Spring Data JPA
+- `User` entity represents application users
+- `TrainerClient` represents relationships between trainers and clients
+- `Role` defines user types (`TRAINER` / `CLIENT`)
 
 #### Authentication Flow
 **1.** Client sends login request (phone + password)  
 **2.** Backend validates credentials  
 **3.** If valid:
 - JWT token is generated
-- token is returned to client  
-**4** Client uses token for authorized requests
+- token is returned to client
+
+**4.** Client uses token for authorized requests
 
 #### Security Model
 - Passwords are stored as hashed values

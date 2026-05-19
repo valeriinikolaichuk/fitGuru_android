@@ -13,6 +13,13 @@
 - Track exercise progress
 - Custom and standard exercise database
 
+---
+
+## Demo Access
+➡ [Demo Access](docs/demo_access.md)
+
+---
+
 ## Architecture
 
 The project is built as a full-stack system:

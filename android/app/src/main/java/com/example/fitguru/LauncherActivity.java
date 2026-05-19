@@ -2,6 +2,7 @@ package com.example.fitguru;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +19,10 @@ public class LauncherActivity extends AppCompatActivity {
         SessionManager sessionManager =
                 new SessionManager(this);
 
+//        sessionManager.clear();
+
         String token = sessionManager.getToken();
+        Log.d("TOKEN", "token = " + token);
 
         if (token != null && !token.isEmpty()) {
             startActivity(new Intent(this, MainActivity.class));

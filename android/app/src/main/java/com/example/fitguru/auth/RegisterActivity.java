@@ -74,12 +74,13 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (response.isSuccessful()) {
 
-                        String token = response.body().token;
+                        String token = response.body().getToken();
 
                         SessionManager sessionManager =
                                 new SessionManager(RegisterActivity.this);
 
                         sessionManager.saveToken(token);
+                        sessionManager.saveRole(response.body().getRole());
 
                         startActivity(
                                 new Intent(
@@ -106,5 +107,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         });
+
+        Button btnBack = findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(v -> finish());
     }
 }

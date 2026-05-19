@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+//import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitguru.R;
 
 import com.example.fitguru.adapters.UserAdapter;
+import com.example.fitguru.auth.LoginActivity;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
 import com.example.fitguru.program.ProgramsActivity;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     SessionManager sessionManager;
     Button btnRequests;
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         listView = findViewById(R.id.listClients);
         btnRequests = findViewById(R.id.btnRequests);
+        btnLogout = findViewById(R.id.btnLogout);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
 
@@ -63,7 +67,22 @@ public class MainActivity extends AppCompatActivity {
 
         String role = sessionManager.getRole();
 
-        if (role.equals("TRAINER")) {
+        btnLogout.setOnClickListener(v -> {
+
+            SessionManager sessionManager =
+                    new SessionManager(MainActivity.this);
+
+            sessionManager.clear();
+
+            startActivity(new Intent(
+                    MainActivity.this,
+                    LoginActivity.class
+            ));
+
+            finish();
+        });
+
+        if ("TRAINER".equals(role)) {
 
             btnRequests.setVisibility(View.VISIBLE);
 
@@ -73,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                                 RequestsActivity.class)
                 );
             });
+
+//          Toast.makeText(this, "CLICKED", Toast.LENGTH_SHORT).show();
 
             loadClients();
         } else {

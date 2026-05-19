@@ -6,6 +6,7 @@
 
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -15,14 +16,17 @@
         android:theme="@style/Theme.FitGuru">
 
         <activity
-            android:name=".auth.LoginActivity"
+            android:name=".auth.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".auth.RegisterActivity"
+            android:name=".auth.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".main.MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".main.RequestsActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".LauncherActivity"

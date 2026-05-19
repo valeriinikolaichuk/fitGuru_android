@@ -27,20 +27,29 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public void register(RegisterRequest request) {
+    public LoginResponse register(RegisterRequest request) {
 
         if (userRepository.existsByPhone(request.getPhone())) {
             throw new RuntimeException("User already exists");
         }
 
         User user = User.builder()
-                .name(request.getName())
-                .phone(request.getPhone())
-                .passwordHash(passwordEncoder.encode(request.getPassword()))
-                .role(Role.valueOf(request.getRole()))
-                .build();
+            .name(request.getName())
+            .phone(request.getPhone())
+            .passwordHash(
+                    passwordEncoder.encode(request.getPassword())
+            )
+            .role(Role.valueOf(request.getRole()))
+            .build();
 
         userRepository.save(user);
+
+        String token = jwtService.generateToken(user);
+
+        return new LoginResponse(
+                token,
+                user.getRole().name()
+        );
     }
 
     public LoginResponse login(LoginRequest request) {
@@ -57,6 +66,6 @@ public class AuthService {
 
         String token = jwtService.generateToken(user);
 
-        return new LoginResponse(token);
+        return new LoginResponse(token, user.getRole().name());
     }
 }

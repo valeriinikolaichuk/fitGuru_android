@@ -46,10 +46,12 @@ Handles all authentication-related logic.
 #### Includes:
 - LoginActivity
 - RegisterActivity
+- AuthInterceptor
 - DTOs:  
 — LoginRequest  
 — LoginResponse  
 — RegisterRequest  
+— RefreshRequest 
 
 #### Architecture
 
@@ -87,6 +89,17 @@ RegisterActivity
 - Communication with backend authentication API
 - Token retrieval after successful login
 - Navigation to main screen after authentication
+
+#### JWT Authentication System
+The application uses a dual-token authentication architecture:   
+- User enters credentials  
+- Server returns:  
+— accessToken  
+— refreshToken  
+— role   
+- `Automatically` adds JWT token to every request
+- Tokens are saved in `SessionManager`
+- User is redirected to `MainActivity`
 
 **Authentication Flow**
 - User opens the app

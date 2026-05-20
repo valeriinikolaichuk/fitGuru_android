@@ -106,6 +106,15 @@ The application uses a dual-token authentication architecture:
 - `Automatically` adds JWT token to every request
 - Tokens are saved in `SessionManager`
 - User is redirected to `MainActivity`
+```
+Login → Access Token + Refresh Token
+  ↓
+API requests (Access Token)
+  ↓
+If 401 → Refresh Token used
+  ↓
+New Access Token generated
+```
 
 **Authentication Flow**
 - User opens the app

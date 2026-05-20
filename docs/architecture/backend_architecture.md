@@ -83,3 +83,43 @@ Responsible for:
 - Follows separation of concerns (Controller → Service → Repository)
 
 ---
+
+### Trainer–Client Relationship Modules
+#### Architecture
+```
+├── trainer/
+│     ├── controller/
+│     │     └── TrainerController
+│     ├── service/
+│     │     └── TrainerService
+│     ├── dto/
+│     |      └── ClientResponse
+|     ├── entity/
+│     |      └── TrainerClient
+│     └── repository/
+│            └── TrainerClientRepository
+│
+├── client/
+│     ├── controller/
+│     │     └── ClientController
+│     ├── service/
+│     │     └── ClientService
+│     └── dto/
+│           └── TrainerResponse
+|
+└── user/
+      └── entity/
+            ├── User
+            └── enums/
+                  └── Role
+```
+
+### Trainer Module
+
+
+---
+
+### Client Module
+
+
+---

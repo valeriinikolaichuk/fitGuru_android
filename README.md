@@ -31,6 +31,14 @@ The project is built as a full-stack system:
 
 ---
 
+## Authentication Flow
+
+The app uses a dual-token system:
+- **Access Token** → short-lived (2 hours)
+- **Refresh Token** → long-lived (45 days)
+
+---
+
 ## Setup and Run Instructions
 ➡ [How to run the project](docs/setup.md)
 

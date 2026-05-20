@@ -1,5 +1,11 @@
 ## Components (Android)
 
+### Tech Stack
+- Java
+- Retrofit 2
+- OkHttp
+- SharedPreferences (`SessionManager`)
+
 ---
 
 ### Launcher (App Entry Point)

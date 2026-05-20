@@ -40,7 +40,8 @@
 **1. Authentication API**   
 Provides REST endpoints:
 - `POST /auth/register` Registers a new user in the system
-- `POST /auth/login` Authenticates user credentials and returns JWT token
+- `POST /auth/login` Authenticates user credentials and returns JWT access token
+- `POST /auth/refresh` When access token expires server issues new tokens
  
 **2. Business Logic (AuthService)**
 - Validates user input

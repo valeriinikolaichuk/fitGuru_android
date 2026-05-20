@@ -23,7 +23,7 @@ public class TrainerController {
     }
 }
 
-//GET /trainer/clients
+
 //GET /trainer/requests
 //POST /trainer/requests/{id}/accept
 //POST /trainer/requests/{id}/reject

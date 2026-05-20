@@ -9,6 +9,8 @@ import com.fitguru.backend.user.entity.User;
 public interface TrainerClientRepository extends JpaRepository<TrainerClient, Long> 
 {
     List<TrainerClient> findByTrainer(User trainer);
+    
+    List<TrainerClient> findByClient(User client);
 }
 
 

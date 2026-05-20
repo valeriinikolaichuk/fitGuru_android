@@ -1,6 +1,9 @@
 package com.fitguru.backend.auth.service;
 
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fitguru.backend.user.repository.UserRepository;
@@ -64,6 +67,9 @@ public class AuthService {
         )) {
             throw new RuntimeException("Wrong password");
         }
+
+        user.setLastLogin(LocalDateTime.now());
+        userRepository.save(user);
 
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);

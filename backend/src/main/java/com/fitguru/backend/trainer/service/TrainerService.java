@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fitguru.backend.auth.service.JwtService;
 import com.fitguru.backend.trainer.dto.ClientResponse;
@@ -22,10 +21,12 @@ public class TrainerService {
 
     public List<ClientResponse> getClients(String token) {
 
-        String phone = jwtService.extractPhone(token.replace("Bearer ", ""));
+        String phone = jwtService.extractPhone(
+            token.replace("Bearer ", "")
+        );
 
         User trainer = userRepository.findByPhone(phone)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         return repository.findByTrainer(trainer)
                 .stream()
@@ -34,6 +35,6 @@ public class TrainerService {
                         tc.getClient().getName(),
                         tc.getClient().getPhone()
                 ))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

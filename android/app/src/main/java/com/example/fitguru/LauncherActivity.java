@@ -21,7 +21,7 @@ public class LauncherActivity extends AppCompatActivity {
 
 //        sessionManager.clear();
 
-        String token = sessionManager.getToken();
+        String token = sessionManager.getAccessToken();
         Log.d("TOKEN", "token = " + token);
 
         if (token != null && !token.isEmpty()) {

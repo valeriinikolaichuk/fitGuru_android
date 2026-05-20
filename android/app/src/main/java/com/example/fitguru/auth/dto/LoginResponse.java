@@ -2,11 +2,26 @@ package com.example.fitguru.auth.dto;
 
 public class LoginResponse {
 
-    public String token;
+    private String accessToken;
+    private String refreshToken;
     public String role;
 
-    public String getToken() {
-        return token;
+    public LoginResponse(
+            String accessToken,
+            String refreshToken,
+            String role
+    ) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        this.role = role;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     public String getRole() {

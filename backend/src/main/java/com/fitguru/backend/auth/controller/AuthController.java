@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fitguru.backend.auth.dto.LoginRequest;
 import com.fitguru.backend.auth.dto.LoginResponse;
+import com.fitguru.backend.auth.dto.RefreshRequest;
 import com.fitguru.backend.auth.dto.RegisterRequest;
 import com.fitguru.backend.auth.service.AuthService;
 
@@ -28,5 +29,12 @@ public class AuthController {
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
         return authService.login(request);
+    }
+
+    @PostMapping("/refresh")
+    public LoginResponse refresh(
+            @RequestBody RefreshRequest request
+    ) {
+        return authService.refresh(request);
     }
 }

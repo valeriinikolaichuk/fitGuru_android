@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     RadioGroup rgRole;
     Button btnRegister;
-
+    SessionManager sessionManager;
     ApiService api;
 
     @Override
@@ -35,7 +35,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        api = RetrofitClient.getInstance().create(ApiService.class);
+        sessionManager =
+                new SessionManager(this);
+
+        api = RetrofitClient
+                .getInstance(sessionManager)
+                .create(ApiService.class);
 
         etName = findViewById(R.id.etName);
         etPhone = findViewById(R.id.etPhone);
@@ -74,12 +79,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (response.isSuccessful()) {
 
-                        String token = response.body().getToken();
+                        String token = response.body().getAccessToken();
 
                         SessionManager sessionManager =
                                 new SessionManager(RegisterActivity.this);
 
-                        sessionManager.saveToken(token);
+                        sessionManager.saveAccessToken(token);
                         sessionManager.saveRole(response.body().getRole());
 
                         startActivity(

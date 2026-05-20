@@ -33,9 +33,14 @@ public class RequestsActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listRequests);
 
-        api = RetrofitClient.getInstance().create(ApiService.class);
+        SessionManager sessionManager =
+                new SessionManager(this);
+
+        api = RetrofitClient
+                .getInstance(sessionManager)
+                .create(ApiService.class);
+
         repository = new UserRepository(api);
-        sessionManager = new SessionManager(this);
 
         loadRequests();
     }
@@ -43,7 +48,7 @@ public class RequestsActivity extends AppCompatActivity {
     private void loadRequests() {
 
         repository.getRequests(
-                "Bearer " + sessionManager.getToken(),
+                "Bearer " + sessionManager.getAccessToken(),
                 new Callback<List<TrainingRequestResponse>>() {
 
                     @Override

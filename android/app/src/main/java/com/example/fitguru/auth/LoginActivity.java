@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etPhone, etPassword;
     Button btnLogin;
     Button btnRegister;
-
+    SessionManager sessionManager;
     ApiService api;
 
     @Override
@@ -33,7 +33,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        api = RetrofitClient.getInstance().create(ApiService.class);
+        sessionManager =
+                new SessionManager(this);
+
+        api = RetrofitClient
+                .getInstance(sessionManager)
+                .create(ApiService.class);
 
         etPhone = findViewById(R.id.etPhone);
         etPassword = findViewById(R.id.etPassword);
@@ -67,9 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (response.isSuccessful()) {
 
-                        LoginResponse body = response.body();
-
-                        if (body == null || body.token == null) {
+                        if (response.body() == null ||
+                                response.body().getAccessToken() == null) {
 
                             Toast.makeText(
                                     LoginActivity.this,
@@ -80,13 +84,22 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
-                        String token = body.token;
+                        String accessToken =
+                                response.body().getAccessToken();
+
+                        String refreshToken =
+                                response.body().getRefreshToken();
 
                         SessionManager sessionManager =
                                 new SessionManager(LoginActivity.this);
 
-                        sessionManager.saveToken(token);
-                        sessionManager.saveRole(response.body().getRole());
+                        sessionManager.saveAccessToken(accessToken);
+
+                        sessionManager.saveRefreshToken(refreshToken);
+
+                        sessionManager.saveRole(
+                                response.body().getRole()
+                        );
 
                         Toast.makeText(
                                 LoginActivity.this,

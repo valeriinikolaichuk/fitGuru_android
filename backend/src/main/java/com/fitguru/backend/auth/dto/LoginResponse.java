@@ -4,16 +4,24 @@ import lombok.Data;
 
 @Data
 public class LoginResponse {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
     public String role;
 
-    public LoginResponse(String token, String role) {
-        this.token = token;
+    public LoginResponse(
+        String accessToken, String refreshToken, String role
+    ) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.role = role;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     public String getRole() {

@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fitguru.R;
 
 import com.example.fitguru.adapters.UserAdapter;
-import com.example.fitguru.auth.LoginActivity;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
 import com.example.fitguru.program.ProgramsActivity;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     SessionManager sessionManager;
     Button btnRequests;
     Button btnFindTrainers;
-    Button btnLogout;
+    Button btnCloseApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +44,18 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        api = RetrofitClient.getInstance().create(ApiService.class);
+        sessionManager =
+                new SessionManager(this);
+
+        api = RetrofitClient
+                .getInstance(sessionManager)
+                .create(ApiService.class);
+
         repository = new UserRepository(api);
-        sessionManager = new SessionManager(this);
         listView = findViewById(R.id.listClients);
         btnRequests = findViewById(R.id.btnRequests);
         btnFindTrainers = findViewById(R.id.btnFindTrainers);
-        btnLogout = findViewById(R.id.btnLogout);
+        btnCloseApp = findViewById(R.id.btnCloseApp);
 
         listView.setOnItemClickListener((
                 parent,
@@ -81,19 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         String role = sessionManager.getRole();
 
-        btnLogout.setOnClickListener(v -> {
-
-            SessionManager sessionManager =
-                    new SessionManager(MainActivity.this);
-
-            sessionManager.clear();
-
-            startActivity(new Intent(
-                    MainActivity.this,
-                    LoginActivity.class
-            ));
-
-            finish();
+        btnCloseApp.setOnClickListener(v -> {
+            finishAffinity();
         });
 
         if ("TRAINER".equals(role)) {
@@ -126,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadClients() {
 
-        String token = sessionManager.getToken();
+        String token = sessionManager.getAccessToken();
 
         repository.getClients(
                 "Bearer " + token,
@@ -164,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadTrainers() {
 
-        String token = sessionManager.getToken();
+        String token = sessionManager.getAccessToken();
 
         repository.getTrainers(
                 "Bearer " + token,
@@ -208,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendRequest(Long trainerId) {
 
-        String token = sessionManager.getToken();
+        String token = sessionManager.getAccessToken();
 
         repository.sendRequest(
                 "Bearer " + token,

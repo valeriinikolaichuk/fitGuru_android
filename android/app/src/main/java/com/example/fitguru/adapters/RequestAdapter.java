@@ -67,7 +67,7 @@ public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
         btnAccept.setOnClickListener(v -> {
 
             repository.acceptRequest(
-                    "Bearer " + sessionManager.getToken(),
+                    "Bearer " + sessionManager.getAccessToken(),
                     request.id,
                     new Callback<Void>() {
 
@@ -98,7 +98,7 @@ public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
         btnReject.setOnClickListener(v -> {
 
             repository.rejectRequest(
-                    "Bearer " + sessionManager.getToken(),
+                    "Bearer " + sessionManager.getAccessToken(),
                     request.id,
                     new Callback<Void>() {
 

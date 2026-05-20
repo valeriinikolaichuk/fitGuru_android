@@ -35,9 +35,14 @@ public class TrainersListActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listTrainers);
 
-        api = RetrofitClient.getInstance().create(ApiService.class);
+        SessionManager sessionManager =
+                new SessionManager(this);
+
+        api = RetrofitClient
+                .getInstance(sessionManager)
+                .create(ApiService.class);
+
         repository = new UserRepository(api);
-        sessionManager = new SessionManager(this);
 
         loadTrainers();
 
@@ -52,7 +57,7 @@ public class TrainersListActivity extends AppCompatActivity {
 
     private void loadTrainers() {
 
-        String token = sessionManager.getToken();
+        String token = sessionManager.getAccessToken();
 
         repository.getTrainers(
                 "Bearer " + token,
@@ -81,9 +86,14 @@ public class TrainersListActivity extends AppCompatActivity {
 
     private void sendRequest(Long trainerId) {
 
-        String token = sessionManager.getToken();
+        String token = sessionManager.getAccessToken();
 
-        ApiService api = RetrofitClient.getInstance().create(ApiService.class);
+        SessionManager sessionManager =
+                new SessionManager(this);
+
+        api = RetrofitClient
+                .getInstance(sessionManager)
+                .create(ApiService.class);
 
         api.sendRequest("Bearer " + token, trainerId)
                 .enqueue(new Callback<Void>() {

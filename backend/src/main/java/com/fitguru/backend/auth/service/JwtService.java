@@ -20,15 +20,23 @@ public class JwtService {
         SECRET.getBytes(StandardCharsets.UTF_8)
     );
 
-    public String generateToken(User user) {
-
+    public String generateAccessToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getPhone())
                 .claim("role", user.getRole().name())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 2)) // 2 hours
                 .signWith(key)
                 .compact();
+    }
+
+    public String generateRefreshToken(User user) {
+        return Jwts.builder()
+            .setSubject(user.getPhone())
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 45)) // 45 days
+            .signWith(key)
+            .compact();
     }
 
     public String extractPhone(String token) {

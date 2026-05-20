@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.fitguru.backend.user.repository.UserRepository;
 import com.fitguru.backend.auth.dto.LoginRequest;
 import com.fitguru.backend.auth.dto.LoginResponse;
+import com.fitguru.backend.auth.dto.RefreshRequest;
 import com.fitguru.backend.auth.dto.RegisterRequest;
 import com.fitguru.backend.user.entity.User;
 import com.fitguru.backend.user.entity.enums.Role; 
@@ -44,11 +45,11 @@ public class AuthService {
 
         userRepository.save(user);
 
-        String token = jwtService.generateToken(user);
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
 
         return new LoginResponse(
-                token,
-                user.getRole().name()
+            accessToken, refreshToken, user.getRole().name()
         );
     }
 
@@ -64,8 +65,35 @@ public class AuthService {
             throw new RuntimeException("Wrong password");
         }
 
-        String token = jwtService.generateToken(user);
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
 
-        return new LoginResponse(token, user.getRole().name());
+        return new LoginResponse(
+            accessToken, refreshToken, user.getRole().name()
+        );
+    }
+
+    public LoginResponse refresh(RefreshRequest request) {
+
+        String phone = jwtService.extractPhone(
+                request.getRefreshToken()
+        );
+
+        User user = userRepository.findByPhone(phone)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found")
+                );
+
+        String newAccessToken =
+                jwtService.generateAccessToken(user);
+
+        String newRefreshToken =
+                jwtService.generateRefreshToken(user);
+
+        return new LoginResponse(
+                newAccessToken,
+                newRefreshToken,
+                user.getRole().name()
+        );
     }
 }

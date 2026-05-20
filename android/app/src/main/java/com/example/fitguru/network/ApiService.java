@@ -2,6 +2,7 @@ package com.example.fitguru.network;
 
 import com.example.fitguru.auth.dto.LoginRequest;
 import com.example.fitguru.auth.dto.LoginResponse;
+import com.example.fitguru.auth.dto.RefreshRequest;
 import com.example.fitguru.auth.dto.RegisterRequest;
 import com.example.fitguru.main.dto.TrainingRequestResponse;
 import com.example.fitguru.trainer.dto.ClientResponse;
@@ -23,6 +24,9 @@ public interface ApiService {
 
     @POST("/auth/login")
     Call<LoginResponse> login(@Body LoginRequest request);
+
+    @POST("/auth/refresh")
+    Call<LoginResponse> refresh(@Body RefreshRequest request);
 
     @GET("/trainer/clients")
     Call<List<ClientResponse>> getClients(

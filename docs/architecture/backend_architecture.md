@@ -85,6 +85,11 @@ Responsible for:
 ---
 
 ### Trainer–Client Relationship Modules
+#### Overview
+These modules implement the relationship system between trainers and clients in the `FitGuru` platform.  
+They provide REST APIs for retrieving assigned trainers and clients based on the authenticated user role.  
+The system is built on a many-to-many relationship using a dedicated join table (`trainer_clients`) and follows a layered, scalable architecture.  
+
 #### Architecture
 ```
 ├── trainer/

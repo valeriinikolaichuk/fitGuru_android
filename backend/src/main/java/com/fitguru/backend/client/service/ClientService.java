@@ -7,8 +7,9 @@ import java.util.List;
 import com.fitguru.backend.auth.service.JwtService;
 import com.fitguru.backend.client.dto.TrainerResponse;
 import com.fitguru.backend.trainer.repository.TrainerClientRepository;
-import com.fitguru.backend.user.repository.UserRepository;
 import com.fitguru.backend.user.entity.User;
+import com.fitguru.backend.user.entity.enums.Role;
+import com.fitguru.backend.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,10 @@ public class ClientService {
 
         User client = userRepository.findByPhone(phone)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (client.getRole() != Role.CLIENT) {
+            throw new RuntimeException("Access denied");
+        }
 
         return trainerClientRepository.findByClient(client)
                 .stream()

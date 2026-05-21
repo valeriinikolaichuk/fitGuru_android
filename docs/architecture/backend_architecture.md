@@ -115,11 +115,42 @@ Responsible for:
 ```
 
 ### Trainer Module
+#### Responsibilities  
 
+Provides REST endpoints for trainers:
+- `GET /trainer/clients` Returns a list of clients assigned to the authenticated trainer.
+
+#### Business Logic
+- Extracts trainer identity from JWT token
+- Loads trainer from database
+- Fetches related clients via `TrainerClientRepository`
+- Maps data to `ClientResponse` DTO
+
+#### Relationship Management (TrainerClient)
+The `TrainerClient` entity represents a many-to-many relationship between users.  
+It contains:
+- `trainer` → User with TRAINER role
+- `client` → User with CLIENT role
+- `createdAt` → assignment timestamp
+
+#### Data Access Layer  
+`TrainerClientRepository`  
+Provides access to relationship data:  
+- findByTrainer(User trainer) → returns all clients of a trainer
+- findByClient(User client) → returns all trainers of a client
 
 ---
 
 ### Client Module
+#### Responsibilities
 
+Provides REST endpoints for clients:
+- `GET /client/trainers` Returns a list of trainers assigned to the authenticated client.
+
+#### Business Logic
+- Extracts client identity from JWT token
+- Loads client from database
+- Fetches related trainers via `TrainerClientRepository`
+- Maps data to `TrainerResponse` DTO
 
 ---

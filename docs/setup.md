@@ -44,3 +44,9 @@ Mac/Linux:
 ```
 #### Application URL
 http://localhost:8080
+
+#### Swagger
+The project integrates `Swagger UI` (via Springdoc OpenAPI) for interactive API documentation.  
+It allows you to view all available REST endpoints, inspect request/response data models, and test API queries directly from the browser.
+
+* **Swagger UI URL:** [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)

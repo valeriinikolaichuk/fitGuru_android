@@ -3,6 +3,7 @@ package com.fitguru.backend.client.service;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fitguru.backend.auth.service.JwtService;
 import com.fitguru.backend.client.dto.TrainerResponse;
@@ -12,6 +13,7 @@ import com.fitguru.backend.user.entity.enums.Role;
 import com.fitguru.backend.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +42,32 @@ public class ClientService {
                         tc.getTrainer().getId(),
                         tc.getTrainer().getName(),
                         tc.getTrainer().getPhone()
+                ))
+                .toList();
+    }
+
+    public List<TrainerResponse> getAvailableTrainers(String token) {
+
+        String phone = jwtService.extractPhone(
+            token.replace("Bearer ", "")
+        );
+
+        User client = userRepository.findByPhone(phone)
+                .orElseThrow();
+
+        Set<Long> connectedTrainerIds = trainerClientRepository.findByClient(client)
+                .stream()
+                .map(tc -> tc.getTrainer().getId())
+                .collect(Collectors.toSet());
+
+        List<User> allTrainers = userRepository.findByRole(Role.TRAINER);
+
+        return allTrainers.stream()
+                .filter(tr -> !connectedTrainerIds.contains(tr.getId()))
+                .map(tr -> new TrainerResponse(
+                        tr.getId(),
+                        tr.getName(),
+                        tr.getPhone()
                 ))
                 .toList();
     }

@@ -19,7 +19,7 @@ import com.example.fitguru.program.ProgramsActivity;
 import com.example.fitguru.storage.SessionManager;
 import com.example.fitguru.trainer.dto.ClientResponse;
 import com.example.fitguru.trainer.dto.TrainerResponse;
-import com.example.fitguru.repository.UserRepository;
+import com.example.fitguru.repository.TrainerClientRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     ApiService api;
-    UserRepository repository;
+    TrainerClientRepository repository;
     ListView listView;
     SessionManager sessionManager;
     Button btnRequests;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 .getInstance(sessionManager)
                 .create(ApiService.class);
 
-        repository = new UserRepository(api);
+        repository = new TrainerClientRepository(api);
         listView = findViewById(R.id.listClients);
         btnRequests = findViewById(R.id.btnRequests);
         btnFindTrainers = findViewById(R.id.btnFindTrainers);

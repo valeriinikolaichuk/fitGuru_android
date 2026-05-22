@@ -10,7 +10,7 @@ import com.example.fitguru.adapters.RequestAdapter;
 import com.example.fitguru.main.dto.TrainingRequestResponse;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
-import com.example.fitguru.repository.UserRepository;
+import com.example.fitguru.repository.TrainerClientRepository;
 import com.example.fitguru.storage.SessionManager;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class RequestsActivity extends AppCompatActivity {
 
     ListView listView;
     ApiService api;
-    UserRepository repository;
+    TrainerClientRepository repository;
     SessionManager sessionManager;
 
     @Override
@@ -40,7 +40,7 @@ public class RequestsActivity extends AppCompatActivity {
                 .getInstance(sessionManager)
                 .create(ApiService.class);
 
-        repository = new UserRepository(api);
+        repository = new TrainerClientRepository(api);
 
         loadRequests();
     }

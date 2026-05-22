@@ -27,6 +27,9 @@
         <activity
             android:name=".main.RequestsActivity"
             android:exported="false"/>
+        <activity
+            android:name=".main.TrainersListActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".LauncherActivity"

@@ -38,6 +38,11 @@ public interface ApiService {
             @Header("Authorization") String token
     );
 
+    @GET("/client/trainers/available")
+    Call<List<TrainerResponse>> getAvailableTrainers(
+            @Header("Authorization") String token
+    );
+
     @GET("/trainer/requests")
     Call<List<TrainingRequestResponse>> getRequests(
             @Header("Authorization") String token

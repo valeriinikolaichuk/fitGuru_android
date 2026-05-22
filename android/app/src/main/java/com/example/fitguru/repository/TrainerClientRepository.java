@@ -9,11 +9,11 @@ import java.util.List;
 
 import retrofit2.Callback;
 
-public class UserRepository {
+public class TrainerClientRepository {
 
     private final ApiService api;
 
-    public UserRepository(ApiService api) {
+    public TrainerClientRepository(ApiService api) {
         this.api = api;
     }
 
@@ -32,6 +32,20 @@ public class UserRepository {
 
         api.getTrainers(token).enqueue(callback);
     }
+
+    public void getAvailableTrainers(
+            String token,
+            Callback<List<TrainerResponse>> callback
+    ) {
+        api.getAvailableTrainers(token).enqueue(callback);
+    }
+
+
+
+
+
+
+
 
     public void getRequests(
             String token,

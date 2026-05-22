@@ -10,7 +10,7 @@ import com.example.fitguru.R;
 import com.example.fitguru.adapters.UserAdapter;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
-import com.example.fitguru.repository.UserRepository;
+import com.example.fitguru.repository.TrainerClientRepository;
 import com.example.fitguru.storage.SessionManager;
 import com.example.fitguru.trainer.dto.TrainerResponse;
 
@@ -25,7 +25,7 @@ public class TrainersListActivity extends AppCompatActivity {
 
     ListView listView;
     ApiService api;
-    UserRepository repository;
+    TrainerClientRepository repository;
     SessionManager sessionManager;
 
     @Override
@@ -35,14 +35,13 @@ public class TrainersListActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listTrainers);
 
-        SessionManager sessionManager =
-                new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
         api = RetrofitClient
                 .getInstance(sessionManager)
                 .create(ApiService.class);
 
-        repository = new UserRepository(api);
+        repository = new TrainerClientRepository(api);
 
         loadTrainers();
 
@@ -59,13 +58,13 @@ public class TrainersListActivity extends AppCompatActivity {
 
         String token = sessionManager.getAccessToken();
 
-        repository.getTrainers(
+        repository.getAvailableTrainers(
                 "Bearer " + token,
                 new Callback<List<TrainerResponse>>() {
 
                     @Override
                     public void onResponse(Call<List<TrainerResponse>> call,
-                                           Response<List<TrainerResponse>> response) {
+                            Response<List<TrainerResponse>> response) {
 
                         if (response.isSuccessful() && response.body() != null) {
 

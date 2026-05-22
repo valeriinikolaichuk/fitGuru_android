@@ -8,6 +8,8 @@ import java.util.List;
 import com.fitguru.backend.client.dto.TrainerResponse;
 import com.fitguru.backend.client.service.ClientService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/client")
 @RequiredArgsConstructor
@@ -17,9 +19,18 @@ public class ClientController {
 
     @GetMapping("/trainers")
     public List<TrainerResponse> trainers(
-            @RequestHeader("Authorization") String token
+        @RequestHeader("Authorization") String token
     ) {
         return clientService.getTrainers(token);
+    }
+
+    @GetMapping("/trainers/available")
+    public List<TrainerResponse> getAvailableTrainers(
+        HttpServletRequest request
+    ) {
+        String token = request.getHeader("Authorization");
+        
+        return clientService.getAvailableTrainers(token);
     }
 }
 

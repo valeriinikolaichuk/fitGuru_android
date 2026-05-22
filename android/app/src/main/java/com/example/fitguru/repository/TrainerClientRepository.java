@@ -18,26 +18,21 @@ public class TrainerClientRepository {
     }
 
     public void getClients(
-            String token,
             Callback<List<ClientResponse>> callback
     ) {
-
-        api.getClients(token).enqueue(callback);
+        api.getClients().enqueue(callback);
     }
 
     public void getTrainers(
-            String token,
             Callback<List<TrainerResponse>> callback
     ) {
-
-        api.getTrainers(token).enqueue(callback);
+        api.getTrainers().enqueue(callback);
     }
 
     public void getAvailableTrainers(
-            String token,
             Callback<List<TrainerResponse>> callback
     ) {
-        api.getAvailableTrainers(token).enqueue(callback);
+        api.getAvailableTrainers().enqueue(callback);
     }
 
 
@@ -48,40 +43,33 @@ public class TrainerClientRepository {
 
 
     public void getRequests(
-            String token,
             Callback<List<TrainingRequestResponse>> callback
     ) {
-
-        api.getRequests(token).enqueue(callback);
+        api.getRequests().enqueue(callback);
     }
 
     public void acceptRequest(
-            String token,
             Long requestId,
             Callback<Void> callback
     ) {
-
-        api.acceptRequest(token, requestId)
+        api.acceptRequest(requestId)
                 .enqueue(callback);
     }
 
     public void rejectRequest(
-            String token,
             Long requestId,
             Callback<Void> callback
     ) {
 
-        api.rejectRequest(token, requestId)
+        api.rejectRequest(requestId)
                 .enqueue(callback);
     }
 
     public void sendRequest(
-            String token,
             Long trainerId,
             Callback<Void> callback
     ) {
-
-        api.sendRequest(token, trainerId)
+        api.sendRequest(trainerId)
                 .enqueue(callback);
     }
 }

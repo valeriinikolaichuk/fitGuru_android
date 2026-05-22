@@ -48,7 +48,6 @@ public class RequestsActivity extends AppCompatActivity {
     private void loadRequests() {
 
         repository.getRequests(
-                "Bearer " + sessionManager.getAccessToken(),
                 new Callback<List<TrainingRequestResponse>>() {
 
                     @Override

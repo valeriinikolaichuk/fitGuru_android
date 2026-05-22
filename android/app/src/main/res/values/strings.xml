@@ -3,4 +3,7 @@
     <string name="ENTRIES">Entries</string>
     <string name="ACCEPT">ACCEPT</string>
     <string name="REJECT">REJECT</string>
+    <string name="closeapp">Close App</string>
+    <string name="sendrequest">Send Request</string>
+    <string name="back">Back</string>
 </resources>

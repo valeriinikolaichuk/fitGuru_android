@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         String token = sessionManager.getAccessToken();
 
         repository.getClients(
-                "Bearer " + token,
                 new Callback<List<ClientResponse>>() {
 
                     @Override
@@ -160,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         String token = sessionManager.getAccessToken();
 
         repository.getTrainers(
-                "Bearer " + token,
                 new Callback<List<TrainerResponse>>() {
 
                     @Override
@@ -204,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
         String token = sessionManager.getAccessToken();
 
         repository.sendRequest(
-                "Bearer " + token,
                 trainerId,
                 new Callback<Void>() {
 

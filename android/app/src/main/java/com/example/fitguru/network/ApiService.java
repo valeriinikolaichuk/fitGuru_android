@@ -29,40 +29,29 @@ public interface ApiService {
     Call<LoginResponse> refresh(@Body RefreshRequest request);
 
     @GET("/trainer/clients")
-    Call<List<ClientResponse>> getClients(
-            @Header("Authorization") String token
-    );
+    Call<List<ClientResponse>> getClients();
 
     @GET("/client/trainers")
-    Call<List<TrainerResponse>> getTrainers(
-            @Header("Authorization") String token
-    );
+    Call<List<TrainerResponse>> getTrainers();
 
     @GET("/client/trainers/available")
-    Call<List<TrainerResponse>> getAvailableTrainers(
-            @Header("Authorization") String token
-    );
+    Call<List<TrainerResponse>> getAvailableTrainers();
 
     @GET("/trainer/requests")
-    Call<List<TrainingRequestResponse>> getRequests(
-            @Header("Authorization") String token
-    );
+    Call<List<TrainingRequestResponse>> getRequests();
 
     @POST("/trainer/requests/{id}/accept")
     Call<Void> acceptRequest(
-            @Header("Authorization") String token,
             @Path("id") Long requestId
     );
 
     @POST("/trainer/requests/{id}/reject")
     Call<Void> rejectRequest(
-            @Header("Authorization") String token,
             @Path("id") Long requestId
     );
 
-    @POST("requests/{trainerId}")
+    @POST("/requests/{trainerId}")
     Call<Void> sendRequest(
-            @Header("Authorization") String token,
             @Path("trainerId") Long trainerId
     );
 }

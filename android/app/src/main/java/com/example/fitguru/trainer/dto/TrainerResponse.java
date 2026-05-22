@@ -4,4 +4,16 @@ public class TrainerResponse {
     public Long id;
     public String name;
     public String phone;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 }

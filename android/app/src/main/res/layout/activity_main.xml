@@ -10,7 +10,7 @@
 
     <Button
         android:id="@+id/btnCloseApp"
-        android:text="CloseApp"
+        android:text="@string/closeapp"
         android:layout_margin="26dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

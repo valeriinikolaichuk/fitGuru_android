@@ -31,46 +31,15 @@ Entry point after authentication. Acts as the landing screen after login / regis
 
 ### client/
 
+The `client` module is responsible for trainer discovery and training request management from the client side.
 
+➡ [client/](frontend/client.md)
 
 ---
 
 ### trainer/
 
-
-
----
-
-`RequestsActivity`  
-Screen used by trainers to manage incoming training requests.
-
-#### Responsibilities
-Loads pending training requests
-Displays request list
-Allows accepting requests
-Allows rejecting requests
-Updates UI after request action
-
-#### RequestsActivity Architecture
-```
-activity_requests.xml
-        ↑
-        │ setContentView()
-        │
- RequestsActivity
-        │
-        ├── ListView
-        │
-        ├── UserRepository
-        │
-        ├── SessionManager
-        │
-        └── ApiService
-                │
-                ├── GET /trainer/requests
-                ├── POST /trainer/requests/{id}/accept
-                └── POST /trainer/requests/{id}/reject
-```
+➡ [trainer/](frontend/trainer.md)
                 
 ---
 

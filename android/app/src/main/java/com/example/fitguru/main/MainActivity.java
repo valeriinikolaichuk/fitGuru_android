@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fitguru.R;
 
 import com.example.fitguru.adapters.UserAdapter;
+import com.example.fitguru.client.TrainersListActivity;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
 import com.example.fitguru.program.ProgramsActivity;
 import com.example.fitguru.storage.SessionManager;
-import com.example.fitguru.trainer.dto.ClientResponse;
-import com.example.fitguru.trainer.dto.TrainerResponse;
+import com.example.fitguru.trainer.TrainerRequestsActivity;
+import com.example.fitguru.main.dto.ClientResponse;
+import com.example.fitguru.main.dto.TrainerResponse;
 import com.example.fitguru.repository.TrainerClientRepository;
 
 import java.util.ArrayList;
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             btnRequests.setOnClickListener(v -> {
                 startActivity(
                         new Intent(MainActivity.this,
-                                RequestsActivity.class)
+                                TrainerRequestsActivity.class)
                 );
             });
 

@@ -1,4 +1,4 @@
-package com.example.fitguru.main;
+package com.example.fitguru.trainer;
 
 import android.os.Bundle;
 import android.widget.ListView;
@@ -19,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RequestsActivity extends AppCompatActivity {
+public class TrainerRequestsActivity extends AppCompatActivity {
 
     ListView listView;
     ApiService api;
@@ -60,7 +60,7 @@ public class RequestsActivity extends AppCompatActivity {
 
                             RequestAdapter adapter =
                                     new RequestAdapter(
-                                            RequestsActivity.this,
+                                            TrainerRequestsActivity.this,
                                             response.body()
                                     );
 

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import com.fitguru.backend.client.dto.AvailableTrainerResponse;
 import com.fitguru.backend.client.dto.TrainerResponse;
 import com.fitguru.backend.client.service.ClientService;
 
@@ -25,7 +26,7 @@ public class ClientController {
     }
 
     @GetMapping("/trainers/available")
-    public List<TrainerResponse> getAvailableTrainers(
+    public List<AvailableTrainerResponse> getAvailableTrainers(
         HttpServletRequest request
     ) {
         String token = request.getHeader("Authorization");

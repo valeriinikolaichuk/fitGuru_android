@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.fitguru.R;
-import com.example.fitguru.trainer.dto.ClientResponse;
-import com.example.fitguru.trainer.dto.TrainerResponse;
+import com.example.fitguru.main.dto.ClientResponse;
+import com.example.fitguru.main.dto.TrainerResponse;
 
 import java.util.List;
 

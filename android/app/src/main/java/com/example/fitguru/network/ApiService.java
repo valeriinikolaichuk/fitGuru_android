@@ -4,16 +4,17 @@ import com.example.fitguru.auth.dto.LoginRequest;
 import com.example.fitguru.auth.dto.LoginResponse;
 import com.example.fitguru.auth.dto.RefreshRequest;
 import com.example.fitguru.auth.dto.RegisterRequest;
+import com.example.fitguru.client.dto.AvailableTrainerResponse;
 import com.example.fitguru.main.dto.TrainingRequestResponse;
-import com.example.fitguru.trainer.dto.ClientResponse;
-import com.example.fitguru.trainer.dto.TrainerResponse;
+import com.example.fitguru.main.dto.ClientResponse;
+import com.example.fitguru.main.dto.TrainerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Path;
 
 import java.util.List;
@@ -35,7 +36,12 @@ public interface ApiService {
     Call<List<TrainerResponse>> getTrainers();
 
     @GET("/client/trainers/available")
-    Call<List<TrainerResponse>> getAvailableTrainers();
+    Call<List<AvailableTrainerResponse>> getAvailableTrainers();
+
+    @DELETE("/requests/{trainerId}")
+    Call<Void> cancelRequest(
+            @Path("trainerId") Long trainerId
+    );
 
     @GET("/trainer/requests")
     Call<List<TrainingRequestResponse>> getRequests();

@@ -1,4 +1,4 @@
-package com.example.fitguru.trainer.dto;
+package com.example.fitguru.main.dto;
 
 public class TrainerResponse {
     public Long id;

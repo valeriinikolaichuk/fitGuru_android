@@ -25,10 +25,10 @@
             android:name=".main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".main.RequestsActivity"
+            android:name=".trainer.TrainerRequestsActivity"
             android:exported="false"/>
         <activity
-            android:name=".main.TrainersListActivity"
+            android:name=".client.TrainersListActivity"
             android:exported="false"/>
 
         <activity

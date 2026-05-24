@@ -11,21 +11,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.fitguru.R;
-import com.example.fitguru.trainer.dto.TrainerResponse;
+import com.example.fitguru.client.dto.AvailableTrainerResponse;
 
 import java.util.List;
 
-public class TrainerAdapter extends ArrayAdapter<TrainerResponse> {
+public class TrainerAdapter extends ArrayAdapter<AvailableTrainerResponse> {
 
 
     public interface OnTrainerClickListener {
-        void onSendRequest(TrainerResponse trainer);
+        void onSendRequest(AvailableTrainerResponse trainer, int position);
+        void onCancelRequest(AvailableTrainerResponse trainer, int position);
     }
 
     private final OnTrainerClickListener listener;
 
     public TrainerAdapter(Context context,
-                          List<TrainerResponse> trainers,
+                          List<AvailableTrainerResponse> trainers,
                           OnTrainerClickListener listener) {
         super(context, 0, trainers);
         this.listener = listener;
@@ -40,7 +41,7 @@ public class TrainerAdapter extends ArrayAdapter<TrainerResponse> {
                     .inflate(R.layout.item_trainer, parent, false);
         }
 
-        TrainerResponse trainer = getItem(position);
+        AvailableTrainerResponse trainer = getItem(position);
 
         TextView name = convertView.findViewById(R.id.tvName);
         TextView phone = convertView.findViewById(R.id.tvPhone);
@@ -49,7 +50,32 @@ public class TrainerAdapter extends ArrayAdapter<TrainerResponse> {
         name.setText(trainer.getName());
         phone.setText(trainer.getPhone());
 
-        btnAdd.setOnClickListener(v -> listener.onSendRequest(trainer));
+        String status = trainer.getRequestStatus();
+
+        if (status == null || status.equals("NONE")) {
+
+            btnAdd.setText("Send Request");
+
+            btnAdd.setEnabled(true);
+
+            btnAdd.setOnClickListener(v ->
+                    listener.onSendRequest(trainer, position));
+
+        } else if (status.equals("PENDING")) {
+
+            btnAdd.setText("Cancel Request");
+
+            btnAdd.setEnabled(true);
+
+            btnAdd.setOnClickListener(v ->
+                    listener.onCancelRequest(trainer, position));
+
+        } else if (status.equals("ACCEPTED")) {
+
+            btnAdd.setText("Connected");
+            btnAdd.setEnabled(false);
+            btnAdd.setOnClickListener(null);
+        }
 
         return convertView;
     }

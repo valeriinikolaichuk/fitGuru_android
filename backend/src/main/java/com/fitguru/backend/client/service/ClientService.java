@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fitguru.backend.auth.service.JwtService;
+import com.fitguru.backend.client.dto.AvailableTrainerResponse;
 import com.fitguru.backend.client.dto.TrainerResponse;
+import com.fitguru.backend.request.entity.TrainingRequest;
+import com.fitguru.backend.request.repository.TrainingRequestRepository;
 import com.fitguru.backend.trainer.repository.TrainerClientRepository;
 import com.fitguru.backend.user.entity.User;
 import com.fitguru.backend.user.entity.enums.Role;
@@ -14,6 +17,7 @@ import com.fitguru.backend.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import java.util.Set;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +25,7 @@ public class ClientService {
 
     private final TrainerClientRepository trainerClientRepository;
     private final UserRepository userRepository;
+    private final TrainingRequestRepository trainingRequestRepository;
     private final JwtService jwtService;
 
     public List<TrainerResponse> getTrainers(String token) {
@@ -46,7 +51,7 @@ public class ClientService {
                 .toList();
     }
 
-    public List<TrainerResponse> getAvailableTrainers(String token) {
+    public List<AvailableTrainerResponse> getAvailableTrainers(String token) {
 
         String phone = jwtService.extractPhone(
             token.replace("Bearer ", "")
@@ -60,15 +65,24 @@ public class ClientService {
                 .map(tc -> tc.getTrainer().getId())
                 .collect(Collectors.toSet());
 
+        List<TrainingRequest> requests = trainingRequestRepository.findByClient(client);
+
+        Map<Long, String> statuses = requests.stream()
+            .collect(Collectors.toMap(
+                    r -> r.getTrainer().getId(),
+                    r -> r.getStatus().name()
+            ));
+
         List<User> allTrainers = userRepository.findByRole(Role.TRAINER);
 
         return allTrainers.stream()
-                .filter(tr -> !connectedTrainerIds.contains(tr.getId()))
-                .map(tr -> new TrainerResponse(
-                        tr.getId(),
-                        tr.getName(),
-                        tr.getPhone()
-                ))
-                .toList();
+        .filter(tr -> !connectedTrainerIds.contains(tr.getId()))
+        .map(tr -> new AvailableTrainerResponse(
+                tr.getId(),
+                tr.getName(),
+                tr.getPhone(),
+                statuses.getOrDefault(tr.getId(), "NONE")
+        ))
+        .toList();
     }
 }

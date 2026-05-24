@@ -1,9 +1,10 @@
 package com.example.fitguru.repository;
 
+import com.example.fitguru.client.dto.AvailableTrainerResponse;
 import com.example.fitguru.main.dto.TrainingRequestResponse;
 import com.example.fitguru.network.ApiService;
-import com.example.fitguru.trainer.dto.ClientResponse;
-import com.example.fitguru.trainer.dto.TrainerResponse;
+import com.example.fitguru.main.dto.ClientResponse;
+import com.example.fitguru.main.dto.TrainerResponse;
 
 import java.util.List;
 
@@ -30,12 +31,17 @@ public class TrainerClientRepository {
     }
 
     public void getAvailableTrainers(
-            Callback<List<TrainerResponse>> callback
+            Callback<List<AvailableTrainerResponse>> callback
     ) {
         api.getAvailableTrainers().enqueue(callback);
     }
 
-
+    public void cancelRequest(
+            Long trainerId,
+            Callback<Void> callback
+    ) {
+        api.cancelRequest(trainerId).enqueue(callback);
+    }
 
 
 

@@ -11,7 +11,7 @@
 ### Launcher (App Entry Point)
 - `LauncherActivity`
 
-➡ [Launcher](docs/architecture/frontend/launcher.md)
+➡ [Launcher](frontend/launcher.md)
 
 #### Responsibilities:
 - Entry point of the application

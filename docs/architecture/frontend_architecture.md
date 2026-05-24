@@ -132,28 +132,25 @@ Entry point after authentication. Acts as the landing screen after login / regis
 - `MainActivity`
 
 #### Responsibilities:
-- Checks user role from session
+- Role detection ('CLIENT' / 'TRAINER') via 'SessionManager'
 - Displays main user interface
 - Loads appropriate data (clients or trainers)
 - Displays results in a `ListView`
-- Opens `ProgramsActivity`
-- Opens `RequestsActivity` for trainers
+- Navigates to 'ProgramsActivity' (selected user programs)
+- Navigates to 'TrainersListActivity' (trainer search screen)
+- Navigates to 'TrainerRequestsActivity' (incoming requests for trainers)
+- Closes application using system call ('finishAffinity()')
 
 #### Trainer Flow
 Trainer sees:
-- Accepted clients
+- View their assigned clients
 - "Entries" button
 - "CloseApp" button
 
-The requests screen allows:
-- viewing incoming training requests
-- accepting requests
-- rejecting requests
-
 #### Client Flow
-Client sees:
-- Accepted trainers
-- "AddTrainer" button
+Clients can:
+- View their assigned trainers
+- "AddTrainer" button (view list of available trainers)
 - "CloseApp" button
 
 #### Architecture
@@ -161,13 +158,7 @@ Client sees:
 ```
 activity_main.xml
       ↑
-      │ setContentView()
-      │
  MainActivity
-      │
-      ├── findViewById()
-      │       ├── ListView
-      │       └── Requests Button
       │
       ├── SessionManager
       │       ├── token

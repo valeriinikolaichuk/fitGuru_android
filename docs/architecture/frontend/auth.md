@@ -1,5 +1,9 @@
 ### auth/
 
+#### Overview
+
+Handles all authentication-related logic. 
+
 #### Includes:
 - LoginActivity
 - RegisterActivity

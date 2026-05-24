@@ -11,6 +11,8 @@
 ### Launcher (App Entry Point)
 - `LauncherActivity`
 
+➡ [Launcher](docs/frontend/launcher.md)
+
 #### Responsibilities:
 - Entry point of the application
 - Checks if authentication token exists

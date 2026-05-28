@@ -16,7 +16,9 @@ Password:
 trener
 ```
 
-### Client account:
+---
+
+### Client 1 account:
 Login:  
 ```
 client_1
@@ -28,4 +30,20 @@ Phone:
 Password: 
 ```
 client#1
+```
+
+---
+
+### Client 2 account:
+Login:  
+```
+client_2
+```
+Phone:  
+```
+111222333
+```
+Password: 
+```
+client#2
 ```

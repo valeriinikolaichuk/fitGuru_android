@@ -2,7 +2,7 @@ package com.example.fitguru.main.dto;
 
 public class TrainingRequestResponse {
 
-    public Long id;
+    public Long requestId;
 
     public Long clientId;
 

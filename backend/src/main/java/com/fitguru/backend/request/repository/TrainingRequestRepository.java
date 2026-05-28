@@ -25,4 +25,9 @@ public interface TrainingRequestRepository
     );
 
     List<TrainingRequest> findByClient(User client);
+
+    List<TrainingRequest> findByTrainerAndStatus(
+        User trainer,
+        RequestStatus status
+    );
 }

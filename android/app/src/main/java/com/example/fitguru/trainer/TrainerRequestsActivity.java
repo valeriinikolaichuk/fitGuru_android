@@ -42,6 +42,8 @@ public class TrainerRequestsActivity extends AppCompatActivity {
 
         repository = new TrainerClientRepository(api);
 
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         loadRequests();
     }
 
@@ -61,7 +63,8 @@ public class TrainerRequestsActivity extends AppCompatActivity {
                             RequestAdapter adapter =
                                     new RequestAdapter(
                                             TrainerRequestsActivity.this,
-                                            response.body()
+                                            response.body(),
+                                            repository
                                     );
 
                             listView.setAdapter(adapter);

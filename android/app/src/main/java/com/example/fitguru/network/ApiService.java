@@ -30,34 +30,35 @@ public interface ApiService {
     Call<LoginResponse> refresh(@Body RefreshRequest request);
 
     @GET("/trainer/clients")
-    Call<List<ClientResponse>> getClients();
+    Call<List<ClientResponse>> getClients(); // Connected clients
 
     @GET("/client/trainers")
-    Call<List<TrainerResponse>> getTrainers();
+    Call<List<TrainerResponse>> getTrainers(); // Connected trainers
 
     @GET("/client/trainers/available")
-    Call<List<AvailableTrainerResponse>> getAvailableTrainers();
+    Call<List<AvailableTrainerResponse>> getAvailableTrainers(); // available for requests
 
-    @DELETE("/requests/{trainerId}")
+    @POST("/requests/{trainerId}") // request to the trainer
+    Call<Void> sendRequest(
+            @Path("trainerId") Long trainerId
+    );
+
+    @DELETE("/requests/{trainerId}") //→ cancel
     Call<Void> cancelRequest(
             @Path("trainerId") Long trainerId
     );
 
-    @GET("/trainer/requests")
+    @GET("/requests/trainer") //→ clients requests sent
     Call<List<TrainingRequestResponse>> getRequests();
 
-    @POST("/trainer/requests/{id}/accept")
+
+    @POST("/requests/{id}/accept") //→ accept
     Call<Void> acceptRequest(
             @Path("id") Long requestId
     );
 
-    @POST("/trainer/requests/{id}/reject")
+    @POST("/requests/{id}/reject") //→ reject
     Call<Void> rejectRequest(
             @Path("id") Long requestId
-    );
-
-    @POST("/requests/{trainerId}")
-    Call<Void> sendRequest(
-            @Path("trainerId") Long trainerId
     );
 }

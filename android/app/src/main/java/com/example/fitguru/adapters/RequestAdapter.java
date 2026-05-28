@@ -1,6 +1,7 @@
 package com.example.fitguru.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +29,10 @@ public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
 
     public RequestAdapter(
             Context context,
-            List<TrainingRequestResponse> items
+            List<TrainingRequestResponse> items, TrainerClientRepository repository
     ) {
         super(context, 0, items);
+        this.repository = repository;
     }
 
     @NonNull
@@ -65,9 +67,10 @@ public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
         tvPhone.setText(request.clientPhone);
 
         btnAccept.setOnClickListener(v -> {
-
+            Log.d("ACCEPT", "BUTTON CLICKED");
+            Log.d("ACCEPT", "REQUEST ID = " + request.requestId);
             repository.acceptRequest(
-                    request.id,
+                    request.requestId,
                     new Callback<Void>() {
 
                         @Override
@@ -75,7 +78,7 @@ public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
                                 Call<Void> call,
                                 Response<Void> response
                         ) {
-
+                            Log.d("ACCEPT", "CODE = " + response.code());
                             if (response.isSuccessful()) {
 
                                 remove(request);
@@ -88,7 +91,7 @@ public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
                                 Call<Void> call,
                                 Throwable t
                         ) {
-
+                            Log.e("ACCEPT", "FAIL", t);
                         }
                     }
             );
@@ -97,7 +100,7 @@ public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
         btnReject.setOnClickListener(v -> {
 
             repository.rejectRequest(
-                    request.id,
+                    request.requestId,
                     new Callback<Void>() {
 
                         @Override

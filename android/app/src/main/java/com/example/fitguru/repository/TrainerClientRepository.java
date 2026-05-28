@@ -36,6 +36,14 @@ public class TrainerClientRepository {
         api.getAvailableTrainers().enqueue(callback);
     }
 
+    public void sendRequest(
+            Long trainerId,
+            Callback<Void> callback
+    ) {
+        api.sendRequest(trainerId)
+                .enqueue(callback);
+    }
+
     public void cancelRequest(
             Long trainerId,
             Callback<Void> callback
@@ -43,16 +51,17 @@ public class TrainerClientRepository {
         api.cancelRequest(trainerId).enqueue(callback);
     }
 
-
-
-
-
-
     public void getRequests(
             Callback<List<TrainingRequestResponse>> callback
     ) {
         api.getRequests().enqueue(callback);
     }
+
+
+
+
+
+
 
     public void acceptRequest(
             Long requestId,
@@ -68,14 +77,6 @@ public class TrainerClientRepository {
     ) {
 
         api.rejectRequest(requestId)
-                .enqueue(callback);
-    }
-
-    public void sendRequest(
-            Long trainerId,
-            Callback<Void> callback
-    ) {
-        api.sendRequest(trainerId)
                 .enqueue(callback);
     }
 }

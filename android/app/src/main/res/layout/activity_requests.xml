@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listRequests"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:dividerHeight="8dp"/>
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Back"/>
+
+    <ListView
+        android:id="@+id/listRequests"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dividerHeight="8dp"/>
+
+</LinearLayout>

@@ -27,7 +27,5 @@ public class TrainerController {
 
 
 //GET /trainer/requests
-//POST /trainer/requests/{id}/accept
-//POST /trainer/requests/{id}/reject
 //GET /trainer/programs
 //POST /trainer/programs

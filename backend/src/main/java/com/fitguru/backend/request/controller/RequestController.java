@@ -60,8 +60,14 @@ public class RequestController {
 
         return ResponseEntity.ok().build();
     }
-}
 
-//GET /trainer/requests
-//POST /requests/{id}/accept
-//POST /requests/{id}/reject
+    @PostMapping("/{id}/reject")
+    public ResponseEntity<Void> rejectRequest(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long id
+    ) {
+        requestService.rejectRequest(id);
+
+        return ResponseEntity.ok().build();
+    }
+}

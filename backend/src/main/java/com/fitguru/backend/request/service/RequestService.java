@@ -108,7 +108,7 @@ public class RequestService {
 
     @Transactional
     public void acceptRequest(Long requestId) {
- try {
+
         TrainingRequest request = trainingRequestRepository
                 .findById(requestId)
                 .orElseThrow();
@@ -123,9 +123,17 @@ public class RequestService {
         trainerClientRepository.save(trainerClient);
 
         trainingRequestRepository.save(request);
-        } catch (Exception e) {
-        e.printStackTrace();
-        throw e;
     }
+
+    @Transactional
+    public void rejectRequest(Long requestId) {
+
+        TrainingRequest request = trainingRequestRepository
+                .findById(requestId)
+                .orElseThrow();
+
+        request.setStatus(RequestStatus.REJECTED);
+
+        trainingRequestRepository.save(request);
     }
 }

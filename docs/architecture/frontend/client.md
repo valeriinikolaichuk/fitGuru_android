@@ -1,7 +1,7 @@
 ### client/
 
 #### Overview
-`RequestsActivity`  
+`TrainersListActivity`  
 Screen used by trainers to manage incoming training requests.
 
 #### Responsibilities
@@ -19,8 +19,6 @@ TrainersListActivity
         ↓
 TrainerClientRepository
         ↓
-ApiService (Retrofit)
-        |
 ApiService (Retrofit)
         │
         ├── GET /client/trainers/available  <------------------>  ClientController

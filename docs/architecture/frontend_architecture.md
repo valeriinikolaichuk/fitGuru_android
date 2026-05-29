@@ -39,6 +39,8 @@ The `client` module is responsible for trainer discovery and training request ma
 
 ### trainer/
 
+The `trainer` module responsible for trainer-specific functionality, including client management and training request processing.
+
 ➡ [trainer/](frontend/trainer.md)
                 
 ---

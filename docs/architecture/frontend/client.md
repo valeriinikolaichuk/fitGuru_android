@@ -1,7 +1,7 @@
 ### client/
 
 #### Overview
-`RequestsActivity`  
+`TrainersListActivity`  
 Screen used by trainers to manage incoming training requests.
 
 #### Responsibilities

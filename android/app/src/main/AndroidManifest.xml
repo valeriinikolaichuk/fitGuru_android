@@ -30,6 +30,11 @@
         <activity
             android:name=".client.TrainersListActivity"
             android:exported="false"/>
+        <activity
+            android:name=".program.ClientProgramsActivity"
+            android:exported="false"/>
+        <activity android:name=".program.CreateProgramActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".LauncherActivity"

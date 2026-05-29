@@ -16,7 +16,7 @@ import com.example.fitguru.adapters.UserAdapter;
 import com.example.fitguru.client.TrainersListActivity;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
-import com.example.fitguru.program.ProgramsActivity;
+import com.example.fitguru.program.ClientProgramsActivity;
 import com.example.fitguru.storage.SessionManager;
 import com.example.fitguru.trainer.TrainerRequestsActivity;
 import com.example.fitguru.main.dto.ClientResponse;
@@ -73,10 +73,15 @@ public class MainActivity extends AppCompatActivity {
                 sendRequest(trainer.id);
 
             } else {
-                Intent intent = new Intent(MainActivity.this, ProgramsActivity.class);
+                Intent intent = new Intent(
+                        MainActivity.this,
+                        ClientProgramsActivity.class);
 
                 if (item instanceof ClientResponse) {
-                    intent.putExtra("userId", ((ClientResponse) item).id);
+                    ClientResponse client = (ClientResponse) item;
+
+                    intent.putExtra("userId", client.id);
+                    intent.putExtra("clientName", client.name);
                 } else if (item instanceof TrainerResponse) {
                     intent.putExtra("userId", ((TrainerResponse) item).id);
                 }
@@ -97,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
             btnRequests.setOnClickListener(v -> {
                 startActivity(
-                        new Intent(MainActivity.this,
+                        new Intent(
+                                MainActivity.this,
                                 TrainerRequestsActivity.class)
                 );
             });

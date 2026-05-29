@@ -20,8 +20,6 @@ TrainersListActivity
 TrainerClientRepository
         ↓
 ApiService (Retrofit)
-        |
-ApiService (Retrofit)
         │
         ├── GET /client/trainers/available  <------------------>  ClientController
         │        → List<AvailableTrainerResponse> (DTO)

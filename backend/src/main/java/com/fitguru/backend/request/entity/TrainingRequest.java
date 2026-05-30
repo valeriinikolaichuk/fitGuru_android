@@ -9,7 +9,17 @@ import com.fitguru.backend.request.entity.enums.RequestStatus;
 import com.fitguru.backend.user.entity.User;
 
 @Entity
-@Table(name = "training_requests")
+@Table(name = "training_requests",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            columnNames = {"trainer_id", "client_id"}
+        )
+    },
+        indexes = {
+        @Index(name = "idx_trainer", columnList = "trainer_id"),
+        @Index(name = "idx_client", columnList = "client_id")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor

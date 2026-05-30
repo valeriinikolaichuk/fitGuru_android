@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 import com.fitguru.backend.trainer.entity.TrainerClient;
 import com.fitguru.backend.program.entity.enums.ProgramStatus;
+import com.fitguru.backend.program_exercise.entity.ProgramExercise;
 
 @Entity
 @Table(
@@ -58,4 +61,13 @@ public class Program {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    @Builder.Default
+    @OneToMany(
+        mappedBy = "program",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    
+    private List<ProgramExercise> exercises = new ArrayList<>();
 }

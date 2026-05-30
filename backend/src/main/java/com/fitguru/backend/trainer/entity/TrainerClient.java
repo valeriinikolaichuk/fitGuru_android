@@ -8,7 +8,17 @@ import java.time.LocalDateTime;
 import com.fitguru.backend.user.entity.User;
 
 @Entity
-@Table(name = "trainer_clients")
+@Table(name = "trainer_clients",
+        uniqueConstraints = {
+        @UniqueConstraint(
+            columnNames = {"trainer_id", "client_id"}
+        )
+    },
+    indexes = {
+        @Index(name = "idx_trainer", columnList = "trainer_id"),
+        @Index(name = "idx_client", columnList = "client_id")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor

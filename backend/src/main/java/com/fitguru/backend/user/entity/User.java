@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fitguru.backend.exercise.entity.Exercise;
 import com.fitguru.backend.request.entity.TrainingRequest;
 import com.fitguru.backend.trainer.entity.TrainerClient;
 import com.fitguru.backend.user.entity.enums.Role;
@@ -56,6 +57,9 @@ public class User {
 
     @OneToMany(mappedBy = "client")
     private List<TrainingRequest> sentRequests;
+
+    @OneToMany(mappedBy = "createdBy")
+    private List<Exercise> createdExercises;
 
     @PrePersist
     protected void onCreate() {

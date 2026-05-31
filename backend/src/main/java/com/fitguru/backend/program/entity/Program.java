@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import com.fitguru.backend.trainer.entity.TrainerClient;
 import com.fitguru.backend.program.entity.enums.ProgramStatus;
-import com.fitguru.backend.program_exercise.entity.ProgramExercise;
 
 @Entity
 @Table(
@@ -36,10 +35,6 @@ public class Program {
 
     private String title;
 
-    private LocalDateTime startDate;
-
-    private LocalDateTime endDate;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProgramStatus status;
@@ -65,9 +60,9 @@ public class Program {
     @Builder.Default
     @OneToMany(
         mappedBy = "program",
-        cascade = CascadeType.ALL,
+        cascade = CascadeType.ALL, 
         orphanRemoval = true
     )
     
-    private List<ProgramExercise> exercises = new ArrayList<>();
+    private List<ProgramWeek> weeks = new ArrayList<>();
 }

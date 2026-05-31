@@ -9,8 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fitguru.backend.program.entity.ProgramExercise;
 import com.fitguru.backend.user.entity.User;
-import com.fitguru.backend.program_exercise.entity.ProgramExercise;
 
 @Entity
 @Table(name = "progress",    

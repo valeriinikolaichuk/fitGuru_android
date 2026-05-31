@@ -59,31 +59,51 @@ Stores all available exercises.
 #### Training Programs
 Represents a training plan assigned to a client via a trainer-client relationship.  
 
-`program`
+**`program`**
 - id
 - trainer_client_id → `TrainerClient`
 - title
-- startDate, endDate
-- status → `DRAFT` / `ACTIVE` / `COMPLETED`
+- status → `DRAFT` / `SENT`, / `FINISHED`, / `ARCHIVED`
 - createdAt, updatedAt
+ 
+**Relations:**
+One Program → many `program_week`
+
+**`program_week`**
+- id (PK)
+- program_id (FK)
+- title
+- position (ordering)
 
 **Relations:**
-- One program belongs to one trainer-client pair
-- One program has many exercises
+One Week → many `program_day`
 
-`program_exercise`  
+**`program_day`**
+- id (PK)
+- program_week_id (FK)
+- day (MONDAY–SUNDAY enum)
+- position (ordering)
+
+**Relations:**
+One Day → many `program_xercise`
+
+**`program_exercise`**  
 Join table between program and exercise.
 
-- id
-- program_id
-- exercise_id
-- day – training day of the week `MO`, `TU`, `WE`, `TH`, `FR`, `SA`, `SU`
-- week – training week
-- position – order in workout
-- weight, sets, reps
+- id (PK)
+- program_day_id (FK)
+- exercise_id (FK)
+- position (ordering inside day)
+- weight
+- sets
+- reps
 - notes
+- createdAt, updatedAt
 
-Represents the actual workout structure inside a program.
+**Indexes:**
+program_day_id
+exercise_id
+program_day_id + position
 
 ---
 

@@ -1,5 +1,8 @@
-package com.example.fitguru.program.dto;
+package com.fitguru.backend.program.dto;
 
+import lombok.Data;
+
+@Data
 public class ProgramExerciseDto {
 
     private Long exerciseId;
@@ -13,5 +16,4 @@ public class ProgramExerciseDto {
     private Integer reps;
 
     private String notes;
-
 }

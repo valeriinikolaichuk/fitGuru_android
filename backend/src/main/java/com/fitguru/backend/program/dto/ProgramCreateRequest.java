@@ -1,7 +1,9 @@
-package com.example.fitguru.program.dto;
+package com.fitguru.backend.program.dto;
 
 import java.util.List;
+import lombok.Data;
 
+@Data
 public class ProgramCreateRequest {
 
     private Long trainerClientId;

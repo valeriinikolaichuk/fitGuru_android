@@ -33,7 +33,17 @@
         <activity
             android:name=".program.ClientProgramsActivity"
             android:exported="false"/>
-        <activity android:name=".program.CreateProgramActivity"
+        <activity
+            android:name=".program.CreateProgramActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".program.ProgramWeekActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".program.ProgramDayActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".program.ProgramExerciseActivity"
             android:exported="false"/>
 
         <activity

@@ -8,6 +8,7 @@ import com.example.fitguru.client.dto.AvailableTrainerResponse;
 import com.example.fitguru.main.dto.TrainingRequestResponse;
 import com.example.fitguru.main.dto.ClientResponse;
 import com.example.fitguru.main.dto.TrainerResponse;
+import com.example.fitguru.program.dto.ProgramCreateRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -51,7 +52,6 @@ public interface ApiService {
     @GET("/requests/trainer") //→ clients requests sent
     Call<List<TrainingRequestResponse>> getRequests();
 
-
     @POST("/requests/{id}/accept") //→ accept
     Call<Void> acceptRequest(
             @Path("id") Long requestId
@@ -61,4 +61,12 @@ public interface ApiService {
     Call<Void> rejectRequest(
             @Path("id") Long requestId
     );
+
+    /*
+
+    @POST("api/programs")
+    Call<ProgramResponse> createProgram(
+            @Body ProgramCreateRequest request
+    );
+     */
 }

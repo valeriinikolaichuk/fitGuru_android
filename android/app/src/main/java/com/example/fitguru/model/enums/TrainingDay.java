@@ -1,4 +1,12 @@
 package com.example.fitguru.model.enums;
 
-public class TrainingDay {
+public enum TrainingDay {
+
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY,
+    SUNDAY
 }

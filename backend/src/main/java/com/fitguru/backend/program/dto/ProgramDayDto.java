@@ -1,9 +1,11 @@
-package com.example.fitguru.program.dto;
-
-import com.example.fitguru.model.enums.TrainingDay;
+package com.fitguru.backend.program.dto;
 
 import java.util.List;
+import lombok.Data;
 
+import com.fitguru.backend.program.entity.enums.TrainingDay;
+
+@Data
 public class ProgramDayDto {
 
     private TrainingDay day;

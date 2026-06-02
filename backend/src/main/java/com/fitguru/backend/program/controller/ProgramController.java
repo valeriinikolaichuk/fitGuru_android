@@ -1,16 +1,19 @@
 package com.fitguru.backend.program.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-//@RequestMapping("/auth")
+@RequestMapping("/api/programs")
+@RequiredArgsConstructor
 public class ProgramController {
-    
-}
 
-//POST /programs
-//GET /programs/{id}
-//PUT /programs/{id}
-//GET /trainer/programs
-//GET /client/programs
+    private final ProgramService programService;
+
+    @PostMapping
+    public ProgramResponse create(
+            @RequestBody ProgramCreateRequest request) {
+
+        return programService.create(request);
+    }
+}

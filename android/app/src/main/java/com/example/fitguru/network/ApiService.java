@@ -8,7 +8,15 @@ import com.example.fitguru.client.dto.AvailableTrainerResponse;
 import com.example.fitguru.main.dto.TrainingRequestResponse;
 import com.example.fitguru.main.dto.ClientResponse;
 import com.example.fitguru.main.dto.TrainerResponse;
+import com.example.fitguru.program.dto.ExerciseResponse;
 import com.example.fitguru.program.dto.ProgramCreateRequest;
+import com.example.fitguru.program.dto.ProgramDayCreateRequest;
+import com.example.fitguru.program.dto.ProgramDayResponse;
+import com.example.fitguru.program.dto.ProgramExerciseCreateRequest;
+import com.example.fitguru.program.dto.ProgramExerciseResponse;
+import com.example.fitguru.program.dto.ProgramResponse;
+import com.example.fitguru.program.dto.ProgramWeekCreateRequest;
+import com.example.fitguru.program.dto.ProgramWeekResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,6 +25,7 @@ import retrofit2.http.POST;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -62,11 +71,28 @@ public interface ApiService {
             @Path("id") Long requestId
     );
 
-    /*
-
     @POST("api/programs")
     Call<ProgramResponse> createProgram(
             @Body ProgramCreateRequest request
     );
-     */
+
+    @POST("api/program-weeks")
+    Call<ProgramWeekResponse> createWeek(
+            @Body ProgramWeekCreateRequest request
+    );
+
+    @POST("api/program-days")
+    Call<Void> createDay(
+            @Body List<ProgramDayCreateRequest> requests
+    );
+
+    @POST("api/program-exercises")
+    Call<ProgramExerciseResponse> createExercise(
+            @Body ProgramExerciseCreateRequest request
+    );
+
+    @GET("api/exercises")
+    Call<List<ExerciseResponse>> getExercisesByGroup(
+            @Query("muscleGroup") String muscleGroup
+    );
 }

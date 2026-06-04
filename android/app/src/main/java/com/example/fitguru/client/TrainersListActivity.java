@@ -12,6 +12,7 @@ import com.example.fitguru.client.dto.AvailableTrainerResponse;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
 import com.example.fitguru.repository.TrainerClientRepository;
+import com.example.fitguru.repository.TrainingRequestRepository;
 import com.example.fitguru.storage.SessionManager;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class TrainersListActivity extends AppCompatActivity {
     ListView listView;
     ApiService api;
     TrainerClientRepository repository;
+    TrainingRequestRepository repositoryRequest;
     SessionManager sessionManager;
     TrainerAdapter adapter;
     List<AvailableTrainerResponse> trainers;
@@ -103,7 +105,7 @@ public class TrainersListActivity extends AppCompatActivity {
                              int position,
                              boolean isSend) {
 
-        repository.sendRequest(
+        repositoryRequest.sendRequest(
                 trainer.getId(),
                 new Callback<Void>() {
 
@@ -133,7 +135,7 @@ public class TrainersListActivity extends AppCompatActivity {
     private void cancelRequest(AvailableTrainerResponse trainer,
                                int position) {
 
-        repository.cancelRequest(
+        repositoryRequest.cancelRequest(
                 trainer.getId(),
                 new Callback<Void>() {
 

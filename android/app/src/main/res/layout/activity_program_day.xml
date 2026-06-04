@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
-        android:layout_marginStart="230dp"
+        android:layout_marginStart="270dp"
         android:layout_marginTop="10dp"/>
 
     <TextView
@@ -21,11 +21,16 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"/>
 
-    <EditText
-        android:id="@+id/etExercise"
+    <Spinner
+        android:id="@+id/spinnerMuscleGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Spinner
+        android:id="@+id/spinnerExercise"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Exercise"/>
+        android:layout_marginTop="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:layout_marginStart="90dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="16dp"/>
 
     </LinearLayout>

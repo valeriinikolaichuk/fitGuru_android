@@ -1,5 +1,6 @@
 package com.fitguru.backend.request.repository;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -9,6 +10,7 @@ import com.fitguru.backend.user.entity.*;
 import com.fitguru.backend.request.entity.TrainingRequest;
 import com.fitguru.backend.request.entity.enums.RequestStatus;
 
+@Repository
 public interface TrainingRequestRepository
         extends JpaRepository<TrainingRequest, Long> {
 

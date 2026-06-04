@@ -17,6 +17,7 @@ import com.example.fitguru.client.TrainersListActivity;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
 import com.example.fitguru.program.ClientProgramsActivity;
+import com.example.fitguru.repository.TrainingRequestRepository;
 import com.example.fitguru.storage.SessionManager;
 import com.example.fitguru.trainer.TrainerRequestsActivity;
 import com.example.fitguru.main.dto.ClientResponse;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     ApiService api;
     TrainerClientRepository repository;
+    TrainingRequestRepository repositoryRequest;
     ListView listView;
     SessionManager sessionManager;
     Button btnRequests;
@@ -209,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
         String token = sessionManager.getAccessToken();
 
-        repository.sendRequest(
+        repositoryRequest.sendRequest(
                 trainerId,
                 new Callback<Void>() {
 

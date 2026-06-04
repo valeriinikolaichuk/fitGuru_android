@@ -7,6 +7,14 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="10dp"/>
+
     <TextView
         android:id="@+id/tvExercise"
         android:layout_width="wrap_content"
@@ -36,5 +44,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Notes"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>

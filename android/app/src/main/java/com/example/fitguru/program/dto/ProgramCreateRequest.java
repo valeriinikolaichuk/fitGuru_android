@@ -8,5 +8,4 @@ public class ProgramCreateRequest {
 
     private String title;
 
-    private List<ProgramWeekDto> weeks;
 }

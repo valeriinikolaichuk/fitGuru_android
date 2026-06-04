@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.fitguru.R;
 import com.example.fitguru.main.dto.TrainingRequestResponse;
-import com.example.fitguru.repository.TrainerClientRepository;
+import com.example.fitguru.repository.TrainingRequestRepository;
 import com.example.fitguru.storage.SessionManager;
 
 import java.util.List;
@@ -24,12 +24,12 @@ import retrofit2.Response;
 
 public class RequestAdapter extends ArrayAdapter<TrainingRequestResponse> {
 
-    TrainerClientRepository repository;
+    TrainingRequestRepository repository;
     SessionManager sessionManager;
 
     public RequestAdapter(
             Context context,
-            List<TrainingRequestResponse> items, TrainerClientRepository repository
+            List<TrainingRequestResponse> items, TrainingRequestRepository repository
     ) {
         super(context, 0, items);
         this.repository = repository;

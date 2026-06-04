@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/programs")
 @RequiredArgsConstructor
 public class ProgramController {
-
+/*
     private final ProgramService programService;
 
     @PostMapping
@@ -15,5 +15,5 @@ public class ProgramController {
             @RequestBody ProgramCreateRequest request) {
 
         return programService.create(request);
-    }
+    }*/
 }

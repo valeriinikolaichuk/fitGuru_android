@@ -1,4 +1,4 @@
-package com.example.fitguru.model.enums;
+package com.example.fitguru.program.model.enums;
 
 public enum TrainingDay {
 

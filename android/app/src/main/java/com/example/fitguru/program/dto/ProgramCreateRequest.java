@@ -4,8 +4,8 @@ import java.util.List;
 
 public class ProgramCreateRequest {
 
-    private Long trainerClientId;
+    public Long trainerClientId;
 
-    private String title;
+    public String title;
 
 }

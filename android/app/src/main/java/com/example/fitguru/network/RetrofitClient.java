@@ -4,6 +4,7 @@ import com.example.fitguru.auth.AuthInterceptor;
 import com.example.fitguru.storage.SessionManager;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -15,8 +16,12 @@ public class RetrofitClient {
     public static Retrofit getInstance(SessionManager sessionManager) {
         if (retrofit == null) {
 
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new AuthInterceptor(sessionManager))
+                    .addInterceptor(logging)
                     .build();
 
             retrofit = new Retrofit.Builder()

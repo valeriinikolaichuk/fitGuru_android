@@ -15,6 +15,7 @@ import com.example.fitguru.program.dto.ProgramDayResponse;
 import com.example.fitguru.program.dto.ProgramExerciseCreateRequest;
 import com.example.fitguru.program.dto.ProgramExerciseResponse;
 import com.example.fitguru.program.dto.ProgramResponse;
+import com.example.fitguru.program.dto.ProgramUpdateRequest;
 import com.example.fitguru.program.dto.ProgramWeekCreateRequest;
 import com.example.fitguru.program.dto.ProgramWeekResponse;
 
@@ -24,6 +25,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.POST;
 
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -94,5 +96,16 @@ public interface ApiService {
     @GET("api/exercises")
     Call<List<ExerciseResponse>> getExercisesByGroup(
             @Query("muscleGroup") String muscleGroup
+    );
+
+    @GET("/api/programs/client/{clientId}")
+    Call<List<ProgramResponse>> getProgramsByClient(
+            @Path("clientId") Long clientId
+    );
+
+    @PUT("/api/programs/{id}")
+    Call<ProgramResponse> updateProgram(
+            @Path("id") Long id,
+            @Body ProgramUpdateRequest request
     );
 }

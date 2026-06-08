@@ -5,6 +5,7 @@ import com.example.fitguru.program.dto.ExerciseResponse;
 import com.example.fitguru.program.dto.ProgramCreateRequest;
 import com.example.fitguru.program.dto.ProgramDayCreateRequest;
 import com.example.fitguru.program.dto.ProgramExerciseCreateRequest;
+import com.example.fitguru.program.dto.ProgramUpdateRequest;
 import com.example.fitguru.program.dto.ProgramWeekCreateRequest;
 import com.example.fitguru.program.dto.ProgramResponse;
 import com.example.fitguru.program.dto.ProgramDayResponse;
@@ -57,5 +58,13 @@ public class ProgramCreateRepository {
     ) {
         api.getExercisesByGroup(muscleGroup)
                 .enqueue(callback);
+    }
+
+    public void updateProgram(
+            Long id,
+            ProgramUpdateRequest request,
+            Callback<ProgramResponse> callback
+    ) {
+        api.updateProgram(id, request).enqueue(callback);
     }
 }

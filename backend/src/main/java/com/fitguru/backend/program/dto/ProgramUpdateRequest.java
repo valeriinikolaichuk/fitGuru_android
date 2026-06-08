@@ -1,0 +1,17 @@
+package com.fitguru.backend.program.dto;
+
+import lombok.Data;
+
+@Data
+public class ProgramUpdateRequest {
+    
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+}

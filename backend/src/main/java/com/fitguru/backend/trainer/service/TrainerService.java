@@ -34,12 +34,13 @@ public class TrainerService {
         }
 
         return repository.findByTrainer(trainer)
-                .stream()
-                .map(tc -> new ClientResponse(
-                        tc.getClient().getId(),
-                        tc.getClient().getName(),
-                        tc.getClient().getPhone()
-                ))
-                .toList();
+        .stream()
+        .map(tc -> new ClientResponse(
+                tc.getClient().getId(),
+                tc.getId(),               // TrainerClient ID
+                tc.getClient().getName(),
+                tc.getClient().getPhone()
+        ))
+        .toList();
     }
 }

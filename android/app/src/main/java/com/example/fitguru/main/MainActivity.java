@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                     intent.putExtra("userId", client.id);
                     intent.putExtra("clientName", client.name);
+                    intent.putExtra("trainerClientId", client.trainerClientId);
                 } else if (item instanceof TrainerResponse) {
                     intent.putExtra("userId", ((TrainerResponse) item).id);
                 }

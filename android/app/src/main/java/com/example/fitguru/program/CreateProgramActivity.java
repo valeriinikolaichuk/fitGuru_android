@@ -10,12 +10,15 @@ import com.example.fitguru.R;
 import com.example.fitguru.adapters.WeekAdapter;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
+import com.example.fitguru.program.dto.ProgramResponse;
+import com.example.fitguru.program.dto.ProgramUpdateRequest;
 import com.example.fitguru.program.dto.ProgramWeekCreateRequest;
 import com.example.fitguru.program.dto.ProgramWeekResponse;
 import com.example.fitguru.program.model.WeekItem;
 import com.example.fitguru.repository.ProgramCreateRepository;
 import com.example.fitguru.storage.SessionManager;
 
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,6 +40,7 @@ public class CreateProgramActivity extends AppCompatActivity {
     private ArrayList<WeekItem> weeks;
 
     private Long programId;
+    private EditText etProgramName;
 
     private WeekAdapter adapter;
 
@@ -58,6 +62,7 @@ public class CreateProgramActivity extends AppCompatActivity {
         weeks = new ArrayList<>();
         adapter = new WeekAdapter(this, weeks);
 
+        etProgramName = findViewById(R.id.etProgramName);
         programId = getIntent().getLongExtra("programId", -1);
 
         if (programId == -1) {
@@ -81,6 +86,12 @@ public class CreateProgramActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> finish());
 
+//        @Override
+//        protected void onResume() {
+//            super.onResume();
+//            loadPrograms(clientId);
+//        }
+
         btnAddWeek.setOnClickListener(v -> {
 
             String weekName =
@@ -98,7 +109,49 @@ public class CreateProgramActivity extends AppCompatActivity {
 
         btnSave.setOnClickListener(v -> {
 
+            Log.d("PROGRAM", "Weeks count = " + weeks.size());
+
+            String programName =
+                    etProgramName.getText().toString().trim();
+
+            Log.d("PROGRAM", "Program name = " + programName);
+            Log.d("PROGRAM", "Weeks count = " + weeks.size());
+
+            ProgramUpdateRequest updateRequest =
+                    new ProgramUpdateRequest();
+
+            updateRequest.title = programName;
+
+            repository.updateProgram(
+                    programId,
+                    updateRequest,
+                    new Callback<ProgramResponse>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<ProgramResponse> call,
+                                Response<ProgramResponse> response
+                        ) {
+
+                            Log.d("PROGRAM", "Program updated");
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<ProgramResponse> call,
+                                Throwable t
+                        ) {
+
+                            Log.e("PROGRAM", "Program update error", t);
+                        }
+                    }
+            );
+
             for (WeekItem item : weeks) {
+
+                if (item.getId() != null) {
+                    continue;
+                }
 
                 ProgramWeekCreateRequest request =
                         new ProgramWeekCreateRequest();
@@ -117,13 +170,15 @@ public class CreateProgramActivity extends AppCompatActivity {
                                     Response<ProgramWeekResponse> response
                             ) {
 
-                                if (response.isSuccessful()) {
+                                if (response.isSuccessful()
+                                        && response.body() != null) {
 
-                                    Toast.makeText(
-                                            CreateProgramActivity.this,
-                                            "Week saved",
-                                            Toast.LENGTH_SHORT
-                                    ).show();
+                                    item.setId(response.body().getId());
+
+                                    Log.d(
+                                            "PROGRAM",
+                                            "Week saved id = " + item.getId()
+                                    );
                                 }
                             }
 
@@ -132,12 +187,7 @@ public class CreateProgramActivity extends AppCompatActivity {
                                     Call<ProgramWeekResponse> call,
                                     Throwable t
                             ) {
-
-                                Toast.makeText(
-                                        CreateProgramActivity.this,
-                                        t.getMessage(),
-                                        Toast.LENGTH_LONG
-                                ).show();
+                                Log.e("PROGRAM", "Week error", t);
                             }
                         }
                 );

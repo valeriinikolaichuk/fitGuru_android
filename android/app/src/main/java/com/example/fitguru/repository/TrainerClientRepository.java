@@ -4,6 +4,7 @@ import com.example.fitguru.client.dto.AvailableTrainerResponse;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.main.dto.ClientResponse;
 import com.example.fitguru.main.dto.TrainerResponse;
+import com.example.fitguru.program.dto.ProgramResponse;
 
 import java.util.List;
 
@@ -33,5 +34,12 @@ public class TrainerClientRepository {
             Callback<List<AvailableTrainerResponse>> callback
     ) {
         api.getAvailableTrainers().enqueue(callback);
+    }
+
+    public void getProgramsByClient(
+            Long clientId,
+            Callback<List<ProgramResponse>> callback
+    ) {
+        api.getProgramsByClient(clientId).enqueue(callback);
     }
 }

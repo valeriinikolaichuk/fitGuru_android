@@ -27,4 +27,8 @@ public class WeekItem {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

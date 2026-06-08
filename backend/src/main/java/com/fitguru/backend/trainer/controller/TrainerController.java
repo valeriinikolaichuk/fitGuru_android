@@ -16,7 +16,6 @@ public class TrainerController {
     
     private final TrainerService trainerService;
     
-
     @GetMapping("/clients")
     public List<ClientResponse> clients(
             @RequestHeader("Authorization") String token
@@ -24,8 +23,3 @@ public class TrainerController {
         return trainerService.getClients(token);
     }
 }
-
-
-//GET /trainer/requests
-//GET /trainer/programs
-//POST /trainer/programs

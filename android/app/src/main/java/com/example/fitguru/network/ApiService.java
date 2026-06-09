@@ -118,4 +118,9 @@ public interface ApiService {
     Call<Void> deleteProgram(
             @Path("id") Long id
     );
+
+    @GET("/api/program-weeks/program/{programId}")
+    Call<List<ProgramWeekResponse>> getWeeksByProgram(
+            @Path("programId") Long programId
+    );
 }

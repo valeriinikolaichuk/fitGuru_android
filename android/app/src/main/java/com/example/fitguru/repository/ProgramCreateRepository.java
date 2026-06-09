@@ -81,4 +81,11 @@ public class ProgramCreateRepository {
     ) {
         api.deleteProgram(programId).enqueue(callback);
     }
+
+    public void getWeeksByProgram(
+            Long programId,
+            Callback<List<ProgramWeekResponse>> callback
+    ) {
+        api.getWeeksByProgram(programId).enqueue(callback);
+    }
 }

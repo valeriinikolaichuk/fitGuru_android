@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fitguru.R;
-import com.example.fitguru.program.ProgramDayActivity;
 import com.example.fitguru.program.ProgramWeekActivity;
 import com.example.fitguru.program.model.WeekItem;
 

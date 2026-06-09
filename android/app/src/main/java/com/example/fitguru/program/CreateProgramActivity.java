@@ -249,5 +249,56 @@ public class CreateProgramActivity extends AppCompatActivity {
             );
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadWeeks();
+    }
+
+    private void loadWeeks() {
+
+        repository.getWeeksByProgram(
+                programId,
+                new Callback<List<ProgramWeekResponse>>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<ProgramWeekResponse>> call,
+                            Response<List<ProgramWeekResponse>> response
+                    ) {
+
+                        if (!response.isSuccessful()
+                                || response.body() == null) {
+                            return;
+                        }
+
+                        weeks.clear();
+
+                        for (ProgramWeekResponse week : response.body()) {
+
+                            weeks.add(
+                                    new WeekItem(
+                                            week.getId(),
+                                            week.getTitle(),
+                                            week.getPosition()
+                                    )
+                            );
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<ProgramWeekResponse>> call,
+                            Throwable t
+                    ) {
+                        Log.e("PROGRAM", "Load weeks error", t);
+                    }
+                }
+        );
+    }
 }
 

@@ -1,6 +1,7 @@
 package com.fitguru.backend.program.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fitguru.backend.program.dto.ProgramCreateRequest;
 import com.fitguru.backend.program.dto.ProgramResponse;
@@ -68,5 +69,30 @@ public class ProgramService {
                 .title(program.getTitle())
                 .status(program.getStatus())
                 .build();
+    }
+
+    public ProgramResponse getProgram(Long id) {
+
+        Program program = programRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Program not found"));
+
+        return ProgramResponse.builder()
+                .id(program.getId())
+                .title(program.getTitle())
+                .status(program.getStatus())
+                .build();
+    }
+
+    @Transactional
+    public void deleteProgram(Long id) {
+
+        if (!programRepository.existsById(id)) {
+            throw new RuntimeException("Program not found");
+        }
+
+        Program program = programRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Program not found"));
+
+        programRepository.delete(program);
     }
 }

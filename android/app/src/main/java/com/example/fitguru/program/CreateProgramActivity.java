@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,15 +35,16 @@ public class CreateProgramActivity extends AppCompatActivity {
     private Button btnBack;
     private Button btnAddWeek;
     private Button btnSave;
+    private Button btnDeleteProgram;
 
+    private EditText etProgramName;
     private EditText etWeek;
+
     private RecyclerView rvWeeks;
     private ArrayList<WeekItem> weeks;
+    private WeekAdapter adapter;
 
     private Long programId;
-    private EditText etProgramName;
-
-    private WeekAdapter adapter;
 
     private SessionManager sessionManager;
     private ProgramCreateRepository repository;
@@ -55,14 +57,16 @@ public class CreateProgramActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnAddWeek = findViewById(R.id.btnAddWeek);
         btnSave = findViewById(R.id.btnSave);
+        btnDeleteProgram = findViewById(R.id.btnDeleteProgram);
 
+        etProgramName = findViewById(R.id.etProgramName);
         etWeek = findViewById(R.id.etWeek);
+
         rvWeeks = findViewById(R.id.rvWeeks);
 
         weeks = new ArrayList<>();
         adapter = new WeekAdapter(this, weeks);
 
-        etProgramName = findViewById(R.id.etProgramName);
         programId = getIntent().getLongExtra("programId", -1);
 
         if (programId == -1) {
@@ -81,16 +85,39 @@ public class CreateProgramActivity extends AppCompatActivity {
                 RetrofitClient.getInstance(sessionManager).create(ApiService.class)
         );
 
+        repository.getProgram(
+                programId,
+                new Callback<ProgramResponse>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<ProgramResponse> call,
+                            Response<ProgramResponse> response
+                    ) {
+
+                        if (response.isSuccessful()
+                                && response.body() != null) {
+
+                            etProgramName.setText(
+                                    response.body().getTitle()
+                            );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<ProgramResponse> call,
+                            Throwable t
+                    ) {
+                        Log.e("PROGRAM", "Load program error", t);
+                    }
+                }
+        );
+
         rvWeeks.setLayoutManager(new LinearLayoutManager(this));
         rvWeeks.setAdapter(adapter);
 
         btnBack.setOnClickListener(v -> finish());
-
-//        @Override
-//        protected void onResume() {
-//            super.onResume();
-//            loadPrograms(clientId);
-//        }
 
         btnAddWeek.setOnClickListener(v -> {
 
@@ -108,31 +135,25 @@ public class CreateProgramActivity extends AppCompatActivity {
         });
 
         btnSave.setOnClickListener(v -> {
-
             Log.d("PROGRAM", "Weeks count = " + weeks.size());
 
-            String programName =
-                    etProgramName.getText().toString().trim();
+            String programName = etProgramName.getText().toString().trim();
 
             Log.d("PROGRAM", "Program name = " + programName);
             Log.d("PROGRAM", "Weeks count = " + weeks.size());
 
-            ProgramUpdateRequest updateRequest =
-                    new ProgramUpdateRequest();
-
+            ProgramUpdateRequest updateRequest = new ProgramUpdateRequest();
             updateRequest.title = programName;
 
             repository.updateProgram(
                     programId,
                     updateRequest,
                     new Callback<ProgramResponse>() {
-
                         @Override
                         public void onResponse(
                                 Call<ProgramResponse> call,
                                 Response<ProgramResponse> response
                         ) {
-
                             Log.d("PROGRAM", "Program updated");
                         }
 
@@ -141,7 +162,6 @@ public class CreateProgramActivity extends AppCompatActivity {
                                 Call<ProgramResponse> call,
                                 Throwable t
                         ) {
-
                             Log.e("PROGRAM", "Program update error", t);
                         }
                     }
@@ -149,12 +169,9 @@ public class CreateProgramActivity extends AppCompatActivity {
 
             for (WeekItem item : weeks) {
 
-                if (item.getId() != null) {
-                    continue;
-                }
+                if (item.getId() != null) {continue;}
 
-                ProgramWeekCreateRequest request =
-                        new ProgramWeekCreateRequest();
+                ProgramWeekCreateRequest request = new ProgramWeekCreateRequest();
 
                 request.programId = programId;
                 request.title = item.getTitle();
@@ -169,7 +186,6 @@ public class CreateProgramActivity extends AppCompatActivity {
                                     Call<ProgramWeekResponse> call,
                                     Response<ProgramWeekResponse> response
                             ) {
-
                                 if (response.isSuccessful()
                                         && response.body() != null) {
 
@@ -192,6 +208,45 @@ public class CreateProgramActivity extends AppCompatActivity {
                         }
                 );
             }
+        });
+
+        btnDeleteProgram.setOnClickListener(v -> {
+
+            repository.deleteProgram(
+                    programId,
+                    new Callback<Void>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<Void> call,
+                                Response<Void> response
+                        ) {
+
+                            if (response.isSuccessful()) {
+
+                                Toast.makeText(
+                                        CreateProgramActivity.this,
+                                        "Program deleted",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<Void> call,
+                                Throwable t
+                        ) {
+                            Toast.makeText(
+                                    CreateProgramActivity.this,
+                                    t.getMessage(),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+            );
         });
     }
 }

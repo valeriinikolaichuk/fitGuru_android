@@ -252,4 +252,13 @@ public class ClientProgramsActivity extends AppCompatActivity {
                 }
         );
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (trainerClientId != null && trainerClientId != -1) {
+            loadPrograms(trainerClientId);
+        }
+    }
 }

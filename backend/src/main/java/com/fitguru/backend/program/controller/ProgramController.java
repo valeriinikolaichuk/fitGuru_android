@@ -1,5 +1,6 @@
 package com.fitguru.backend.program.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,22 @@ public class ProgramController {
             @RequestBody ProgramUpdateRequest request
     ) {
         return programService.update(id, request);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProgramResponse> getProgram(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(
+                programService.getProgram(id)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProgram(
+            @PathVariable Long id
+    ) {
+        programService.deleteProgram(id);
+        return ResponseEntity.noContent().build();
     }
 }

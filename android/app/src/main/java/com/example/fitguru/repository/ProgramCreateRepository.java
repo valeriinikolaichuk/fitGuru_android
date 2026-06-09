@@ -67,4 +67,18 @@ public class ProgramCreateRepository {
     ) {
         api.updateProgram(id, request).enqueue(callback);
     }
+
+    public void getProgram(
+            Long id,
+            Callback<ProgramResponse> callback
+    ) {
+        api.getProgram(id).enqueue(callback);
+    }
+
+    public void deleteProgram(
+            Long programId,
+            Callback<Void> callback
+    ) {
+        api.deleteProgram(programId).enqueue(callback);
+    }
 }

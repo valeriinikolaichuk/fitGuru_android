@@ -108,4 +108,14 @@ public interface ApiService {
             @Path("id") Long id,
             @Body ProgramUpdateRequest request
     );
+
+    @GET("/api/programs/{id}") // programs name
+    Call<ProgramResponse> getProgram(
+            @Path("id") Long id
+    );
+
+    @DELETE("/api/programs/{id}")
+    Call<Void> deleteProgram(
+            @Path("id") Long id
+    );
 }

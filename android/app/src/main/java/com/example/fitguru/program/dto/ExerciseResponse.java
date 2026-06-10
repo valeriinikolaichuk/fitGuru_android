@@ -7,4 +7,9 @@ public class ExerciseResponse {
     public String exercise;
 
     public String muscleGroup;
+
+    @Override
+    public String toString() {
+        return exercise;
+    }
 }

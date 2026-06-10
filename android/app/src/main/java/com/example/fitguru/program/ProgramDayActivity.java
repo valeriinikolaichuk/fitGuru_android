@@ -3,6 +3,7 @@ package com.example.fitguru.program;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,25 +44,38 @@ public class ProgramDayActivity extends AppCompatActivity {
 
     private Button btnAddExercise, btnBack, btnSave;
     private RecyclerView rvExercises;
+    private TextView tvDayTitle;
+    private Long dayId;
+    private ExerciseResponse selectedExercise;
 
     private List<MuscleGroup> muscleGroups;
     private List<ExerciseResponse> availableExercises;
 
     private ArrayList<ProgramExerciseCreateRequest> exercises;
-
     private ExercisesAdapter adapter;
 
     private SessionManager sessionManager;
     private ProgramCreateRepository repository;
 
-    private final int REQUEST_EXERCISE = 100;
+    private ActivityResultLauncher<Intent> exerciseLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("DAY_ACTIVITY", "START");
         setContentView(R.layout.activity_program_day);
 
-        TextView tvDayTitle = findViewById(R.id.tvDayTitle);
+        initViews();
+        initData();
+        initRecycler();
+        initSpinners();
+        initLauncher();
+        initListeners();
+    }
+
+    // ---------------- INIT VIEWS ----------------
+    private void initViews() {
+        tvDayTitle = findViewById(R.id.tvDayTitle);
 
         spinnerMuscleGroup = findViewById(R.id.spinnerMuscleGroup);
         spinnerExercise = findViewById(R.id.spinnerExercise);
@@ -69,10 +85,13 @@ public class ProgramDayActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
 
         rvExercises = findViewById(R.id.rvExercises);
+    }
 
+    // ---------------- INIT DATA ----------------
+    private void initData() {
+
+        dayId = getIntent().getLongExtra("dayId", -1);
         tvDayTitle.setText(getIntent().getStringExtra("dayName"));
-
-        btnBack.setOnClickListener(v -> finish());
 
         sessionManager = new SessionManager(this);
         repository = new ProgramCreateRepository(
@@ -83,6 +102,32 @@ public class ProgramDayActivity extends AppCompatActivity {
         muscleGroups = Arrays.asList(MuscleGroup.values());
         availableExercises = new ArrayList<>();
         exercises = new ArrayList<>();
+    }
+
+    // ---------------- INIT RECYCLER ----------------
+    private void initRecycler() {
+
+        adapter = new ExercisesAdapter(exercises, position -> {
+
+            ProgramExerciseCreateRequest item = exercises.get(position);
+
+            Intent intent = new Intent(
+                    this,
+                    ProgramExerciseActivity.class
+            );
+
+            intent.putExtra("exerciseId", item.exerciseId);
+            intent.putExtra("position", item.position);
+
+            exerciseLauncher.launch(intent);
+        });
+
+        rvExercises.setLayoutManager(new LinearLayoutManager(this));
+        rvExercises.setAdapter(adapter);
+    }
+
+    // ---------------- INIT SPINNERS ----------------
+    private void initSpinners() {
 
         ArrayAdapter<MuscleGroup> muscleAdapter =
                 new ArrayAdapter<>(
@@ -104,83 +149,91 @@ public class ProgramDayActivity extends AppCompatActivity {
                     public void onNothingSelected(AdapterView<?> parent) {}
                 }
         );
+    }
 
-        adapter = new ExercisesAdapter(exercises, position -> {
+    // ---------------- ACTIVITY RESULT API ----------------
+    private void initLauncher() {
 
-            ProgramExerciseCreateRequest item = exercises.get(position);
+        exerciseLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
 
-            Intent intent = new Intent(
-                    this,
-                    ProgramExerciseActivity.class
-            );
+                    if (result.getResultCode() != RESULT_OK || result.getData() == null) {
+                        return;
+                    }
 
-            intent.putExtra("exerciseId", item.exerciseId);
-            intent.putExtra("position", item.position);
+                    Intent data = result.getData();
 
-            startActivityForResult(intent, REQUEST_EXERCISE);
-        });
+                    ProgramExerciseCreateRequest req = new ProgramExerciseCreateRequest();
 
-        rvExercises.setLayoutManager(new LinearLayoutManager(this));
-        rvExercises.setAdapter(adapter);
+                    req.dayId = dayId;
+
+                    req.exerciseId = data.getLongExtra("exerciseId", -1);
+                    req.position = data.getIntExtra("position", exercises.size());
+                    req.exerciseName = data.getStringExtra("exerciseName");
+
+                    req.weight = data.getDoubleExtra("weight", 0);
+                    req.sets = data.getIntExtra("sets", 0);
+                    req.reps = data.getIntExtra("reps", 0);
+                    req.notes = data.getStringExtra("notes");
+
+                    exercises.add(req);
+                    adapter.notifyItemInserted(exercises.size() - 1);
+                }
+        );
+    }
+
+    // ---------------- BUTTONS ----------------
+    private void initListeners() {
+
+        btnBack.setOnClickListener(v -> finish());
 
         btnAddExercise.setOnClickListener(v -> {
 
             if (availableExercises.isEmpty()) return;
 
-            ExerciseResponse selected =
-                    availableExercises.get(
-                            spinnerExercise.getSelectedItemPosition()
-                    );
+            selectedExercise =
+                    (ExerciseResponse) spinnerExercise.getSelectedItem();
 
-            Intent intent = new Intent(
-                    this,
-                    ProgramExerciseActivity.class
-            );
+            Intent intent = new Intent(this, ProgramExerciseActivity.class);
 
-            intent.putExtra("exerciseId", selected.id);
+            intent.putExtra("exerciseId", selectedExercise.id);
+            intent.putExtra("exerciseName", selectedExercise.exercise);
             intent.putExtra("position", exercises.size());
 
-            startActivityForResult(intent, REQUEST_EXERCISE);
+            exerciseLauncher.launch(intent);
         });
 
-        btnSave.setOnClickListener(v -> {
-
-            for (ProgramExerciseCreateRequest req : exercises) {
-                repository.createExercise(req, new Callback<ProgramExerciseResponse>() {
-                    @Override
-                    public void onResponse(Call<ProgramExerciseResponse> call, Response<ProgramExerciseResponse> response) {}
-
-                    @Override
-                    public void onFailure(Call<ProgramExerciseResponse> call, Throwable t) {}
-                });
-            }
-
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-        });
+        btnSave.setOnClickListener(v -> saveExercises());
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    // ---------------- SAVE ----------------
+    private void saveExercises() {
 
-        if (requestCode == REQUEST_EXERCISE && resultCode == RESULT_OK) {
-
-            ProgramExerciseCreateRequest req = new ProgramExerciseCreateRequest();
-
-            req.exerciseId = data.getLongExtra("exerciseId", -1);
-            req.position = data.getIntExtra("position", 0);
-
-            req.weight = data.getDoubleExtra("weight", 0);
-            req.sets = data.getIntExtra("sets", 0);
-            req.reps = data.getIntExtra("reps", 0);
-            req.notes = data.getStringExtra("notes");
-
-            exercises.add(req);
-
-            adapter.notifyItemInserted(exercises.size() - 1);
+        if (exercises.isEmpty()) {
+            Toast.makeText(this, "Nothing to save", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        for (ProgramExerciseCreateRequest req : exercises) {
+
+            repository.createExercise(req, new Callback<ProgramExerciseResponse>() {
+                @Override
+                public void onResponse(Call<ProgramExerciseResponse> call,
+                                       Response<ProgramExerciseResponse> response) {
+                }
+
+                @Override
+                public void onFailure(Call<ProgramExerciseResponse> call, Throwable t) {
+                    Log.e("PROGRAM", "Exercise save error", t);
+                }
+            });
+        }
+
+        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
     }
 
+    // ---------------- LOAD EXERCISES ----------------
     private void loadExercises(MuscleGroup muscleGroup) {
 
         repository.getExercisesByGroup(
@@ -188,29 +241,27 @@ public class ProgramDayActivity extends AppCompatActivity {
                 new Callback<List<ExerciseResponse>>() {
 
                     @Override
-                    public void onResponse(Call<List<ExerciseResponse>> call, Response<List<ExerciseResponse>> response) {
+                    public void onResponse(Call<List<ExerciseResponse>> call,
+                                           Response<List<ExerciseResponse>> response) {
 
                         if (!response.isSuccessful() || response.body() == null) return;
 
                         availableExercises = response.body();
 
-                        List<String> names = new ArrayList<>();
-
-                        for (ExerciseResponse e : availableExercises) {
-                            names.add(e.exercise);
-                        }
-
-                        spinnerExercise.setAdapter(
+                        ArrayAdapter<ExerciseResponse> adapter =
                                 new ArrayAdapter<>(
                                         ProgramDayActivity.this,
                                         android.R.layout.simple_spinner_dropdown_item,
-                                        names
-                                )
-                        );
+                                        availableExercises
+                                );
+
+                        spinnerExercise.setAdapter(adapter);
                     }
 
                     @Override
-                    public void onFailure(Call<List<ExerciseResponse>> call, Throwable t) {}
+                    public void onFailure(Call<List<ExerciseResponse>> call, Throwable t) {
+                        Log.e("PROGRAM", "Load exercises error", t);
+                    }
                 }
         );
     }

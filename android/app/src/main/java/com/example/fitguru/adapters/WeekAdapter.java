@@ -76,13 +76,11 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.WeekViewHolder
     public static class WeekViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvWeek;
-        Button btnDelete;
 
         public WeekViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvWeek = itemView.findViewById(R.id.tvWeek);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }

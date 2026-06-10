@@ -18,7 +18,7 @@ public class ProgramController {
     private final ProgramService programService;
 
     @PostMapping
-    public ProgramResponse ccreateProgram(
+    public ProgramResponse createProgram(
             @RequestBody ProgramCreateRequest request
     ) {
         System.out.println("PROGRAM CONTROLLER HIT");

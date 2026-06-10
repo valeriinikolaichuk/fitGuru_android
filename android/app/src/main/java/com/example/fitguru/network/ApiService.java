@@ -50,6 +50,13 @@ public interface ApiService {
     @GET("/client/trainers/available")
     Call<List<AvailableTrainerResponse>> getAvailableTrainers(); // available for requests
 
+    @GET("/api/programs/client/{clientId}")
+    Call<List<ProgramResponse>> getProgramsByClient(
+            @Path("clientId") Long clientId
+    );
+
+// -- TrainingRequestRepository
+
     @POST("/requests/{trainerId}") // request to the trainer
     Call<Void> sendRequest(
             @Path("trainerId") Long trainerId
@@ -73,34 +80,11 @@ public interface ApiService {
             @Path("id") Long requestId
     );
 
+// -- ProgramCreateRepository
+
     @POST("api/programs")
     Call<ProgramResponse> createProgram(
             @Body ProgramCreateRequest request
-    );
-
-    @POST("api/program-weeks")
-    Call<ProgramWeekResponse> createWeek(
-            @Body ProgramWeekCreateRequest request
-    );
-
-    @POST("api/program-days")
-    Call<Void> createDay(
-            @Body List<ProgramDayCreateRequest> requests
-    );
-
-    @POST("api/program-exercises")
-    Call<ProgramExerciseResponse> createExercise(
-            @Body ProgramExerciseCreateRequest request
-    );
-
-    @GET("api/exercises")
-    Call<List<ExerciseResponse>> getExercisesByGroup(
-            @Query("muscleGroup") String muscleGroup
-    );
-
-    @GET("/api/programs/client/{clientId}")
-    Call<List<ProgramResponse>> getProgramsByClient(
-            @Path("clientId") Long clientId
     );
 
     @PUT("/api/programs/{id}")
@@ -119,8 +103,44 @@ public interface ApiService {
             @Path("id") Long id
     );
 
+// -- WEEK
+
+    @POST("api/program-weeks")
+    Call<ProgramWeekResponse> createWeek(
+            @Body ProgramWeekCreateRequest request
+    );
+
     @GET("/api/program-weeks/program/{programId}")
     Call<List<ProgramWeekResponse>> getWeeksByProgram(
             @Path("programId") Long programId
+    );
+
+    @DELETE("api/program-weeks/{weekId}")
+    Call<Void> deleteWeek(
+            @Path("weekId") Long weekId
+    );
+
+// -- DAY
+
+    @POST("api/program-days")
+    Call<Void> createDay(
+            @Body List<ProgramDayCreateRequest> requests
+    );
+
+    @GET("api/program-days/week/{weekId}")
+    Call<List<ProgramDayResponse>> getDaysByWeek(
+            @Path("weekId") Long weekId
+    );
+
+// -- EXERCISE
+
+    @POST("api/program-exercises")
+    Call<ProgramExerciseResponse> createExercise(
+            @Body ProgramExerciseCreateRequest request
+    );
+
+    @GET("api/exercises")
+    Call<List<ExerciseResponse>> getExercisesByGroup(
+            @Query("muscleGroup") String muscleGroup
     );
 }

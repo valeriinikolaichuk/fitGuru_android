@@ -1,5 +1,6 @@
 package com.example.fitguru.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,35 +9,45 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.fitguru.R;
+import com.example.fitguru.program.model.DayItem;
 
-public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.DayVH> {
-    private ArrayList<String> days;
-    private OnItemClick listener;
+import java.util.List;
+
+public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.DayViewHolder> {
+
+    private final Context context;
+    private final List<DayItem> days;
+    private final OnItemClick listener;
 
     public interface OnItemClick {
-        void onClick(int position);
+        void onClick(DayItem item);
     }
 
-    public DaysAdapter(ArrayList<String> days, OnItemClick listener) {
+    public DaysAdapter(Context context, List<DayItem> days, OnItemClick listener) {
+        this.context = context;
         this.days = days;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public DayVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(android.R.layout.simple_list_item_1, parent, false);
-        return new DayVH(view);
+                .inflate(R.layout.item_day, parent, false);
+        return new DayViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DayVH holder, int position) {
-        String day = days.get(position);
-        holder.text.setText(day);
+    public void onBindViewHolder(@NonNull DayViewHolder holder, int position) {
 
-        holder.itemView.setOnClickListener(v -> listener.onClick(position));
+        DayItem item = days.get(position);
+
+        holder.tvDay.setText(item.getDay().name());
+
+        holder.itemView.setOnClickListener(v ->
+                listener.onClick(item)
+        );
     }
 
     @Override
@@ -44,12 +55,15 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.DayVH> {
         return days.size();
     }
 
-    static class DayVH extends RecyclerView.ViewHolder {
-        TextView text;
+    static class DayViewHolder extends RecyclerView.ViewHolder {
 
-        public DayVH(@NonNull View itemView) {
+        TextView tvDay;
+        TextView arrow;
+
+        public DayViewHolder(@NonNull View itemView) {
             super(itemView);
-            text = itemView.findViewById(android.R.id.text1);
+            tvDay = itemView.findViewById(R.id.tvDay);
+            arrow = itemView.findViewById(R.id.tvArrow);
         }
     }
 }

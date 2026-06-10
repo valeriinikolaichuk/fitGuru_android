@@ -50,5 +50,9 @@ public class ProgramWeekService {
             .stream()
             .map(ProgramWeekMapper::toResponse)
             .toList();
-}
+    }
+
+    public void delete(Long weekId) {
+        weekRepository.deleteById(weekId);
+    }
 }

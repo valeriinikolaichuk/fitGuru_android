@@ -31,35 +31,6 @@ public class ProgramCreateRepository {
         api.createProgram(request).enqueue(callback);
     }
 
-    public void createWeek(
-            ProgramWeekCreateRequest request,
-            Callback<ProgramWeekResponse> callback
-    ) {
-        api.createWeek(request).enqueue(callback);
-    }
-
-    public void createDay(
-            List<ProgramDayCreateRequest> requests,
-            Callback<Void> callback
-    ) {
-        api.createDay(requests).enqueue(callback);
-    }
-
-    public void createExercise(
-            ProgramExerciseCreateRequest request,
-            Callback<ProgramExerciseResponse> callback
-    ) {
-        api.createExercise(request).enqueue(callback);
-    }
-
-    public void getExercisesByGroup(
-            String muscleGroup,
-            Callback<List<ExerciseResponse>> callback
-    ) {
-        api.getExercisesByGroup(muscleGroup)
-                .enqueue(callback);
-    }
-
     public void updateProgram(
             Long id,
             ProgramUpdateRequest request,
@@ -82,10 +53,58 @@ public class ProgramCreateRepository {
         api.deleteProgram(programId).enqueue(callback);
     }
 
+// -- WEEK
+
+    public void createWeek(
+            ProgramWeekCreateRequest request,
+            Callback<ProgramWeekResponse> callback
+    ) {
+        api.createWeek(request).enqueue(callback);
+    }
+
     public void getWeeksByProgram(
             Long programId,
             Callback<List<ProgramWeekResponse>> callback
     ) {
         api.getWeeksByProgram(programId).enqueue(callback);
+    }
+
+    public void deleteWeek(
+            Long weekId,
+            Callback<Void> callback
+    ) {
+        api.deleteWeek(weekId).enqueue(callback);
+    }
+
+// -- DAY
+
+    public void createDay(
+            List<ProgramDayCreateRequest> requests,
+            Callback<Void> callback
+    ) {
+        api.createDay(requests).enqueue(callback);
+    }
+
+    public void getDaysByWeek(
+            Long weekId,
+            Callback<List<ProgramDayResponse>> callback
+    ) {
+        api.getDaysByWeek(weekId).enqueue(callback);
+    }
+
+// -- EXERCISE
+
+    public void createExercise(
+            ProgramExerciseCreateRequest request,
+            Callback<ProgramExerciseResponse> callback
+    ) {
+        api.createExercise(request).enqueue(callback);
+    }
+
+    public void getExercisesByGroup(
+            String muscleGroup,
+            Callback<List<ExerciseResponse>> callback
+    ) {
+        api.getExercisesByGroup(muscleGroup).enqueue(callback);
     }
 }

@@ -13,6 +13,7 @@ public class ProgramExerciseActivity extends AppCompatActivity {
 
     public long exerciseId;
     public int position;
+    private String exerciseName;
 
     private EditText etWeight;
     private EditText etSets;
@@ -29,6 +30,7 @@ public class ProgramExerciseActivity extends AppCompatActivity {
 
         exerciseId = getIntent().getLongExtra("exerciseId", -1);
         position = getIntent().getIntExtra("position", 0);
+        exerciseName = getIntent().getStringExtra("exerciseName");
 
         etWeight = findViewById(R.id.etWeight);
         etSets = findViewById(R.id.etSets);
@@ -46,6 +48,7 @@ public class ProgramExerciseActivity extends AppCompatActivity {
 
             result.putExtra("exerciseId", exerciseId);
             result.putExtra("position", position);
+            result.putExtra("exerciseName", exerciseName);
 
             result.putExtra("weight", Double.parseDouble(etWeight.getText().toString()));
             result.putExtra("sets", Integer.parseInt(etSets.getText().toString()));

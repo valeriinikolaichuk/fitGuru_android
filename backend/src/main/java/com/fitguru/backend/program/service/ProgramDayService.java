@@ -1,14 +1,17 @@
 package com.fitguru.backend.program.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.fitguru.backend.program.dto.ProgramDayCreateRequest;
+import com.fitguru.backend.program.dto.ProgramDayResponse;
 import com.fitguru.backend.program.entity.ProgramDay;
 import com.fitguru.backend.program.entity.ProgramWeek;
 import com.fitguru.backend.program.repository.ProgramDayRepository;
 import com.fitguru.backend.program.repository.ProgramWeekRepository;
+import com.fitguru.backend.program.mapper.ProgramDayMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +22,11 @@ public class ProgramDayService {
     private final ProgramDayRepository dayRepository;
     private final ProgramWeekRepository weekRepository;
 
-    public void create(List<ProgramDayCreateRequest> requests) {
+    public List<ProgramDayResponse> create(
+            List<ProgramDayCreateRequest> requests
+    ) {
+
+        List<ProgramDayResponse> result = new ArrayList<>();
 
         for (ProgramDayCreateRequest request : requests) {
 
@@ -33,7 +40,24 @@ public class ProgramDayService {
                     .position(request.getPosition())
                     .build();
 
-            dayRepository.save(day);
+            day = dayRepository.save(day);
+
+            result.add(
+                    ProgramDayMapper.toResponse(day)
+            );
         }
+
+        return result;
+    }
+
+    public List<ProgramDayResponse> getByWeek(
+            Long weekId
+    ) {
+
+        return dayRepository
+                .findByWeekIdOrderByPosition(weekId)
+                .stream()
+                .map(ProgramDayMapper::toResponse)
+                .toList();
     }
 }

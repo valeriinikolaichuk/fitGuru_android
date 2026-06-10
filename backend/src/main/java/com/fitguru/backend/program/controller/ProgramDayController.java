@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
 import com.fitguru.backend.program.dto.ProgramDayCreateRequest;
+import com.fitguru.backend.program.dto.ProgramDayResponse;
 import com.fitguru.backend.program.service.ProgramDayService;
 
 @RestController
@@ -20,5 +21,12 @@ public class ProgramDayController {
             @RequestBody List<ProgramDayCreateRequest> requests
     ) {
         dayService.create(requests);
+    }
+
+    @GetMapping("/week/{weekId}")
+    public List<ProgramDayResponse> getByWeek(
+            @PathVariable Long weekId
+    ) {
+        return dayService.getByWeek(weekId);
     }
 }

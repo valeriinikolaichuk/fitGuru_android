@@ -42,7 +42,7 @@ public class ProgramDayActivity extends AppCompatActivity {
     private Spinner spinnerMuscleGroup;
     private Spinner spinnerExercise;
 
-    private Button btnAddExercise, btnBack, btnSave;
+    private Button btnAddExercise, btnBack, btnSave, btnDeleteDay;
     private RecyclerView rvExercises;
     private TextView tvDayTitle;
     private Long dayId;
@@ -68,6 +68,7 @@ public class ProgramDayActivity extends AppCompatActivity {
         initViews();
         initData();
         initRecycler();
+        loadDayExercises();
         initSpinners();
         initLauncher();
         initListeners();
@@ -83,6 +84,7 @@ public class ProgramDayActivity extends AppCompatActivity {
         btnAddExercise = findViewById(R.id.btnAddExercise);
         btnBack = findViewById(R.id.btnBack);
         btnSave = findViewById(R.id.btnSave);
+        btnDeleteDay = findViewById(R.id.btnDeleteDay);
 
         rvExercises = findViewById(R.id.rvExercises);
     }
@@ -205,6 +207,53 @@ public class ProgramDayActivity extends AppCompatActivity {
         });
 
         btnSave.setOnClickListener(v -> saveExercises());
+
+
+
+
+
+        btnDeleteDay.setOnClickListener(v -> {
+
+            repository.deleteDay(
+                    dayId,
+                    new Callback<Void>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<Void> call,
+                                Response<Void> response
+                        ) {
+
+                            if (response.isSuccessful()) {
+
+                                Toast.makeText(
+                                        ProgramDayActivity.this,
+                                        "Day deleted",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<Void> call,
+                                Throwable t
+                        ) {
+                            Toast.makeText(
+                                    ProgramDayActivity.this,
+                                    t.getMessage(),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    }
+            );
+        });
+
+
+
+
     }
 
     // ---------------- SAVE ----------------
@@ -216,21 +265,58 @@ public class ProgramDayActivity extends AppCompatActivity {
         }
 
         for (ProgramExerciseCreateRequest req : exercises) {
+            if (req.id != null) {
+                continue;
+            }
 
-            repository.createExercise(req, new Callback<ProgramExerciseResponse>() {
-                @Override
-                public void onResponse(Call<ProgramExerciseResponse> call,
-                                       Response<ProgramExerciseResponse> response) {
-                }
+            repository.createExercise(
+                    req,
+                    new Callback<ProgramExerciseResponse>() {
 
-                @Override
-                public void onFailure(Call<ProgramExerciseResponse> call, Throwable t) {
-                    Log.e("PROGRAM", "Exercise save error", t);
-                }
-            });
+                        @Override
+                        public void onResponse(
+                                Call<ProgramExerciseResponse> call,
+                                Response<ProgramExerciseResponse> response
+                        ) {
+
+                            if (!response.isSuccessful()
+                                    || response.body() == null) {
+
+                                Log.e(
+                                        "PROGRAM",
+                                        "Save failed: " + response.code()
+                                );
+                                return;
+                            }
+
+                            req.id = response.body().getId();
+
+                            Log.d(
+                                    "PROGRAM",
+                                    "Exercise saved id = " + req.id
+                            );
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<ProgramExerciseResponse> call,
+                                Throwable t
+                        ) {
+                            Log.e(
+                                    "PROGRAM",
+                                    "Exercise save error",
+                                    t
+                            );
+                        }
+                    }
+            );
         }
 
-        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(
+                this,
+                "Save started",
+                Toast.LENGTH_SHORT
+        ).show();
     }
 
     // ---------------- LOAD EXERCISES ----------------
@@ -260,6 +346,57 @@ public class ProgramDayActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<List<ExerciseResponse>> call, Throwable t) {
+                        Log.e("PROGRAM", "Load exercises error", t);
+                    }
+                }
+        );
+    }
+
+    private void loadDayExercises() {
+
+        repository.getExercisesByDay(
+                dayId,
+                new Callback<List<ProgramExerciseResponse>>() {
+
+                    @Override
+                    public void onResponse(
+                            Call<List<ProgramExerciseResponse>> call,
+                            Response<List<ProgramExerciseResponse>> response
+                    ) {
+
+                        if (!response.isSuccessful()
+                                || response.body() == null) {
+                            return;
+                        }
+
+                        exercises.clear();
+
+                        for (ProgramExerciseResponse item : response.body()) {
+
+                            ProgramExerciseCreateRequest req =
+                                    new ProgramExerciseCreateRequest();
+
+                            req.id = item.getId();
+                            req.exerciseId = item.getExerciseId();
+                            req.exerciseName = item.getExerciseName();
+                            req.position = item.getPosition();
+
+                            req.weight = item.getWeight();
+                            req.sets = item.getSets();
+                            req.reps = item.getReps();
+                            req.notes = item.getNotes();
+
+                            exercises.add(req);
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<ProgramExerciseResponse>> call,
+                            Throwable t
+                    ) {
                         Log.e("PROGRAM", "Load exercises error", t);
                     }
                 }

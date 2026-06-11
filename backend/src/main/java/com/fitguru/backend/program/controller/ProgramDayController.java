@@ -29,4 +29,11 @@ public class ProgramDayController {
     ) {
         return dayService.getByWeek(weekId);
     }
+
+    @DeleteMapping("/{dayId}")
+    public void delete(
+            @PathVariable Long weekId
+    ) {
+        dayService.delete(weekId);
+    }
 }

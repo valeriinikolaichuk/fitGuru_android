@@ -1,12 +1,14 @@
 package com.fitguru.backend.program.service;
 
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.fitguru.backend.program.repository.*;
 import com.fitguru.backend.program.dto.*;
 import com.fitguru.backend.exercise.repository.ExerciseRepository;
 import com.fitguru.backend.program.entity.ProgramDay;
 import com.fitguru.backend.program.entity.ProgramExercise;
+import com.fitguru.backend.program.mapper.ProgramExerciseMapper;
 import com.fitguru.backend.exercise.entity.Exercise;
 
 import lombok.RequiredArgsConstructor;
@@ -50,5 +52,14 @@ public class ProgramExerciseService {
                 .exerciseName(exercise.getExercise())
                 .position(programExercise.getPosition())
                 .build();
+    }
+
+    public List<ProgramExerciseResponse> getByDay(Long dayId) {
+
+        return exerciseProgramRepository
+            .findByDayIdOrderByPosition(dayId)
+            .stream()
+            .map(ProgramExerciseMapper::toResponse)
+            .toList();
     }
 }

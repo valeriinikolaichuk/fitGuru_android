@@ -92,6 +92,13 @@ public class ProgramCreateRepository {
         api.getDaysByWeek(weekId).enqueue(callback);
     }
 
+    public void deleteDay(
+            Long dayId,
+            Callback<Void> callback
+    ) {
+        api.deleteWeek(dayId).enqueue(callback);
+    }
+
 // -- EXERCISE
 
     public void createExercise(
@@ -106,5 +113,12 @@ public class ProgramCreateRepository {
             Callback<List<ExerciseResponse>> callback
     ) {
         api.getExercisesByGroup(muscleGroup).enqueue(callback);
+    }
+
+    public void getExercisesByDay(
+            Long dayId,
+            Callback<List<ProgramExerciseResponse>> callback
+    ) {
+        api.getExercisesByDay(dayId).enqueue(callback);
     }
 }

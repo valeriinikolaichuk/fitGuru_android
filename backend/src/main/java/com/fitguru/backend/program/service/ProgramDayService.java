@@ -60,4 +60,8 @@ public class ProgramDayService {
                 .map(ProgramDayMapper::toResponse)
                 .toList();
     }
+
+    public void delete(Long dayId) {
+        dayRepository.deleteById(dayId);
+    }
 }

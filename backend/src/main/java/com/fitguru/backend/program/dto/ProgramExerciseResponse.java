@@ -14,4 +14,12 @@ public class ProgramExerciseResponse {
     private String exerciseName;
 
     private Integer position;
+
+    public Double weight;
+
+    public Integer sets;
+
+    public Integer reps;
+
+    public String notes;
 }

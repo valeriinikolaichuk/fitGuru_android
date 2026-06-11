@@ -57,7 +57,7 @@ public class ExercisesAdapter
 
         ProgramExerciseCreateRequest item =
                 exercises.get(position);
-        
+
         holder.tvExercise.setText(
                 (position + 1) + ". " + item.exerciseName
         );

@@ -132,6 +132,11 @@ public interface ApiService {
             @Path("weekId") Long weekId
     );
 
+    @DELETE("api/program-days/{dayId}")
+    Call<Void> deleteDay(
+            @Path("dayId") Long dayId
+    );
+
 // -- EXERCISE
 
     @POST("api/program-exercises")
@@ -142,5 +147,10 @@ public interface ApiService {
     @GET("api/exercises")
     Call<List<ExerciseResponse>> getExercisesByGroup(
             @Query("muscleGroup") String muscleGroup
+    );
+
+    @GET("api/program-exercises/day/{dayId}")
+    Call<List<ProgramExerciseResponse>> getExercisesByDay(
+            @Path("dayId") Long dayId
     );
 }

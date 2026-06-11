@@ -2,6 +2,7 @@ package com.fitguru.backend.program.controller;
 
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 import com.fitguru.backend.program.service.ProgramExerciseService;
 import com.fitguru.backend.program.dto.ProgramExerciseCreateRequest;
@@ -19,5 +20,12 @@ public class ProgramExerciseController {
             @RequestBody ProgramExerciseCreateRequest request
     ) {
         return exerciseService.create(request);
+    }
+
+    @GetMapping("/day/{dayId}")
+    public List<ProgramExerciseResponse> getByDay(
+            @PathVariable Long dayId
+    ) {
+        return exerciseService.getByDay(dayId);
     }
 }

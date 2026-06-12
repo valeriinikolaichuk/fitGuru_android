@@ -5,6 +5,23 @@
   <h4>The current application serves as a beta version for testing purposes, with functionality expected to be expanded over time. Future iterations will include a native iOS application as well as a full-featured web application.</h4>
 </div>
 
+<details open="open">
+<summary>Contents</summary>
+
+- [Features](#features)
+- [Demo Access](#demo-access)
+- [Architecture](#architecture)
+- [Authentication Flow](#authentication-flow)
+- [Setup and Run Instructions](#setup-and-run-instructions)
+- [Database](#database)
+- [Project Structure](#project-structure)
+- [License](LICENSE)
+- [Author](#author)
+
+</details>
+
+
+
 ## Features
 
 - Create and manage workout programs
@@ -56,5 +73,11 @@ For a detailed explanation of the database structure see:
 For a detailed explanation of the system architecture see:    
 ➡ [frontend documentation](docs/architecture/frontend_architecture.md)  
 ➡ [backend documentation](docs/architecture/backend_architecture.md)
+
+---
+
+## Author
+
+Valerii Nikolaichuk
 
 ---

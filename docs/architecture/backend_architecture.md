@@ -26,14 +26,6 @@ Central Spring Security configuration.
 
 ---
 
-### client/
-
-Provides REST endpoints for client-related operations.
-
-➡ [client/](backend/client.md)
-
----
-
 ### trainer/
 
 Provides functionality for retrieving trainer-client relationships.
@@ -42,51 +34,41 @@ Provides functionality for retrieving trainer-client relationships.
 
 ---
 
-### Trainer–Client Relationship Modules
-#### Overview
-These modules implement the relationship system between trainers and clients in the `FitGuru` platform.  
-They provide REST APIs for retrieving assigned trainers and clients based on the authenticated user role.  
-The system is built on a many-to-many relationship using a dedicated join table (`trainer_clients`) and follows a layered, scalable architecture.  
+### client/
 
+Provides REST endpoints for client-related operations.
 
-
-### Trainer Module
-#### Responsibilities  
-
-Provides REST endpoints for trainers:
-- `GET /trainer/clients` Returns a list of clients assigned to the authenticated trainer.
-
-#### Business Logic
-- Extracts trainer identity from JWT token
-- Loads trainer from database
-- Fetches related clients via `TrainerClientRepository`
-- Maps data to `ClientResponse` DTO
-
-#### Relationship Management (TrainerClient)
-The `TrainerClient` entity represents a many-to-many relationship between users.  
-It contains:
-- `trainer` → User with TRAINER role
-- `client` → User with CLIENT role
-- `createdAt` → assignment timestamp
-
-#### Data Access Layer  
-`TrainerClientRepository`  
-Provides access to relationship data:  
-- findByTrainer(User trainer) → returns all clients of a trainer
-- findByClient(User client) → returns all trainers of a client
+➡ [client/](backend/client.md)
 
 ---
 
-### Client Module
-#### Responsibilities
+### request/
 
-Provides REST endpoints for clients:
-- `GET /client/trainers` Returns a list of trainers assigned to the authenticated client.
+Provides REST endpoints for managing trainer-client connection requests.
 
-#### Business Logic
-- Extracts client identity from JWT token
-- Loads client from database
-- Fetches related trainers via `TrainerClientRepository`
-- Maps data to `TrainerResponse` DTO
+➡ [request/](backend/request.md)
 
 ---
+
+### program/
+
+Provides functionality for creating and managing training programs.
+
+➡ [program/](backend/program.md)
+
+---
+
+### exercise/
+
+Provides access to exercise definitions used in training programs.
+
+➡ [exercise/](backend/exercise.md)
+
+---
+
+### progress/
+
+Provides training execution and user progress over time.
+
+➡ [progress/](backend/progress.md)
+

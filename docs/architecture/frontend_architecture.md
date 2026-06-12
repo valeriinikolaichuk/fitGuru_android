@@ -63,6 +63,8 @@ Provides functionality for creating and editing workout programs.
 
 ### adapters/
 
+The adapter layer is responsible for binding DTO and local model data to Android UI components.
+
 ➡ [adapters/](frontend/adapters.md)
 
 ---

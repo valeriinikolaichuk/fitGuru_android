@@ -60,11 +60,15 @@ Provides functionality for creating and managing training programs.
 
 ### exercise/
 
-➡ [exercise/](backend/exercise.md)
-
 Provides access to exercise definitions used in training programs.
+
+➡ [exercise/](backend/exercise.md)
 
 ---
 
+### progress/
 
+Provides training execution and user progress over time.
+
+➡ [progress/](backend/progress.md)
 

@@ -45,6 +45,18 @@ The `trainer` module responsible for trainer-specific functionality, including c
                 
 ---
 
+### view/
+
+➡ [trainer/](frontend/view.md)
+
+---
+
+### program/
+
+➡ [trainer/](frontend/program.md)
+
+---
+
 ### adapters/
 
 ➡ [adapters/](frontend/adapters.md)

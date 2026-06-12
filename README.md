@@ -15,7 +15,7 @@
 - [Setup and Run Instructions](#setup-and-run-instructions)
 - [Database](#database)
 - [Project Structure](#project-structure)
-- [License](LICENSE.md)
+- [License](LICENSE)
 - [Author](#author)
 
 </details>

@@ -31,7 +31,10 @@
             android:name=".client.TrainersListActivity"
             android:exported="false"/>
         <activity
-            android:name=".program.ClientProgramsActivity"
+            android:name=".view.ClientProgramsActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.TrainerProgramsActivity"
             android:exported="false"/>
         <activity
             android:name=".program.CreateProgramActivity"
@@ -44,6 +47,15 @@
             android:exported="false"/>
         <activity
             android:name=".program.ProgramExerciseActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.ProgramViewActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.ProgramWeekViewActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".view.ProgramDayViewActivity"
             android:exported="false"/>
 
         <activity

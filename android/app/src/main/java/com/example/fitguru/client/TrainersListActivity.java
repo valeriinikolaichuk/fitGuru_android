@@ -46,6 +46,7 @@ public class TrainersListActivity extends AppCompatActivity {
                 .create(ApiService.class);
 
         repository = new TrainerClientRepository(api);
+        repositoryRequest = new TrainingRequestRepository(api);
 
         loadTrainers();
 

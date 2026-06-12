@@ -5,6 +5,8 @@ public class TrainerResponse {
     public String name;
     public String phone;
 
+    public Long trainerClientId;
+
     public Long getId() {
         return id;
     }
@@ -16,4 +18,6 @@ public class TrainerResponse {
     public String getPhone() {
         return phone;
     }
+
+    public Long getTrainerClientId() { return trainerClientId; }
 }

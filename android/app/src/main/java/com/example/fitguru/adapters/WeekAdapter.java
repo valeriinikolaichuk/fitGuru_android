@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +19,22 @@ import java.util.List;
 
 public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.WeekViewHolder> {
 
+    public interface OnWeekClick {
+        void onClick(WeekItem week);
+    }
+
     private final Context context;
     private final List<WeekItem> weeks;
+    private final OnWeekClick listener;
 
-    public WeekAdapter(Context context, List<WeekItem> weeks) {
+    public WeekAdapter(
+            Context context,
+            List<WeekItem> weeks,
+            OnWeekClick listener
+    ) {
         this.context = context;
         this.weeks = weeks;
+        this.listener = listener;
     }
 
     @NonNull
@@ -48,23 +57,17 @@ public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.WeekViewHolder
         holder.tvWeek.setOnClickListener(v -> {
 
             if (week.getId() == null) {
+
                 Toast.makeText(
                         context,
                         "Week not saved yet",
                         Toast.LENGTH_SHORT
                 ).show();
+
                 return;
             }
 
-            Intent intent = new Intent(
-                    context,
-                    ProgramWeekActivity.class
-            );
-
-            intent.putExtra("weekId", week.getId());
-            intent.putExtra("weekName", week.getTitle());
-
-            context.startActivity(intent);
+            listener.onClick(week);
         });
     }
 

@@ -19,8 +19,7 @@ public class TrainingRequestRepository {
             Long trainerId,
             Callback<Void> callback
     ) {
-        api.sendRequest(trainerId)
-                .enqueue(callback);
+        api.sendRequest(trainerId).enqueue(callback);
     }
 
     public void cancelRequest(
@@ -40,8 +39,7 @@ public class TrainingRequestRepository {
             Long requestId,
             Callback<Void> callback
     ) {
-        api.acceptRequest(requestId)
-                .enqueue(callback);
+        api.acceptRequest(requestId).enqueue(callback);
     }
 
     public void rejectRequest(
@@ -49,7 +47,6 @@ public class TrainingRequestRepository {
             Callback<Void> callback
     ) {
 
-        api.rejectRequest(requestId)
-                .enqueue(callback);
+        api.rejectRequest(requestId).enqueue(callback);
     }
 }

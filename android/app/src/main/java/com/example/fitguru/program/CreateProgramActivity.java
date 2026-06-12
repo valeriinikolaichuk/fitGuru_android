@@ -1,5 +1,6 @@
 package com.example.fitguru.program;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,7 +66,22 @@ public class CreateProgramActivity extends AppCompatActivity {
         rvWeeks = findViewById(R.id.rvWeeks);
 
         weeks = new ArrayList<>();
-        adapter = new WeekAdapter(this, weeks);
+        adapter = new WeekAdapter(
+                this,
+                weeks,
+                week -> {
+
+                    Intent intent = new Intent(
+                            CreateProgramActivity.this,
+                            ProgramWeekActivity.class
+                    );
+
+                    intent.putExtra("weekId", week.getId());
+                    intent.putExtra("weekName", week.getTitle());
+
+                    startActivity(intent);
+                }
+        );
 
         programId = getIntent().getLongExtra("programId", -1);
 

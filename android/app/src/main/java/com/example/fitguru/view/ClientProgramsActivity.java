@@ -1,4 +1,4 @@
-package com.example.fitguru.program;
+package com.example.fitguru.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fitguru.R;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
+import com.example.fitguru.program.CreateProgramActivity;
 import com.example.fitguru.program.dto.ProgramCreateRequest;
 import com.example.fitguru.program.dto.ProgramResponse;
 import com.example.fitguru.repository.ProgramCreateRepository;
@@ -219,7 +220,7 @@ public class ClientProgramsActivity extends AppCompatActivity {
                                     Intent intent =
                                             new Intent(
                                                     ClientProgramsActivity.this,
-                                                    CreateProgramActivity.class
+                                                    ProgramViewActivity.class
                                             );
 
                                     intent.putExtra(
@@ -230,6 +231,11 @@ public class ClientProgramsActivity extends AppCompatActivity {
                                     intent.putExtra(
                                             "trainerClientId",
                                             trainerClientId
+                                    );
+
+                                    intent.putExtra(
+                                            "mode",
+                                            "TRAINER"
                                     );
 
                                     startActivity(intent);

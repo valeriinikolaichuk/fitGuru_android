@@ -45,6 +45,7 @@ public class ClientService {
                 .stream()
                 .map(tc -> new TrainerResponse(
                         tc.getTrainer().getId(),
+                        tc.getId(), // TrainerClient ID
                         tc.getTrainer().getName(),
                         tc.getTrainer().getPhone()
                 ))

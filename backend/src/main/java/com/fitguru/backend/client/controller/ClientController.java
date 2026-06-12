@@ -34,7 +34,3 @@ public class ClientController {
         return clientService.getAvailableTrainers(token);
     }
 }
-
-
-//POST /client/request-trainer
-//GET /client/programs

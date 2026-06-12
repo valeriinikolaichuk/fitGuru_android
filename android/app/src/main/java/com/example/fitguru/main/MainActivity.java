@@ -6,17 +6,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-//import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitguru.R;
 
 import com.example.fitguru.adapters.UserAdapter;
+import com.example.fitguru.view.TrainerProgramsActivity;
 import com.example.fitguru.client.TrainersListActivity;
 import com.example.fitguru.network.ApiService;
 import com.example.fitguru.network.RetrofitClient;
-import com.example.fitguru.program.ClientProgramsActivity;
+import com.example.fitguru.view.ClientProgramsActivity;
 import com.example.fitguru.repository.TrainingRequestRepository;
 import com.example.fitguru.storage.SessionManager;
 import com.example.fitguru.trainer.TrainerRequestsActivity;
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TrainingRequestRepository repositoryRequest;
     ListView listView;
     SessionManager sessionManager;
+
     Button btnRequests;
     Button btnFindTrainers;
     Button btnCloseApp;
@@ -48,15 +49,17 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        sessionManager =
-                new SessionManager(this);
+        sessionManager = new SessionManager(this);
 
         api = RetrofitClient
                 .getInstance(sessionManager)
                 .create(ApiService.class);
 
         repository = new TrainerClientRepository(api);
+        repositoryRequest = new TrainingRequestRepository(api);
+
         listView = findViewById(R.id.listClients);
+
         btnRequests = findViewById(R.id.btnRequests);
         btnFindTrainers = findViewById(R.id.btnFindTrainers);
         btnCloseApp = findViewById(R.id.btnCloseApp);
@@ -72,7 +75,26 @@ public class MainActivity extends AppCompatActivity {
 
             if ("CLIENT".equals(role) && item instanceof TrainerResponse) {
                 TrainerResponse trainer = (TrainerResponse) item;
+
+                Intent intent =
+                        new Intent(
+                                MainActivity.this,
+                                TrainerProgramsActivity.class
+                        );
+
+                intent.putExtra(
+                        "trainerClientId",
+                        trainer.getTrainerClientId()
+                );
+
+                intent.putExtra(
+                        "trainerName",
+                        trainer.getName()
+                );
+
                 sendRequest(trainer.id);
+
+                startActivity(intent);
 
             } else {
                 Intent intent = new Intent(
@@ -110,8 +132,6 @@ public class MainActivity extends AppCompatActivity {
                                 TrainerRequestsActivity.class)
                 );
             });
-
-//          Toast.makeText(this, "CLICKED", Toast.LENGTH_SHORT).show();
 
             loadClients();
         } else {
@@ -153,7 +173,9 @@ public class MainActivity extends AppCompatActivity {
                                 items.add(c);
                             }
 
-                            UserAdapter adapter = new UserAdapter(MainActivity.this, items);
+                            UserAdapter adapter = new UserAdapter(
+                                    MainActivity.this, items
+                            );
                             listView.setAdapter(adapter);
                         }
                     }
@@ -183,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
                             List<String> names = new ArrayList<>();
 
                             for (TrainerResponse t : response.body()) {
-
                                 names.add(t.name);
                             }
 
@@ -193,7 +214,9 @@ public class MainActivity extends AppCompatActivity {
                                 items.add(c);
                             }
 
-                            UserAdapter adapter = new UserAdapter(MainActivity.this, items);
+                            UserAdapter adapter = new UserAdapter(
+                                    MainActivity.this, items
+                            );
                             listView.setAdapter(adapter);
                         }
                     }

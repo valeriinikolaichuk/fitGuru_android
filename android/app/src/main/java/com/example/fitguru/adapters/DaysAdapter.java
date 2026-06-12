@@ -16,15 +16,19 @@ import java.util.List;
 
 public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.DayViewHolder> {
 
-    private final Context context;
-    private final List<DayItem> days;
-    private final OnItemClick listener;
-
     public interface OnItemClick {
         void onClick(DayItem item);
     }
 
-    public DaysAdapter(Context context, List<DayItem> days, OnItemClick listener) {
+    private final Context context;
+    private final List<DayItem> days;
+    private final OnItemClick listener;
+
+    public DaysAdapter(
+            Context context,
+            List<DayItem> days,
+            OnItemClick listener
+    ) {
         this.context = context;
         this.days = days;
         this.listener = listener;

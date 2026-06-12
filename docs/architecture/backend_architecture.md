@@ -26,40 +26,29 @@ Central Spring Security configuration.
 
 ---
 
+### client/
+
+Provides REST endpoints for client-related operations.
+
+➡ [client/](backend/client.md)
+
+---
+
+### trainer/
+
+Provides functionality for retrieving trainer-client relationships.
+
+➡ [trainer/](backend/trainer.md)
+
+---
+
 ### Trainer–Client Relationship Modules
 #### Overview
 These modules implement the relationship system between trainers and clients in the `FitGuru` platform.  
 They provide REST APIs for retrieving assigned trainers and clients based on the authenticated user role.  
 The system is built on a many-to-many relationship using a dedicated join table (`trainer_clients`) and follows a layered, scalable architecture.  
 
-#### Architecture
-```
-├── trainer/
-│     ├── controller/
-│     │     └── TrainerController
-│     ├── service/
-│     │     └── TrainerService
-│     ├── dto/
-│     |      └── ClientResponse
-|     ├── entity/
-│     |      └── TrainerClient
-│     └── repository/
-│            └── TrainerClientRepository
-│
-├── client/
-│     ├── controller/
-│     │     └── ClientController
-│     ├── service/
-│     │     └── ClientService
-│     └── dto/
-│           └── TrainerResponse
-|
-└── user/
-      └── entity/
-            ├── User
-            └── enums/
-                  └── Role
-```
+
 
 ### Trainer Module
 #### Responsibilities  

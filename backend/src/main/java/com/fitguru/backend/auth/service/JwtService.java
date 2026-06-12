@@ -4,7 +4,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
-import com.fitguru.backend.user.entity.User;
+import com.fitguru.backend.auth.entity.User;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

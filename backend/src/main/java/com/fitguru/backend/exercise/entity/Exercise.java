@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fitguru.backend.auth.entity.User;
 import com.fitguru.backend.exercise.entity.enums.*;
-import com.fitguru.backend.user.entity.User;
 
 @Entity
 @Table(name = "exercise")

@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.fitguru.backend.user.repository.UserRepository;
 import com.fitguru.backend.auth.dto.LoginRequest;
 import com.fitguru.backend.auth.dto.LoginResponse;
 import com.fitguru.backend.auth.dto.RefreshRequest;
 import com.fitguru.backend.auth.dto.RegisterRequest;
-import com.fitguru.backend.user.entity.User;
-import com.fitguru.backend.user.entity.enums.Role; 
+import com.fitguru.backend.auth.entity.User;
+import com.fitguru.backend.auth.entity.enums.Role;
+import com.fitguru.backend.auth.repository.UserRepository; 
 
 @Service
 public class AuthService {

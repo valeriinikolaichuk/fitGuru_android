@@ -5,8 +5,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+import com.fitguru.backend.auth.entity.User;
 import com.fitguru.backend.request.entity.enums.RequestStatus;
-import com.fitguru.backend.user.entity.User;
 
 @Entity
 @Table(name = "training_requests",

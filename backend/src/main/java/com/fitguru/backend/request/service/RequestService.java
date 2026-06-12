@@ -3,19 +3,18 @@ package com.fitguru.backend.request.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fitguru.backend.auth.entity.User;
+import com.fitguru.backend.auth.repository.UserRepository;
 import com.fitguru.backend.auth.service.JwtService;
 import com.fitguru.backend.request.dto.TrainingRequestResponse;
 import com.fitguru.backend.request.entity.TrainingRequest;
 import com.fitguru.backend.request.entity.enums.RequestStatus;
-import com.fitguru.backend.user.repository.UserRepository;
 import com.fitguru.backend.request.repository.TrainingRequestRepository;
 import com.fitguru.backend.trainer.entity.TrainerClient;
 import com.fitguru.backend.trainer.repository.TrainerClientRepository;
 
 import lombok.RequiredArgsConstructor;
 import java.util.List;
-
-import com.fitguru.backend.user.entity.User;
 
 @Service
 @RequiredArgsConstructor

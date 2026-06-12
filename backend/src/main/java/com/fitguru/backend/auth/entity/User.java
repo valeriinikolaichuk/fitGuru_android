@@ -1,4 +1,4 @@
-package com.fitguru.backend.user.entity;
+package com.fitguru.backend.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,10 +6,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fitguru.backend.auth.entity.enums.Role;
 import com.fitguru.backend.exercise.entity.Exercise;
 import com.fitguru.backend.request.entity.TrainingRequest;
 import com.fitguru.backend.trainer.entity.TrainerClient;
-import com.fitguru.backend.user.entity.enums.Role;
 
 @Entity
 @Table(name = "users")

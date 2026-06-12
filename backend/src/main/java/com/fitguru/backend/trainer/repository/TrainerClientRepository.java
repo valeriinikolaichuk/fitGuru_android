@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
+import com.fitguru.backend.auth.entity.User;
 import com.fitguru.backend.trainer.entity.TrainerClient;
-import com.fitguru.backend.user.entity.User;
 
 public interface TrainerClientRepository extends JpaRepository<TrainerClient, Long> 
 {

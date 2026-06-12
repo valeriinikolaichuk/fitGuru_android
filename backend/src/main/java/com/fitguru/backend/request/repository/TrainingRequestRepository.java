@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.List;
 
-import com.fitguru.backend.user.entity.*;
+import com.fitguru.backend.auth.entity.*;
 import com.fitguru.backend.request.entity.TrainingRequest;
 import com.fitguru.backend.request.entity.enums.RequestStatus;
 

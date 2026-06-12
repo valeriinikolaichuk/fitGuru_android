@@ -1,49 +1,44 @@
 ### client/
-
-#### Overview
 `TrainersListActivity`  
-Screen used by trainers to manage incoming training requests.
 
 #### Responsibilities
-- Loads available trainers from backend
+- Loads available trainers from the backend
 - Displays trainers in a `ListView`
-- Sends training requests
+- Sends training requests to selected trainers
 - Cancels pending requests
-- Updates button state dynamically without screen reload
+- Updates trainer request status without reloading the screen
+- Provides navigation back to the main screen
 
 #### Architecture
 ```
 activity_trainers_list.xml
         ↓
 TrainersListActivity
-        ↓
-TrainerClientRepository
-        ↓
-ApiService (Retrofit)
-        │
-        ├── GET /client/trainers/available  <------------------>  ClientController
-        │        → List<AvailableTrainerResponse> (DTO)
-        │
-        ├── POST /requests/{trainerId}  <---------------------->  RequestController
-        │        → creates training request
-        │
-        ├── DELETE /requests/{trainerId}  <-------------------->  RequestController
-        |        → cancels pending request
-        ↓
-AvailableTrainerResponse (DTO)
-        ↓
-Gson parsing
-        ↓
-TrainerAdapter
-        ↓
-ListView UI
+        |
+        ├── repositories
+        |       ├── TrainerClientRepository
+        |       └── TrainingRequestRepository
+        |
+        └── ApiService (Retrofit)
+                │
+                ├── GET /client/trainers/available
+                │        → List<AvailableTrainerResponse>
+                │
+                ├── POST /requests/{trainerId}
+                │        → create training request
+                │
+                └── DELETE /requests/{trainerId}
+                         → cancel training request
+                ↓
+      AvailableTrainerResponse (DTO)
+                ↓
+              Gson
+                ↓
+        TrainerAdapter
+                ↓
+            ListView
 ```
 
 `AvailableTrainerResponse`  
-Used to display trainers together with request status.
+DTO used to display trainer information together with the current request status.
 
-**Fields:**  
-`id`  
-`name`  
-`phone`  
-`requestStatus`

@@ -47,13 +47,13 @@ The `trainer` module responsible for trainer-specific functionality, including c
 
 ### view/
 
-➡ [trainer/](frontend/view.md)
+➡ [view/](frontend/view.md)
 
 ---
 
 ### program/
 
-➡ [trainer/](frontend/program.md)
+➡ [program/](frontend/program.md)
 
 ---
 

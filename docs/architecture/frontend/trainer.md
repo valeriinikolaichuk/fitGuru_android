@@ -1,16 +1,11 @@
 ### trainer/
-
-#### Overview
 `TrainerRequestsActivity`  
-Screen used by trainers to view and manage incoming training requests.
 
 #### Responsibilities
-- Loading pending training requests
-- Displaying request information
-- Accepting client requests
-- Rejecting client requests
-- Updating the request list after actions
-- Navigating back to the main screen
+- Loads incoming training requests from the backend
+- Displays requests in a `ListView`
+- Initializes `RequestAdapter`
+- Provides navigation back to the previous screen
 
 #### Architecture
 ```
@@ -20,32 +15,26 @@ TrainerRequestsActivity
         │
         ├── SessionManager
         │
-        ├── TrainerClientRepository
+        ├── TrainingRequestRepository
         │
         └── ApiService (Retrofit)
                 │
-                ├── GET /requests/trainer  <---------------------->  RequestController
+                ├── GET /requests/trainer
                 │        → List<TrainingRequestResponse>
                 │
-                ├── POST /requests/{id}/accept  <----------------->  RequestController
+                ├── POST /requests/{id}/accept
                 │
-                └── POST /requests/{id}/reject  <----------------->  RequestController
-                        ↓
-                   RequestService
+                └── POST /requests/{id}/reject
+                         ↓
+                    RequestController
+                         ↓
+                    RequestAdapter
+                         ↓
+                      ListView
 ```
 
 `RequestAdapter`  
 Custom adapter used for displaying training requests.  
 
-#### Used for
-- Incoming training requests
-
-#### Layout
-`item_request.xml`  
-
-#### Handles
-- Displaying client name
-- Displaying client phone number
-- Accept request action
-- Reject request action
-- Removing processed requests from the list
+`TrainingRequestResponse`  
+DTO representing a training request.

@@ -55,6 +55,8 @@ The view module is responsible for displaying workout programs and their hierarc
 
 ### program/
 
+Provides functionality for creating and editing workout programs.
+
 ➡ [program/](frontend/program.md)
 
 ---

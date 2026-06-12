@@ -1,86 +1,44 @@
-## Modules (Backend)
+## Components (Backend)
+
+### Tech Stack
+- Spring Boot 3.5.14
+- Maven
+- Spring Security
+- JWT Authentication
+- Spring Data JPA
+- Lombok
 
 ---
 
-### Auth Module
+### auth/
 
-#### Overview
+Handles all authentication-related logic.  
 
-- The module implements the **authentication system** for the FitGuru platform.  
-- It provides **REST APIs** for user registration, login, and JWT-based authentication.  
-- The module follows a layered architecture and is designed to be easily extendable for future features.  
+➡ [auth/](backend/auth.md)
 
-#### Architecture
-```
-├── auth/
-|     ├── controller/
-|     │    └── AuthController
-|     ├── service/
-|     │    ├── AuthService
-|     │    └── JwtService
-|     └── dto/
-|          ├── LoginRequest
-|          ├── RegisterRequest
-|          ├── LoginResponse
-|          └── RefreshRequest
-|
-├── user/
-|    ├── repository/
-|    │    └── UserRepository
-|    └── entity/
-|         ├── User
-|         └── enums/
-|              └── Role
-|
-└── trener/entity/ 
-               └── TrainerClient
-```
+---
 
-#### Responsibilities
-**1. Authentication API**   
-Provides REST endpoints:
-- `POST /auth/register` Registers a new user in the system
-- `POST /auth/login` Authenticates user credentials and returns JWT access token
-- `POST /auth/refresh` When access token expires server issues new tokens
- 
-**2. Business Logic (AuthService)**
-- Validates user input
-- Checks if user exists
-- Verifies password
-- Handles registration logic
-- Generates JWT token via JwtService
+### config/
 
-**3. JWT Handling (JwtService)**
-Responsible for:
-- Generating JWT tokens
-- Setting token expiration time
-- Extracting user information from token
-- Supporting authentication validation logic
+Central Spring Security configuration.
 
-**4. Data Layer**
-- `UserRepository` handles database operations using Spring Data JPA
-- `User` entity represents application users
-- `TrainerClient` represents relationships between trainers and clients
-- `Role` defines user types (`TRAINER` / `CLIENT`)
+➡ [config/](backend/config.md)
 
-#### Authentication Flow
-**1.** Client sends login request (phone + password)  
-**2.** Backend validates credentials  
-**3.** If valid:
-- JWT token is generated
-- token is returned to client
+---
 
-**4.** Client uses token for authorized requests
+### client/
 
-#### Security Model
-- Passwords are stored as hashed values
-- JWT token is used for stateless authentication
-- Token is validated on each protected request (future extension)
+Provides REST endpoints for client-related operations.
 
-#### Notes
-- The module currently supports only authentication functionality
-- Designed for future expansion (fitness tracking, training plans, etc.)
-- Follows separation of concerns (Controller → Service → Repository)
+➡ [client/](backend/client.md)
+
+---
+
+### trainer/
+
+Provides functionality for retrieving trainer-client relationships.
+
+➡ [trainer/](backend/trainer.md)
 
 ---
 
@@ -90,34 +48,7 @@ These modules implement the relationship system between trainers and clients in 
 They provide REST APIs for retrieving assigned trainers and clients based on the authenticated user role.  
 The system is built on a many-to-many relationship using a dedicated join table (`trainer_clients`) and follows a layered, scalable architecture.  
 
-#### Architecture
-```
-├── trainer/
-│     ├── controller/
-│     │     └── TrainerController
-│     ├── service/
-│     │     └── TrainerService
-│     ├── dto/
-│     |      └── ClientResponse
-|     ├── entity/
-│     |      └── TrainerClient
-│     └── repository/
-│            └── TrainerClientRepository
-│
-├── client/
-│     ├── controller/
-│     │     └── ClientController
-│     ├── service/
-│     │     └── ClientService
-│     └── dto/
-│           └── TrainerResponse
-|
-└── user/
-      └── entity/
-            ├── User
-            └── enums/
-                  └── Role
-```
+
 
 ### Trainer Module
 #### Responsibilities  

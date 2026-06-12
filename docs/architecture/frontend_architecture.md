@@ -31,7 +31,7 @@ Entry point after authentication. Acts as the landing screen after login / regis
 
 ### client/
 
-The `client` module is responsible for trainer discovery and training request management from the client side.
+Allows clients to browse available trainers and manage training requests.
 
 ➡ [client/](frontend/client.md)
 
@@ -39,13 +39,31 @@ The `client` module is responsible for trainer discovery and training request ma
 
 ### trainer/
 
-The `trainer` module responsible for trainer-specific functionality, including client management and training request processing.
+Allows trainers to view and manage incoming training requests from clients.
 
 ➡ [trainer/](frontend/trainer.md)
                 
 ---
 
+### view/
+
+The view module is responsible for displaying workout programs and their hierarchical structure.
+
+➡ [view/](frontend/view.md)
+
+---
+
+### program/
+
+Provides functionality for creating and editing workout programs.
+
+➡ [program/](frontend/program.md)
+
+---
+
 ### adapters/
+
+The adapter layer is responsible for binding DTO and local model data to Android UI components.
 
 ➡ [adapters/](frontend/adapters.md)
 

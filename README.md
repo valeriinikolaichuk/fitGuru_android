@@ -7,11 +7,11 @@
 
 ## Features
 
-- Trainer can create and edit workout programs
-- Assign programs to clients
-- Clients can view assigned programs
-- Track exercise progress
-- Custom and standard exercise database
+- Create and manage workout programs
+- Assign and share programs with clients
+- Client access to assigned plans
+- Track training progress
+- Built-in exercise database with custom entries
 
 ---
 

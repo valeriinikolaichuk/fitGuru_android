@@ -1,28 +1,30 @@
 ### main/
-Entry point after authentication. Acts as the landing screen after login / registration
+Entry point screen displayed after authentication. Serves as the landing page after login / registration
 - `MainActivity`
 
 #### Responsibilities:
 - Role detection ('CLIENT' / 'TRAINER') via 'SessionManager'
-- Displays main user interface
-- Loads appropriate data (clients or trainers)
-- Displays results in a `ListView`
-- Navigates to `ProgramsActivity` (selected user programs)
-- Navigates to `TrainersListActivity` (trainer search screen)
-- Navigates to `TrainerRequestsActivity` (incoming requests for trainers)
-- Closes application using system call ('finishAffinity()')
+- Displays main user interface based on role
+- Loads corresponding data (clients or trainers)
+- Displays data in a `ListView`
+- Navigates to relevant screens:  
+➜  `TrainerProgramsActivity` / `ClientProgramsActivity` (user programs)  
+➜  `TrainersListActivity` (browse trainers, client flow)  
+➜  `TrainerRequestsActivity` (incoming client requests, trainer flow)  
+- Closes application using 'finishAffinity()'
 
 #### Trainer Flow
 Trainer sees:
 - View their assigned clients
-- "Entries" button (view list of requests) `TrainerRequestsActivity`
-- "CloseApp" button
+- Access incoming training requests ( `TrainerRequestsActivity` )
+- Open client programs ( `ClientProgramsActivity` )
 
 #### Client Flow
 Clients can:
-- View their assigned trainers
-- "AddTrainer" button (view list of available trainers) `TrainersListActivity`
-- "CloseApp" button
+- View assigned trainers
+- Browse available trainers ( `TrainersListActivity` )
+- Send training requests to trainers
+- Open trainer programs ( `TrainerProgramsActivity` )
 
 #### Architecture
 
@@ -35,26 +37,21 @@ activity_main.xml
       │       ├── token
       │       └── role
       │
-      ├── TrainerClientRepository
+      ├── Repositories
+      |      ├── TrainerClientRepository
+      |      └── TrainingRequestRepository
       |
-      ├── Navigation
-      │       ├── opens TrainersListActivity
-      │       ├── opens TrainerRequestsActivity
-      │       └── opens ProgramsActivity
+      ├── Navigation layer
+      │       ├── TrainersListActivity
+      │       ├── TrainerRequestsActivity
+      │       ├── TrainerProgramsActivity
+      │       └── ClientProgramsActivity
       │
       └── ApiService (Retrofit)
               │
-              ├── GET /trainer/clients <------------------> TrainerController
-              │        → List<ClientResponse> (DTO)
-              |
-              ├── GET /client/trainers <------------------> ClientController
-              │        → List<TrainerResponse> (DTO)
+              ├── GET /trainer/clients
+              │        → List<ClientResponse>
               │
-DTO (ClientResponse / TrainerResponse)
-              ↓
-            Gson
-              ↓
-           Adapter
-              ↓
-          ListView
+              └── GET /client/trainers
+                       → List<TrainerResponse>
 ```

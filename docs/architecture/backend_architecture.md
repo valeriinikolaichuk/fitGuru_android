@@ -49,3 +49,12 @@ Provides REST endpoints for managing trainer-client connection requests.
 ➡ [request/](backend/request.md)
 
 ---
+
+### program/
+
+Provides functionality for creating and managing training programs.
+
+➡ [program/](backend/program.md)
+
+---
+

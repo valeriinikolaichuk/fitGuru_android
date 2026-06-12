@@ -58,3 +58,13 @@ Provides functionality for creating and managing training programs.
 
 ---
 
+### exercise/
+
+➡ [exercise/](backend/exercise.md)
+
+Provides access to exercise definitions used in training programs.
+
+---
+
+
+

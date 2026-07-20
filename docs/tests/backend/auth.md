@@ -1,14 +1,5 @@
 ## Auth Testing
-
-### Test Configuration
-
-Testing framework:
-- Spring Boot Test framework
-- JUnit 5 for unit testing
-- Mockito for mocking dependencies
-- `@ExtendWith(MockitoExtension.class)` for isolated unit tests
-
-The authentication module is tested without loading the full Spring context. External dependencies such as repositories, password encoder, and JWT services are mocked to verify business logic independently.
+The `authentication` module is tested without loading the full Spring context. External dependencies such as repositories, password encoder, and JWT services are mocked to verify business logic independently.
 
 | Module | Tested functionality |
 |--------|----------------------|

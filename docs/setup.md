@@ -45,6 +45,9 @@ Mac/Linux:
 #### Application URL
 http://localhost:8080
 
+### DATABASE
+➡ [db_backup.dump](https://github.com/valeriinikolaichuk/fitGuru_android/blob/main/docs/database)
+
 #### Swagger
 The project integrates `Swagger UI` (via Springdoc OpenAPI) for interactive API documentation.  
 It allows you to view all available REST endpoints, inspect request/response data models, and test API queries directly from the browser.

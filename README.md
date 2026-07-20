@@ -15,6 +15,7 @@
 - [Setup and Run Instructions](#setup-and-run-instructions)
 - [Database](#database)
 - [Project Structure](#project-structure)
+- [Testing](#testing)
 - [License](LICENSE)
 - [Author](#author)
 
@@ -73,6 +74,11 @@ For a detailed explanation of the database structure see:
 For a detailed explanation of the system architecture see:    
 ➡ [frontend documentation](docs/architecture/frontend_architecture.md)  
 ➡ [backend documentation](docs/architecture/backend_architecture.md)
+
+---
+
+## Testing
+➡ [backend tests](docs/backend_tests.md)  
 
 ---
 

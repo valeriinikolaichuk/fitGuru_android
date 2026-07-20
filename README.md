@@ -82,7 +82,7 @@ For a detailed explanation of the system architecture see:
 ---
 
 ## Swagger API Documentation
-➡ [Swagger API Documentation](docs/swagger.md)
+➡ [Swagger API Documentation](docs/tests/swagger.md)
 
 ---
 

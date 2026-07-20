@@ -16,12 +16,11 @@
 - [Database](#database)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
+- [Swagger API Documentation](#swagger-api-documentation)
 - [License](LICENSE)
 - [Author](#author)
 
 </details>
-
-
 
 ## Features
 
@@ -79,6 +78,11 @@ For a detailed explanation of the system architecture see:
 
 ## Testing
 ➡ [backend tests](docs/tests/backend_tests.md)  
+
+---
+
+## Swagger API Documentation
+➡ [Swagger API Documentation](docs/swagger.md)
 
 ---
 

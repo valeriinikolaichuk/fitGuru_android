@@ -73,3 +73,21 @@ Tested functionality:
 | generateRefreshToken_shouldCreateValidToken | Verifies refresh token creation and expiration |
 | extractPhone_shouldReturnUserPhone | Verifies phone extraction from valid JWT |
 | extractPhone_shouldFailWithInvalidToken | Verifies invalid JWT rejection |
+
+---
+
+### AuthController
+
+| Endpoint | Tested functionality |
+|---|---|
+| POST `/auth/register` | User registration request mapping and response handling |
+| POST `/auth/login` | Login request mapping and authentication response |
+| POST `/auth/refresh` | Refresh token request processing |
+
+**Testing approach:**
+- `@WebMvcTest` used for controller isolation.
+- `MockMvc` used for HTTP request simulation.
+- `AuthService` mocked with Mockito.
+- JSON request/response validation performed with `ObjectMapper` and `jsonPath`.
+
+The controller layer is tested independently from authentication business logic.

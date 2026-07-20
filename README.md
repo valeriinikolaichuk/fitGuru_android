@@ -78,7 +78,7 @@ For a detailed explanation of the system architecture see:
 ---
 
 ## Testing
-➡ [backend tests](docs/backend_tests.md)  
+➡ [backend tests](docs/tests/backend_tests.md)  
 
 ---
 

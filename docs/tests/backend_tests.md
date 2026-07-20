@@ -10,10 +10,6 @@ Testing framework:
 
 The authentication module is tested without loading the full Spring context. External dependencies such as repositories, password encoder, and JWT services are mocked to verify business logic independently.
 
-### Covered Components
-
-The following components are covered by automated tests:
-
 | Module | Tested functionality |
 |--------|----------------------|
 | AuthService | User registration, duplicate user validation, login flow, password validation, JWT token generation, refresh token flow |
@@ -22,7 +18,6 @@ The following components are covered by automated tests:
 | PasswordEncoder | Password encoding and password matching validation |
 
 ### Test Scenarios
-
 #### User Registration
 Tests verify:
 - New user creation.
@@ -60,3 +55,21 @@ Run all backend tests:
 ```
 mvnw.cmd test
 ```
+
+---
+
+## JwtService
+Tested functionality:
+- Access token generation.
+- Refresh token generation.
+- JWT subject extraction.
+- Role claim validation.
+- Token parsing and signature validation.
+- Invalid token handling.
+
+| Test | Description |
+|------|-------------|
+| generateAccessToken_shouldCreateValidToken | Verifies access token creation with user phone and role claims |
+| generateRefreshToken_shouldCreateValidToken | Verifies refresh token creation and expiration |
+| extractPhone_shouldReturnUserPhone | Verifies phone extraction from valid JWT |
+| extractPhone_shouldFailWithInvalidToken | Verifies invalid JWT rejection |

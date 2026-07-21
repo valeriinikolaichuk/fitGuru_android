@@ -45,30 +45,35 @@ If registration succeeds, the `API` returns a success response.
 ### 3. Login
 
 Open:
+
 ```
 POST /auth/login
 ```
 
 Click **Try it out**.
 
-Example:
-```
+Example request:
+
+```json
 {
-  "email": "user1@example.com",
+  "phone": "380991112233",
   "password": "password123"
 }
 ```
 
 Click **Execute**.
 
-The response contains a JWT token:
-```
+The response contains:
+
+```json
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiJ9..."
+  "accessToken": "<JWT access token>",
+  "refreshToken": "<JWT refresh token>",
+  "role": "CLIENT"
 }
 ```
 
-Copy the token.
+Copy the **access token**.
 
 ---
 
@@ -78,41 +83,60 @@ Click the **Authorize** button in the top-right corner.
 
 Enter:
 
+```
+Bearer <access_token>
+```
+
+Example:
+
+```
 Bearer eyJhbGciOiJIUzI1NiJ9...
+```
 
 Click **Authorize**.
 
 ---
 
-### 5. Call protected endpoint
+### 5. Refresh Access Token
 
 Open:
+
 ```
-POST /api/process
+POST /auth/refresh
 ```
 
 Click **Try it out**.
 
-Example:
-```
+Example request:
+
+```json
 {
-  "text": "hello world"
+  "refreshToken": "<refresh_token>"
 }
 ```
 
 Click **Execute**.
 
-The request will include:
-```
-Authorization: Bearer <JWT>
-```
+The response returns a new pair of JWT tokens:
 
-The auth-api will:
-- Validate the `JWT` token.
-- Load the user from `PostgreSQL`.
-- Call data-api.
-- Send `X-Internal-Token`.
-- Save a processing log.
-- Return the transformed result.
+```json
+{
+  "accessToken": "<new access token>",
+  "refreshToken": "<new refresh token>",
+  "role": "CLIENT"
+}
+```
 
 ---
+
+### 6. Access Protected Endpoints
+
+After authorization, protected endpoints can be called directly from Swagger UI.
+
+The backend will:
+
+- Validate the `JWT` access token.
+- Authenticate the current user.
+- Check the user's role and permissions.
+- Execute the requested operation.
+- Return the requested resource or an appropriate error response.

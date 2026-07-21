@@ -1,4 +1,24 @@
 ## Auth Testing
+<details open="open">
+<summary>Contents</summary>
+  
+- [AuthService](#authservice)
+- [JwtService](#jwtservice)
+- [AuthController](#authcontroller)
+- [Current test coverage](#current-test-coverage)
+  
+</details>
+
+### Test Configuration
+Testing framework:
+- Spring Boot Test framework
+- JUnit 5 for unit testing
+- Mockito for mocking dependencies
+- `@ExtendWith(MockitoExtension.class)` for isolated unit tests
+
+---
+
+### AuthService
 The `authentication` module is tested without loading the full Spring context. External dependencies such as repositories, password encoder, and JWT services are mocked to verify business logic independently.
 
 | Module | Tested functionality |
@@ -35,7 +55,7 @@ Tests verify:
 
 ---
 
-## JwtService
+### JwtService
 Tested functionality:
 - Access token generation.
 - Refresh token generation.
@@ -68,3 +88,14 @@ Tested functionality:
 - JSON request/response validation performed with `ObjectMapper` and `jsonPath`.
 
 The controller layer is tested independently from authentication business logic.
+
+---
+
+### Current test coverage
+|Element	|Instruction Coverage|
+|---------|--------------------|
+|auth.service|	95%|
+|auth.controller|	100%|
+|auth.dto|	100%|
+|auth.entity.enums|	100%|
+|auth.entity|	0%|

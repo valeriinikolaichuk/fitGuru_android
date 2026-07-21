@@ -1,13 +1,20 @@
 ## Auth Testing
 <details open="open">
 <summary>Contents</summary>
-
+  
 - [AuthService](#authservice)
 - [JwtService](#jwtservice)
 - [AuthController](#authcontroller)
 - [Current test coverage](#current-test-coverage)
-
+  
 </details>
+
+### Test Configuration
+Testing framework:
+- Spring Boot Test framework
+- JUnit 5 for unit testing
+- Mockito for mocking dependencies
+- `@ExtendWith(MockitoExtension.class)` for isolated unit tests
 
 ---
 

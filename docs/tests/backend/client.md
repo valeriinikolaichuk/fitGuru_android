@@ -130,9 +130,20 @@ assertTrue(result.isEmpty());
 ---
 
 ### ClientController
-
+**verify:**
+- `GET /client/trainers` endpoint
+- `GET /client/trainers/available` endpoint
+- Authorization header handling
+- Service layer interaction
+- Correct `HTTP` **200** responses
+- `JSON` response mapping
 
 ---
 
 ### Current test coverage
+Client module:
 
+- Instruction Coverage: 100%
+- Branch Coverage: 100%
+
+The Client module business logic and REST API layer are fully covered by automated tests.

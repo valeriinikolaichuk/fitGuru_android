@@ -25,12 +25,7 @@
 ---
 
 ### ClientService
-#### getTrainers_shouldReturnTrainerList
-Checking:
-- `JWT` parsed successfully;
-- User found;
-- Role = `CLIENT`;
-- Trainer list returned.
+#### `getTrainers_shouldReturnTrainerList`
 
 **Verifies:**
 - Correct trimming of `Bearer` before passing to `JwtService`.
@@ -44,7 +39,7 @@ Checking:
 
 ---
 
-#### getTrainers_shouldThrowWhenUserNotFound
+#### `getTrainers_shouldThrowWhenUserNotFound`
 Checking:
 ```
 User client = userRepository.findByPhone(phone)
@@ -53,7 +48,7 @@ User client = userRepository.findByPhone(phone)
 
 ---
 
-#### getTrainers_shouldThrowWhenUserIsNotClient
+#### `getTrainers_shouldThrowWhenUserIsNotClient`
 Checking:
 ```
 if (client.getRole() != Role.CLIENT) {
@@ -61,49 +56,64 @@ if (client.getRole() != Role.CLIENT) {
 }
 ```
 
-Create user:
-```
-user.setRole(Role.TRAINER);
-```
-Checking:
-```
-assertThrows(RuntimeException.class,
-        () -> clientService.getTrainers(token));
-```
+**Verifies:**
+- Phone number successfully extracted from `JWT`;
+- User found;
+- Role is not `CLIENT`;
+- `RuntimeException("Access denied")` thrown;
+- `trainerClientRepository` is not called at all.
 
 ---
 
-#### getTrainers_shouldReturnEmptyList
+#### `getTrainers_shouldReturnEmptyList`
+**Verifies** the case when the client exists, has the correct `CLIENT` role, but does not have any connected trainers yet..
+
 If
 ```
-trainingRequestRepository.findByClient(...)
+trainingRequestRepository.findByClient(client)
 ```
 returns
 ```
 Collections.emptyList()
 ```
-then the status must be
-```
-NONE
-```
+then the service should return an empty list of TrainerResponse objects.
 
 ---
 
-#### getAvailableTrainers_shouldReturnAvailableTrainerList
-Checking:
+#### `getAvailableTrainers_shouldReturnAvailableTrainerList`
+```
 - Trainer №1 is already connected → should not be in the list
 - Trainer №2 has a pending request
 - Trainer №3 has no request at all
-
+```
 Expected result:
 ```
 trainer2 -> PENDING
 trainer3 -> NONE
 ```
 
+**Verifies:**
+- `JWT` extraction
+- Finding the client
+- Fetching connected trainers list
+- Creating connectedTrainerIds
+- Getting requests
+- Building statuses map
+- Filtering trainers
+- Invoking getOrDefault(..., "NONE")
+- Creating `AvailableTrainerResponse`
+
 ---
 
-#### getAvailableTrainers_shouldReturnEmptyList
+#### `getAvailableTrainers_shouldReturnEmptyList`
+**Verifies:**
+- Given:
+  - Client exists,
+  - no connected trainers,
+  - no requests,
+  - no available trainers in the system
+- Then: The result should be an empty list
+
 If
 ```
 userRepository.findByRole(Role.TRAINER)

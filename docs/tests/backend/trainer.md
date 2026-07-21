@@ -21,7 +21,7 @@
 
 ---
 
-### getClients_shouldThrowWhenUserNotFound
+#### getClients_shouldThrowWhenUserNotFound
 Checking:
 ```
 userRepository.findByPhone(phone)
@@ -42,3 +42,30 @@ then the service must throw a `RuntimeException` with the message:
 `User not found`
 ```
 The trainer-client repository must not be accessed.
+
+---
+
+#### getClients_shouldThrowWhenUserIsNotTrainer
+Checking:
+```
+if (trainer.getRole() != Role.TRAINER) {
+    throw new RuntimeException("Access denied");
+}
+```
+
+**Verifies** that access is denied when the authenticated user does not have the `TRAINER` role.  
+If
+```
+user.getRole()
+```
+is not
+```
+TRAINER
+```
+then the service must throw a `RuntimeException` with the message:
+```
+`Access denied`
+```
+The trainer-client repository must not be accessed.
+
+---

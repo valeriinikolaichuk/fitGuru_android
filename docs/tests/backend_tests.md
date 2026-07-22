@@ -5,6 +5,7 @@
 
 - [auth](backend/auth.md)
 - [client](backend/client.md)
+- [trainer](backend/trainer.md)
 
 </details>
 

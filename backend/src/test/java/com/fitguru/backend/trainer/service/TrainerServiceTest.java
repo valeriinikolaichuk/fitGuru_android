@@ -4,7 +4,6 @@ import com.fitguru.backend.auth.entity.User;
 import com.fitguru.backend.auth.entity.enums.Role;
 import com.fitguru.backend.auth.repository.UserRepository;
 import com.fitguru.backend.auth.service.JwtService;
-import com.fitguru.backend.request.repository.TrainingRequestRepository;
 import com.fitguru.backend.trainer.dto.ClientResponse;
 import com.fitguru.backend.trainer.entity.TrainerClient;
 import com.fitguru.backend.trainer.repository.TrainerClientRepository;

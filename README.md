@@ -1,6 +1,6 @@
 <div align="center">
   <h3>FitGuru</h3>
-  <h4>FitGuru is intended to be a fitness trainer-client platform that allows personal trainers to create and manage workout programs for their clients online. The application is designed to be as simple and practical as possible, focusing only on creating, tracking, and sharing workout plans.</h4>
+  <h4>FitGuru is a fitness trainer-client application that allows personal trainers to create and manage workout programs for their clients online. The application is designed to be as simple and practical as possible, focusing only on creating, tracking, and sharing workout plans.</h4>
   <h4>This project explores full-stack development with Java (Android + Spring Boot), focusing on system design, API development, and client-server interaction.</h4>
   <h4>This repository contains the MVP (Minimum Viable Product) of the application, currently focused on validating the core functionality. Future releases will expand its functionality, introducing a native iOS application and a full-featured web platform.</h4>
   <h4>The project concept is driven by my own personal trainer experience.</h4>

@@ -1,5 +1,18 @@
 ## Trainer Testing
 
+<details open="open">
+<summary>Contents</summary>
+  
+- [Trainer Service](#trainer-service)
+  - [getClients_shouldReturnClientList](#getclients_shouldreturnclientlist)
+  - [getClients_shouldThrowWhenUserNotFound](#getclients_shouldthrowwhenusernotfound)
+  - [getClients_shouldThrowWhenUserIsNotTrainer](#getclients_shouldthrowwhenuserisnottrainer)
+  - [getClients_shouldReturnEmptyList](#getclients_shouldreturnemptylist)
+- [Trainer Controller](#trainer-controller)
+- [Current test coverage](#current-test-coverage)
+  
+</details>
+
 ---
 
 ### Trainer Service
@@ -8,6 +21,8 @@
 - Mockito for mocking repositories and external dependencies
 - `@ExtendWith(MockitoExtension.class)` for isolated unit testing
 - Dependencies are mocked to test service logic without database interaction
+
+---
 
 #### getClients_shouldReturnClientList
 - Extracting trainer identity from `JWT` token
@@ -28,7 +43,8 @@ userRepository.findByPhone(phone)
         .orElseThrow(() -> new RuntimeException("User not found"));
 ```
 
-**Verifies** the behavior when the trainer extracted from the JWT token does not exist in the database.  
+**Verifies** the behavior when the trainer extracted from the JWT token does not exist in the database. 
+
 If
 ```
 userRepository.findByPhone(phone)
@@ -54,6 +70,7 @@ if (trainer.getRole() != Role.TRAINER) {
 ```
 
 **Verifies** that access is denied when the authenticated user does not have the `TRAINER` role.  
+
 If
 ```
 user.getRole()
@@ -69,3 +86,39 @@ then the service must throw a `RuntimeException` with the message:
 The trainer-client repository must not be accessed.
 
 ---
+
+#### getClients_shouldReturnEmptyList
+**Verifies** the case when the authenticated trainer exists, has the correct `TRAINER` role, but does not have any connected clients.
+
+If
+```
+repository.findByTrainer(trainer)
+```
+returns
+```
+Collections.emptyList()
+```
+then the service should return an empty list of `ClientResponse` objects.
+
+---
+
+### Trainer Controller
+The Trainer Controller is covered by automated MVC tests using Spring MockMvc.
+
+#### Covered Endpoint
+#### GET /trainer/clients
+
+**The test verifies:**
+- Authorization header handling
+- TrainerService invocation
+- HTTP 200 response
+- `JSON` response serialization
+- Correct mapping of `ClientResponse` objects
+
+---
+
+### Current test coverage
+```
+com.fitguru.backend.trainer.service      100%
+com.fitguru.backend.trainer.controller   100%
+```

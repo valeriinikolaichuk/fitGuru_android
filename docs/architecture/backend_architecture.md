@@ -6,7 +6,7 @@
 - Spring Security
 - JWT Authentication
 - Spring Data JPA
-- Spring Web
+- Spring Web 
 - Lombok
 
 ---

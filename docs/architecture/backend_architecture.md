@@ -5,7 +5,7 @@
 - Maven
 - Spring Security
 - JWT Authentication
-- Spring Data JPA
+- Spring Data JPA 
 - Spring Web 
 - Lombok
 

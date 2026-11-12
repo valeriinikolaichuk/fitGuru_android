@@ -19,6 +19,8 @@
 - Mockito
 - Maven
 
+---
+
 ### Running Tests
 Run all backend tests:
 
@@ -34,3 +36,10 @@ JaCoCo reports are generated after running tests and can be found in:
 ```
 target/site/jacoco/index.html
 ```
+
+---
+
+### Current test coverage:
+- Instruction Coverage: 60%
+
+---

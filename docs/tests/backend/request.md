@@ -16,6 +16,10 @@
   
 </details>
 
+---
+
+### Request Service
+
 #### Scenarios
 | Method | Tests|
 |--------|------|
@@ -26,8 +30,6 @@
 |rejectRequest()	| success|
 
 ---
-
-### Request Service
 
 ### sendRequest_shouldSaveTrainingRequest
 **Verifies** that a new training request is created when no pending request already exists.
@@ -112,4 +114,25 @@ then the service should return an empty list of `TrainingRequestResponse` object
 ---
 
 ### Request Controller
+### sendRequest_shouldReturnOk()
+Verifies that the endpoint delegates the request to the service layer and returns HTTP 200 OK.
 
+### cancelRequest_shouldReturnOk()
+Verifies that the endpoint delegates request cancellation to the service layer and returns HTTP 200 OK.
+
+### getRequests_shouldReturnRequestList()
+Verifies that the endpoint returns pending training requests as JSON and delegates processing to the service layer.
+
+### acceptRequest_shouldReturnOk()
+Verifies that the endpoint accepts a training request, delegates processing to the service layer, and returns HTTP 200 OK.
+
+### rejectRequest_shouldReturnOk()
+Verifies that the endpoint rejects a training request, delegates processing to the service layer, and returns HTTP 200 OK.
+
+---
+
+### Current test coverage
+```
+com.fitguru.backend.request.service      100%
+com.fitguru.backend.request.controller   100%
+```
